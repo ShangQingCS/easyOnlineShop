@@ -1,0 +1,88 @@
+@charset "utf-8";
+/* CSS Document */
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td{margin:0;padding:0}fieldset,img{border:0px;}:focus{outline:0}address,caption,cite,code,dfn,em,strong,th,var,optgroup{font-style:normal;font-weight:normal}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}abbr,acronym{border:0;font-variant:normal}input,button,textarea,select,optgroup,option{font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit}code,kbd,samp,tt{font-size:100%}input,button,textarea,select{*font-size:100%}body{line-height:1.5}ol,ul{list-style:none}table{border-collapse:collapse;border-spacing:0}caption,th{text-align:left}sup,sub{font-size:100%;vertical-align:baseline}:link,:visited ,ins{text-decoration:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}
+body{ font-family:"宋体","Microsoft YaHei","微软雅黑","黑体"; font-size:12px; background-color:#FFFFFF; color:#666666;}
+*{margin:0; padding:0;}
+b{ font-weight:normal;}
+a{ color:#666666;}
+a:hover{ text-decoration:underline;}
+header, section, footer, aside, nav, article, figure{display: block;}
+.clearfix:after {content:"."; display:block; height:0; clear:both; visibility:hidden; font-size:0;}
+.clearfix {zoom:1;}
+
+/***********首页样式开始*************/
+body{
+_background-attachment:fixed; 
+_background-image:url(about:blank);
+}
+.header{
+	background: url(../images/header_bj.jpg) repeat-x;
+	width:1000px;
+	height:68px;
+
+}
+.logo{
+	float:left;
+
+}
+.rcxx{
+	background:url(../images/rcxx_bj.jpg) no-repeat;
+	height:68px;
+	width:700px;
+	float:left;
+	text-align:right;
+	color:#fff;
+
+}
+.rcxx li{
+	margin-top:43px;
+}
+.rcxx li span{
+	color:#F00;
+	font-weight:bold;
+}
+.rcxx li img{
+	vertical-align:middle;
+}
+.nav{
+	width:1000px;
+	background: url(../images/nav_bj.jpg) repeat-x;
+	height:30px;
+}
+.nav ul{
+	margin-left:200px;
+}
+.nav ul li{
+	float:left;
+	font-size:14px;
+	font-family:"微软雅黑";
+	font-weight:bold;
+	line-height:30px;
+	width:60px;
+	text-align:center;
+}
+.nav li a{
+    color:#333;
+}
+.mbx{
+	background: url(../images/mbx_bj.jpg) repeat-x;
+	width:1000px;
+	height:20px;
+}
+.right{
+	float:left;
+	/*border:1px solid #e1e1e1;*/
+	margin-left:10px;
+	width:810px;
+}
+.footer{
+	margin-top:15px;
+	border-top:1px solid #e1e1e1;
+	width:1000px;
+	height:44px;
+	background: url(../images/footer_bj.jpg) repeat-x;
+	text-align:center;
+}
+.footer span{
+	line-height:44px;
+}

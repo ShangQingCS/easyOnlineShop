@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="framework.db.pojo.TFormConfig" table="T_FORM_CONFIG">
+        <id name="formId" type="java.lang.String">
+            <column name="FORM_ID" length="36" />
+            <generator class="assigned" />
+        </id>
+        <property name="formName" type="java.lang.String">
+            <column name="FORM_NAME" length="200" />
+        </property>
+        <property name="formColumnSize" type="java.lang.Integer">
+            <column name="FORM_COLUMN_SIZE" />
+        </property>
+        <property name="formOnloadEvent" type="java.lang.String">
+            <column name="FORM_ONLOAD_EVENT" length="200" />
+        </property>
+        <property name="formGroup" type="java.lang.String">
+            <column name="FORM_GROUP" length="200" />
+        </property>
+        <property name="formElemens" type="java.lang.String">
+            <column name="FORM_ELEMENS" />
+        </property>
+        <property name="formEvents" type="java.lang.String">
+            <column name="FORM_EVENTS" />
+        </property>
+        <property name="formCss" type="java.lang.String">
+            <column name="FORM_CSS" />
+        </property>
+        <property name="formViews" type="java.lang.String">
+            <column name="FORM_VIEWS" length="200" />
+        </property>
+        <property name="templateUrl" type="java.lang.String">
+            <column name="TEMPLATE_URL" length="200" />
+        </property>
+        <property name="workflowId" type="java.lang.String">
+            <column name="WORKFLOW_ID" length="36" />
+        </property>
+        <property name="formVersion" type="java.lang.Integer">
+            <column name="FORM_VERSION" />
+        </property>
+        <property name="userId" type="java.lang.String">
+            <column name="USER_ID" length="36" />
+        </property>
+        <property name="flag" type="java.lang.String">
+            <column name="FLAG" length="1" />
+        </property>
+        <property name="createTime" type="java.sql.Timestamp">
+            <column name="CREATE_TIME" length="26" />
+        </property>
+        <property name="updateTime" type="java.sql.Timestamp">
+            <column name="UPDATE_TIME" length="26" />
+        </property>
+        
+        <property name="synchronizationObject" type="java.lang.String">
+            <column name="SYNCHRONIZATION_OBJECT" length="72" />
+        </property>
+        <property name="editConfigJson" type="java.lang.String">
+            <column name="EDIT_CONFIG_JSON" />
+        </property>
+          
+    </class>
+</hibernate-mapping>

@@ -19,9 +19,6 @@ import framework.logger.AuditLogger;
 
 @SuppressWarnings("unchecked")
 public class LoginAction {
-	public static final String SQL_USER_MSG = "select * from t_xt_emp where user_id=?";
-	//public static final String SQL_XT_USER_MSG = "select * from t_xt_user where u_id=?";
-	
 	private String code;
 	private TXtUser user;
 	private boolean success;

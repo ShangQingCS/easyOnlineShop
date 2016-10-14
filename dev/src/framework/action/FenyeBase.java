@@ -1,6 +1,5 @@
 package framework.action;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +8,7 @@ import org.apache.struts2.json.annotations.JSON;
 
 import framework.db.DBUtil;
 
-
+@SuppressWarnings({"rawtypes","unchecked"})
 public class FenyeBase {
 	protected int page = 1;//当前页数
 	protected int total;//返回数据行数

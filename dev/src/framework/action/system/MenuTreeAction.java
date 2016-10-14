@@ -1,6 +1,5 @@
 package framework.action.system;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,25 +20,35 @@ import framework.util.DateUtils;
 
 import com.opensymphony.xwork2.Action;
 
+@SuppressWarnings({"rawtypes","unchecked"})
 public class MenuTreeAction {
+	private static final String SQL_MENU = "select m.menu_id,m.menu_name,m.menu_parent_id,m.url,m.px_xh, m.menu_parent_ids, m.open_method, m.logo " 
+			+ " from t_xt_menu m,t_xt_role_menu rm"
+			+ " where m.menu_id=rm.menu_id and m.yx_bj='1' and rm.yx_bj='1'"
+			+ " and rm.role_id in (?)  order by m.px_xh";
+	private static final String SQL_MENU_ALL = "select m.menu_id,m.menu_name,m.menu_parent_id,m.url,m.px_xh, m.menu_parent_ids, m.open_method, m.logo " 
+		+ " from t_xt_menu m"
+		+ " where m.yx_bj='1' order by px_xh";
 	private List<Map> trees;
 	private TXtMenu tree;
 	private String filePath;
-	
-	public String fileTree(){
+		
+	public String fileTree() {
 		String realPath = RequestHelper.getServletContext().getRealPath("/");
 		
-		if(filePath==null){
+		if(filePath == null) {
 			filePath = "";
 		}
-		if(filePath.indexOf("WEB-INF")>-1){
+		if(filePath.indexOf("WEB-INF")>-1) {
 			return null;
 		}
 		
 		File file = new File(realPath+filePath);
 		List list = new ArrayList();
+		List dirList = new ArrayList();
+		List fileList = new ArrayList();
 		for(File f : file.listFiles()){
-			if(f.getName().indexOf("WEB-INF")>-1){
+			if(f.getName().indexOf("WEB-INF")>-1) {
 				continue;
 			}
 			Map map = new HashMap();
@@ -49,8 +58,14 @@ public class MenuTreeAction {
 				map.put("state", "closed");
 			}
 			
-			list.add(map);
+			if(f.isDirectory()) {
+				dirList.add(map);
+			} else {
+				fileList.add(map);
+			}
 		}
+		list.addAll(dirList);
+		list.addAll(fileList);
 		try {
 			RequestHelper.wirte(JSONArray.fromObject(list).toString());
 		} catch (IOException e) {
@@ -59,7 +74,7 @@ public class MenuTreeAction {
 		return null;
 	}
 	
-	public String delete(){
+	public String delete() {
 		DBUtil db = DBUtil.getDBUtilByRequest();
 		if(this.tree.getMenuId().indexOf("xt")==0){
 			return Action.ERROR;
@@ -79,7 +94,7 @@ public class MenuTreeAction {
 		return Action.SUCCESS;
 	}
 	
-	public String save(){
+	public String save() {
 		DBUtil db = DBUtil.getDBUtilByRequest();
 		if(this.tree.getMenuId()==null || "".equals(this.tree.getMenuId().trim())){
 			this.tree.setMenuId(UUID.randomUUID().toString());
@@ -87,7 +102,7 @@ public class MenuTreeAction {
 			this.tree.setMenuParentIds(tree.getMenuParentIds().toString()+","+tree.getMenuId());
 			this.tree.setYxBj("1");
 			db.insert(this.tree);
-		}else{
+		} else {
 			Map params = new HashMap(1);
 			params.put("menuId", tree.getMenuId());
 			TXtMenu menu = (TXtMenu)db.queryByPojo(TXtMenu.class, params).get(0);
@@ -102,29 +117,20 @@ public class MenuTreeAction {
 		return Action.SUCCESS;
 	}
 	
-	public String menuTreeAll(){
+	public String menuTreeAll() {
 		menuTreeQuery(true);
 		return Action.SUCCESS;
 	}
 	
-	
-	public String menuTree(){
+	public String menuTree() {
 		menuTreeQuery(false);
 		return Action.SUCCESS;
 	}
 	
-	private static final String SQL_MENU = "select m.menu_id,m.menu_name,m.menu_parent_id,m.url,m.px_xh, m.menu_parent_ids, m.open_method, m.logo " 
-		+" from t_xt_menu m,t_xt_role_menu rm"
-		+" where m.menu_id=rm.menu_id and m.yx_bj='1' and rm.yx_bj='1'"
-		+" and rm.role_id in (?)  order by m.px_xh";
-	private static final String SQL_MENU_ALL = "select m.menu_id,m.menu_name,m.menu_parent_id,m.url,m.px_xh, m.menu_parent_ids, m.open_method, m.logo " 
-		+" from t_xt_menu m"
-		+" where m.yx_bj='1' order by px_xh";
-	@SuppressWarnings("unchecked")
 	private void menuTreeQuery(boolean isAll){
 		DBUtil db = DBUtil.getDBUtilByRequest();
 		List<Map> list = null;
-		if(isAll){
+		if(isAll) {
 			list = db.queryBySQL(SQL_MENU_ALL);
 		} else {
 			UserMsg currUser = (UserMsg)RequestHelper.getSession().getAttribute("user");
@@ -132,6 +138,7 @@ public class MenuTreeAction {
 			String sql = SQL_MENU.replaceFirst("\\?", rolestr);
 			list = db.queryBySQL(sql);
 		}
+		
 		Map root = null;
 		Map<String,Map> temp = new TreeMap();
 		for (Map pojo : list) {
@@ -139,32 +146,33 @@ public class MenuTreeAction {
 			node.put("id", pojo.get("menuId"));
 			node.put("text", pojo.get("menuName"));
 			node.put("parentId", pojo.get("menuParentId"));
-			Map temp1 = new HashMap(4);
-			temp1.put("pxXh", pojo.get("pxXh"));
-			temp1.put("menuParentIds", pojo.get("menuParentIds"));
-			temp1.put("openMethod", pojo.get("openMethod"));
-			temp1.put("logo", pojo.get("logo"));
-			if(pojo.get("url")!=null && pojo.get("url").toString().length()!=0){
-				temp1.put("url", pojo.get("url"));
-			}else{
-				temp1.put("url", "");
+			
+			Map attrs = new HashMap(5);
+			attrs.put("pxXh", pojo.get("pxXh"));
+			attrs.put("menuParentIds", pojo.get("menuParentIds"));
+			attrs.put("openMethod", pojo.get("openMethod"));
+			attrs.put("logo", pojo.get("logo"));
+			if(pojo.get("url") != null && pojo.get("url").toString().length()!=0) {
+				attrs.put("url", pojo.get("url"));
+			} else {
+				attrs.put("url", "");
 				node.put("state", "closed");
 			}
-			node.put("attributes", temp1);
+			node.put("attributes", attrs);
 			temp.put(pojo.get("menuId").toString(), node);
-			if("root".equals(node.get("parentId"))){
+			if("root".equals(node.get("parentId"))) {
 				root = node;
 			}
 		}
 		
-		for(String key : temp.keySet()){
+		for(String key : temp.keySet()) {
 			Map node = temp.get(key);
 			Map parentMap = temp.get(node.get("parentId"));
-			if(parentMap!=null){
-				if(parentMap.get("children")==null){
+			if(parentMap != null) {
+				if(parentMap.get("children") == null) {
 					parentMap.put("children", new ArrayList());
 				}
-				((ArrayList)parentMap.get("children")).add(node);
+				((ArrayList) parentMap.get("children")).add(node);
 			}
 		}
 		
@@ -180,7 +188,7 @@ public class MenuTreeAction {
 		}
 		
 		trees = new ArrayList(1);
-		if(root!=null){
+		if(root != null) {
 			trees.add(root);
 		}
 	}
@@ -204,6 +212,5 @@ public class MenuTreeAction {
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
 	}
-	
 	
 }

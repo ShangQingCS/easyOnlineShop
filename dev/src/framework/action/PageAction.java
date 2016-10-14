@@ -7,7 +7,7 @@ import org.apache.struts2.json.annotations.JSON;
 
 import framework.bean.PageBean;
 
-@SuppressWarnings("unchecked")
+@SuppressWarnings("rawtypes")
 public class PageAction {
 	protected int page = 1;//当前页数
 	

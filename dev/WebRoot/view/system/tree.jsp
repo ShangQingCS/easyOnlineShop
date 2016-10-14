@@ -31,13 +31,12 @@
 			
 			initMenuTree();//初始化菜单
 			
-			
 			$("#fileTree").tree({
-				onBeforeExpand:function(node){
+				onBeforeExpand:function(node) {
 					$("#fileTree").tree("options").url = "${basePath }/view/system/menuTree!fileTree.action?filePath="+node.id;
 				},
-				onDblClick:function(node){
-					if(node.state){return false;}
+				onDblClick:function(node) {
+					//if(node.state) { return false; }
 					$('#inp_url').val('/'+node.id);
 					$('#win_menu').dialog('close');
 				}
@@ -46,7 +45,7 @@
 		});
 		
 		var isInitLogs = false;
-		function initDivLogos(){
+		function initDivLogos() {
 			if(!isInitLogs){
 				var url = "${basePath }/view/system/menuTree!fileTree.action?filePath=/images/logos/";
 				$.ajax( {
@@ -193,7 +192,7 @@
   </head>
   
    <body class="easyui-layout">
-  	<div region="west" class="easyui-panel bgColor" split="true" title="功能菜单列表" style="width:200px;overflow: auto;" >
+  	<div region="west" class="easyui-panel bgColor" split="true" title="功能菜单列表" style="width:200px;overflow: auto;">
   		<ul id="ul_menu_tree" ></ul>
   	</div>
   	<div id="div_config" region="center" title="功能菜单信息" class="easyui-panel bgColor" style="overflow: auto;">
@@ -227,8 +226,7 @@
 				<td>
 					<input name="tree.url" id="inp_url" class="easyui-validatebox"  maxlength="2000" style="width: 360px;" />
 					<!-- <a href="javascript:void(0);" onclick="showForms();">表单</a>&nbsp; -->
-					<a href="javascript:void(0);" onclick="$('#win_menu').dialog('open');">路径</a>
-					
+					<a href="javascript:void(0);" onclick="$('#win_menu').dialog('open');">选择路径</a>
 				</td>
 			</tr>
 			<!-- <tr>
@@ -265,7 +263,7 @@
 			</tr>
 		</table>
 		
-		<div id="win_menu" title="菜单选择" class="easyui-dialog" closed="true" data-options="width:260,height:280" buttons="#win_menu_buttons">
+		<div id="win_menu" title="菜单选择" class="easyui-dialog" closed="true" data-options="width:600,height:350" buttons="#win_menu_buttons">
 			<ul class="easyui-tree" url="${basePath }/view/system/menuTree!fileTree.action" id="fileTree"></ul>
 			<div id="win_menu_buttons">
  				<a href="#" class="easyui-linkbutton" onclick="$('#win_menu').dialog('close');">关闭</a>
@@ -277,7 +275,6 @@
  				<a href="#" class="easyui-linkbutton" onclick="$('#win_menu_logo').dialog('close');">关闭</a>
 			</div>
 		</div>
-		
 		
 		<div id="win_forms" title="表单列表" class="easyui-dialog" closed="true" style="width:680; height:360;" modal="true">
 		  	<table id="tabForms" class="easyui-datagrid" border="true" style="width:660; height:320;" rownumbers="true"

@@ -8,9 +8,9 @@
 	<!-- org.hibernate.dialect.OracleDialect 解决只返回一个字符的问题 -->
 	<!-- framework.db.MyOracle10gDialect -->
 	<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
-	<property name="connection.url">jdbc:mysql://localhost:3306/sqkj?useUnicode=true&amp;characterEncoding=GBK</property>
-	<property name="connection.username">senlchen</property> 
-	<property name="connection.password">senlchen1</property>
+	<property name="connection.url">jdbc:mysql://localhost:3306/dev?useUnicode=true&amp;characterEncoding=GBK</property>
+	<property name="connection.username">root</property> 
+	<property name="connection.password">root</property>
 	<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
 	<property name="myeclipse.connection.profile">JDBC</property>
 	<property name="connection.pool_size">30</property>
@@ -43,6 +43,6 @@
 	<mapping resource="framework/db/pojo/TXtMessage.hbm.xml" />
 	<mapping resource="framework/db/pojo/TFormTableValue.hbm.xml" />
 	<mapping resource="framework/db/pojo/TPbDatasource.hbm.xml" />
-	<mapping resource="config/hibernate/TSysLog.hbm.xml" />
+	<mapping resource="framework/db/pojo/TAuditLog.hbm.xml" />
 </session-factory>
 </hibernate-configuration>

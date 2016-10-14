@@ -257,6 +257,16 @@ create table T_XT_WORKDAY
 ;
 alter table T_XT_WORKDAY
   add primary key (DAY);
+  
+CREATE TABLE IF NOT EXISTS `t_draft_log` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `loginname` varchar(10) DEFAULT NULL COMMENT '登录名',
+  `logdetail` varchar(2000) DEFAULT NULL,
+  `logsource` varchar(200) DEFAULT NULL,
+  `ip` varchar(30) DEFAULT NULL COMMENT 'IP地址',
+  `createdate` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=312 DEFAULT CHARSET=utf8;
 
 insert into T_XT_EMP (ID, USER_ID, USER_PWD, USER_NAME, ORG_ID, WORK_ADDR, TELPHONE, MOBILE, FAX, SEX, EMAIL, REMARK, POSITION_ID, VALIDATE_DOMAIN, VALIDATE_IP, PCUSERNAME, FLAG)
 values ('d6ce7860-a122-41bd-80d7-cb80f437044c', 'admin', '123456', '系统管理员', '81277dc5-6c4b-4246-97b9-47aafcb3d573', null, null, null, null, '0', null, null, '5bfad0ff-8227-4979-a5ad-6435564b020b', 'YANGCW-PC', '127.0.0.1', null, '1');

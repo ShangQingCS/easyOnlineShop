@@ -44,5 +44,16 @@
 	<mapping resource="framework/db/pojo/TFormTableValue.hbm.xml" />
 	<mapping resource="framework/db/pojo/TPbDatasource.hbm.xml" />
 	<mapping resource="config/hibernate/TSysLog.hbm.xml" />
+	
+	<mapping resource="cn/sqkj/nsyl/db/po/NsDictionaries.hbm.xml" />
+	<mapping resource="cn/sqkj/nsyl/db/po/NsOrder.hbm.xml" />
+	<mapping resource="cn/sqkj/nsyl/db/po/NsCart.hbm.xml" />
+	<mapping resource="cn/sqkj/nsyl/db/po/NsAddress.hbm.xml" />
+	<mapping resource="cn/sqkj/nsyl/db/po/NsAdvertise.hbm.xml" />
+	<mapping resource="cn/sqkj/nsyl/db/po/NsOrderDetail.hbm.xml" />
+	<mapping resource="cn/sqkj/nsyl/db/po/NsEventsinfo.hbm.xml" />
+	<mapping resource="cn/sqkj/nsyl/db/po/NsGoods.hbm.xml" />
+	<mapping resource="cn/sqkj/nsyl/db/po/NsComment.hbm.xml" />
+	
 </session-factory>
 </hibernate-configuration>

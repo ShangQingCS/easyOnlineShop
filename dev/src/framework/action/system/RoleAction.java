@@ -123,13 +123,14 @@ public class RoleAction  extends FenyeBase{
 		
 		List params = new ArrayList(1);
 		if(this.getQueryParams()!=null && this.getQueryParams().size()!=0){
-			db.bind(sql, params, " and role_name like '%'||?||'%' ", this.queryParams.get("roleName"));
+			db.bind(sql, params, " and role_name like concat('%',?,'%') ", this.queryParams.get("roleName"));
 			db.bind(sql, params, " and role_type= ? ", this.queryParams.get("roleType"));
 		}
 		
-		this.setTotal(db.queryCountBySQL(sql.toString(), params));
 		this.query(sql+" order by lr_sj desc", params, db);
-		return "success";
+		int count = db.queryCountBySQL(sql.toString(), params);
+		this.setTotal(count);
+		return Action.SUCCESS;
 	}
 	
 	@SuppressWarnings("unchecked")

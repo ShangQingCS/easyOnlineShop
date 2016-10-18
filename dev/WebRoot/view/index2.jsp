@@ -107,8 +107,10 @@
 		<div align="center" style="font-weight: bold;"><%=application.getInitParameter("copyright") %></div>	
 	</div>
 
-	<div region="west" split="true" title="系统菜单" style="width:220px;">
-		<ul id="menu_tree" class="easyui-tree" data-options="onClick:treeClick"></ul>
+	<div region="west" split="false" style="width:220px;">
+		<div class="easyui-panel" title="系统菜单" fit="true" border="false">
+			<ul id="menu_tree" class="easyui-tree" data-options="onClick:treeClick"></ul>
+ 		</div>
 	</div>
 
 	<div id="div_tabs" region="center" class="easyui-tabs" style="padding:0px;background:#eee;" noheader="true">

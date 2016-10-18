@@ -1,349 +1,422 @@
-create table SYS_CODE
-(
-  ID     VARCHAR(36) not null,
-  TYPE   VARCHAR(100),
-  CODE   VARCHAR(100),
-  LABEL  VARCHAR(200),
-  REMARK VARCHAR(200),
-  FLAG   CHAR(1)
+DROP TABLE IF EXISTS ns_address;
+CREATE TABLE ns_address (
+  id bigint(20) NOT NULL,
+  uerid bigint(20) NOT NULL,
+  address varchar(200) NOT NULL,
+  name varchar(100) NOT NULL,
+  post varchar(10) DEFAULT NULL,
+  phonenumb varchar(20) DEFAULT NULL,
+  telnumb varchar(20) DEFAULT NULL,
+  isuse int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (id),
+  UNIQUE KEY id_UNIQUE (id)
 );
-alter table SYS_CODE
-  add constraint PK_SYS_CODE primary key (ID);
 
-create table T_PB_DATASOURCE
-(
-  ID             VARCHAR(36) not null,
-  SOURCE_NAME    VARCHAR(100),
-  SOURCE_REMARK  VARCHAR(600),
-  SOURCE_SQL     VARCHAR(4000),
-  CREATE_USER_ID VARCHAR(36) not null,
-  WHERE_SQL      VARCHAR(4000),
-  FLAG           CHAR(1) default '1',
-  CREATE_TIME    DATETIME not null,
-  UPDATE_TIME    DATETIME
-)
-;
-alter table T_PB_DATASOURCE
-  add primary key (ID);
+DROP TABLE IF EXISTS ns_advertise;
+CREATE TABLE ns_advertise (
+  id bigint(20) NOT NULL,
+  name varchar(100) DEFAULT NULL,
+  memo text,
+  imgurl varchar(45) DEFAULT NULL,
+  linkkind bigint(20) DEFAULT NULL,
+  imglink varchar(45) DEFAULT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY id_UNIQUE (id)
+);
 
-create table T_PB_UPLOADFILE
-(
-  FILE_ID        VARCHAR(36) not null,
-  PARENT_FILE_ID INTEGER,
-  FILE_NAME      VARCHAR(240) not null,
-  FILE_TYPE      VARCHAR(24),
-  FILE_SIZE      INTEGER default 0 not null,
-  FILE_PATH      VARCHAR(4000) not null,
-  UP_TYPE        VARCHAR(24),
-  LRRY_DM        VARCHAR(50) not null,
-  USER_TYPE      VARCHAR(12) not null,
-  XZFW           VARCHAR(50),
-  YX_BJ          CHAR(1) default 'N' not null,
-  LR_SJ          DATETIME not null,
-  XG_SJ          DATETIME,
-  GROUP_ID       VARCHAR(36)
-)
-;
-alter table T_PB_UPLOADFILE
-  add primary key (FILE_ID);
+DROP TABLE IF EXISTS ns_cart;
+CREATE TABLE ns_cart (
+  userid bigint(20) NOT NULL,
+  goodsid bigint(20) NOT NULL,
+  count int(11) DEFAULT '1',
+  price decimal(10,2) DEFAULT '0.00',
+  id bigint(20) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY id_UNIQUE (id)
+);
 
-create table T_XT_CACHE_TABLE
-(
-  ID             VARCHAR(36) not null,
-  CACHE_TYPE     VARCHAR(200),
-  TABLE_NAME     VARCHAR(60),
-  QUERY_SQL      VARCHAR(4000),
-  CREATE_USER_ID VARCHAR(36),
-  CREATE_ORG_ID  VARCHAR(36),
-  FLAG           CHAR(1),
-  CREATE_TIME    DATETIME,
-  UPDATE_TIME    DATETIME
-)
-;
-alter table T_XT_CACHE_TABLE
-  add primary key (ID);
+DROP TABLE IF EXISTS ns_comment;
+CREATE TABLE ns_comment (
+  id bigint(20) NOT NULL,
+  goodid bigint(20) NOT NULL,
+  comment varchar(500) DEFAULT NULL,
+  create_time datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  score int(11) DEFAULT '0',
+  PRIMARY KEY (id),
+  UNIQUE KEY id_UNIQUE (id)
+);
 
-create table T_XT_EMP
-(
-  ID              VARCHAR(36) not null,
-  USER_ID         VARCHAR(36) not null,
-  USER_PWD        VARCHAR(36),
-  USER_NAME       VARCHAR(200),
-  ORG_ID          VARCHAR(36),
-  WORK_ADDR       VARCHAR(2000),
-  TELPHONE        VARCHAR(50),
-  MOBILE          VARCHAR(11),
-  FAX             VARCHAR(50),
-  SEX             CHAR(1),
-  EMAIL           VARCHAR(50),
-  REMARK          VARCHAR(500),
-  POSITION_ID     VARCHAR(36),
-  VALIDATE_DOMAIN VARCHAR(72),
-  VALIDATE_IP     VARCHAR(15),
-  PCUSERNAME      VARCHAR(100),
-  FLAG            CHAR(1)
-)
-;
-alter table T_XT_EMP
-  add primary key (ID);
+DROP TABLE IF EXISTS ns_dictionaries;
+CREATE TABLE ns_dictionaries (
+  id bigint(20) NOT NULL,
+  name varchar(150) DEFAULT NULL,
+  parentid bigint(20) DEFAULT NULL,
+  memo varchar(200) DEFAULT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY id_UNIQUE (id)
+);
 
-create table T_XT_GROUP
-(
-  ID            VARCHAR(36) not null,
-  GROUP_NAME    VARCHAR(60) not null,
-  BUSINESS_TYPE VARCHAR(60) not null,
-  FLAG          CHAR(1) default '1' not null,
-  CREATE_TIME   DATETIME not null,
-  UPDATE_TIME   DATETIME
-)
-;
-alter table T_XT_GROUP
-  add primary key (ID);
+DROP TABLE IF EXISTS ns_eventsinfo;
+CREATE TABLE ns_eventsinfo (
+  id bigint(20) NOT NULL,
+  name varchar(50) DEFAULT NULL,
+  isuse int(11) DEFAULT '1',
+  memo text,
+  minpicture varchar(100) DEFAULT NULL,
+  picture varchar(100) DEFAULT NULL,
+  goods text,
+  PRIMARY KEY (id),
+  UNIQUE KEY id_UNIQUE (id)
+);
 
-create table T_XT_GROUP_USER
-(
-  ID            VARCHAR(36) not null,
-  USER_ID       VARCHAR(36) not null,
-  USER_TYPE     CHAR(1) not null,
-  GROUP_ID      VARCHAR(36),
-  BUSINESS_TYPE VARCHAR(60) not null,
-  FLAG          CHAR(1) default '1' not null,
-  CREATE_TIME   DATETIME not null,
-  UPDATE_TIME   DATETIME
-)
-;
-alter table T_XT_GROUP_USER
-  add primary key (ID);
+DROP TABLE IF EXISTS ns_goods;
+CREATE TABLE ns_goods (
+  id bigint(20) NOT NULL,
+  gname varchar(50) DEFAULT NULL,
+  price decimal(12,2) DEFAULT NULL,
+  category bigint(20) DEFAULT NULL,
+  kind bigint(20) DEFAULT NULL,
+  brand bigint(20) DEFAULT NULL,
+  detail text,
+  goodimglist varchar(100) DEFAULT NULL,
+  isuser int(11) DEFAULT '1',
+  Gfullname varchar(150) DEFAULT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY id_UNIQUE (id)
+);
 
-create table T_XT_KEY_VALUE
-(
-  KV_KEY   VARCHAR(200) not null,
-  KV_VALUE VARCHAR(2000),
-  YX_BJ    CHAR(1) default '1',
-  LR_SJ    DATETIME not null,
-  XG_SJ    DATETIME
-)
-;
-alter table T_XT_KEY_VALUE
-  add primary key (KV_KEY);
+DROP TABLE IF EXISTS ns_order;
+CREATE TABLE ns_order (
+  id bigint(20) NOT NULL,
+  userid bigint(20) NOT NULL,
+  total decimal(10,0) NOT NULL DEFAULT '0',
+  counts int(11) NOT NULL DEFAULT '1',
+  paytype bigint(20) DEFAULT NULL,
+  outway varchar(45) DEFAULT NULL,
+  orderstatus bigint(20) DEFAULT NULL,
+  delivery_numb varchar(150) DEFAULT NULL,
+  create_time datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  delivery_time datetime DEFAULT NULL,
+  paynumb varchar(150) DEFAULT NULL,
+  PRIMARY KEY (id)
+);
 
-create table T_XT_MENU
-(
-  MENU_ID         VARCHAR(36) not null,
-  MENU_NAME       VARCHAR(400) not null,
-  MENU_PARENT_ID  VARCHAR(36) not null,
-  MENU_PARENT_IDS VARCHAR(2000) not null,
-  URL             VARCHAR(2000),
-  PX_XH           INTEGER,
-  OPEN_METHOD     VARCHAR(24),
-  YX_BJ           CHAR(1) default '1',
-  LR_SJ           DATETIME not null,
-  XG_SJ           DATETIME,
-  LOGO            VARCHAR(200)
-)
-;
-alter table T_XT_MENU
-  add primary key (MENU_ID);
+DROP TABLE IF EXISTS ns_order_detail;
+CREATE TABLE ns_order_detail (
+  id bigint(20) NOT NULL,
+  orderid bigint(20) NOT NULL,
+  userid bigint(20) NOT NULL,
+  goodsid bigint(20) NOT NULL,
+  count int(11) NOT NULL DEFAULT '1',
+  price decimal(10,0) NOT NULL DEFAULT '0',
+  PRIMARY KEY (id),
+  UNIQUE KEY id_UNIQUE (id)
+);
 
-create table T_XT_MESSAGE
-(
-  ID               VARCHAR(36) primary key not null,
-  BATCH_ID         VARCHAR(36),
-  REPLY_MESSAGE_ID VARCHAR(36),
-  TO_USER_ID       VARCHAR(36) not null,
-  TITLE            VARCHAR(36) not null,
-  MESSAGE          VARCHAR(4000) not null,
-  MESSAGE_TYPE     CHAR(1) not null,
-  MESSAGE_STATUS   INTEGER default 0 not null,
-  MESSAGE_LEVEL    INTEGER not null,
-  URL              VARCHAR(1000),
-  CREATE_USER_ID   VARCHAR(36) not null,
-  FLAG             CHAR(1) default '1',
-  CREATE_TIME      DATETIME,
-  UPDATE_TIME      DATETIME
-)
-;
+DROP TABLE IF EXISTS sys_code;
+CREATE TABLE sys_code (
+  ID varchar(36) NOT NULL,
+  TYPE varchar(100) DEFAULT NULL,
+  CODE varchar(100) DEFAULT NULL,
+  LABEL varchar(200) DEFAULT NULL,
+  REMARK varchar(200) DEFAULT NULL,
+  FLAG char(1) DEFAULT NULL,
+  PRIMARY KEY (ID)
+);
 
-create table T_XT_ORG
-(
-  ID            VARCHAR(36) not null,
-  ORG_ID        VARCHAR(50),
-  ORG_NAME      VARCHAR(500),
-  PARENT_ORG_ID VARCHAR(36),
-  ORDER_        int,
-  ROOT          CHAR(1),
-  ORG_CODE      VARCHAR(36),
-  SHORT_NAME    VARCHAR(500),
-  ORG_PATH      VARCHAR(1000),
-  ORG_LEVEL     int
-)
-;
-alter table T_XT_ORG
-  add primary key (ID);
+DROP TABLE IF EXISTS t_draft_log;
+CREATE TABLE t_draft_log (
+  id int(10) NOT NULL AUTO_INCREMENT,
+  loginname varchar(10) DEFAULT NULL COMMENT '登录名',
+  logdetail varchar(2000) DEFAULT NULL,
+  logsource varchar(200) DEFAULT NULL,
+  ip varchar(30) DEFAULT NULL COMMENT 'IP地址',
+  createdate datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (id)
+) ENGINE=InnoDB AUTO_INCREMENT=322 DEFAULT CHARSET=utf8;
 
-create table T_XT_POSITION
-(
-  POSITION_ID   VARCHAR(36) not null,
-  POSITION_NAME VARCHAR(200),
-  POSITION_DESC VARCHAR(200)
-)
-;
-alter table T_XT_POSITION
-  add primary key (POSITION_ID);
+DROP TABLE IF EXISTS t_pb_datasource;
+CREATE TABLE t_pb_datasource (
+  ID varchar(36) NOT NULL,
+  SOURCE_NAME varchar(100) DEFAULT NULL,
+  SOURCE_REMARK varchar(600) DEFAULT NULL,
+  SOURCE_SQL varchar(4000) DEFAULT NULL,
+  CREATE_USER_ID varchar(36) NOT NULL,
+  WHERE_SQL varchar(4000) DEFAULT NULL,
+  FLAG char(1) DEFAULT '1',
+  CREATE_TIME datetime NOT NULL,
+  UPDATE_TIME datetime DEFAULT NULL,
+  PRIMARY KEY (ID)
+);
 
-create table T_XT_ROLE
-(
-  ROLE_ID          VARCHAR(36) not null,
-  ROLE_NAME        VARCHAR(200) not null,
-  ROLE_TYPE        CHAR(1) not null,
-  ROLE_REMARK      VARCHAR(2000),
-  ROLE_STATE_VALUE VARCHAR(12),
-  YX_BJ            CHAR(1) default '1',
-  LR_SJ            DATETIME not null,
-  XG_SJ            DATETIME
-)
-;
-alter table T_XT_ROLE
-  add primary key (ROLE_ID);
+DROP TABLE IF EXISTS t_pb_uploadfile;
+CREATE TABLE t_pb_uploadfile (
+  FILE_ID varchar(36) NOT NULL,
+  PARENT_FILE_ID int(11) DEFAULT NULL,
+  FILE_NAME varchar(240) NOT NULL,
+  FILE_TYPE varchar(24) DEFAULT NULL,
+  FILE_SIZE int(11) NOT NULL DEFAULT '0',
+  FILE_PATH varchar(4000) NOT NULL,
+  UP_TYPE varchar(24) DEFAULT NULL,
+  LRRY_DM varchar(50) NOT NULL,
+  USER_TYPE varchar(12) NOT NULL,
+  XZFW varchar(50) DEFAULT NULL,
+  YX_BJ char(1) NOT NULL DEFAULT 'N',
+  LR_SJ datetime NOT NULL,
+  XG_SJ datetime DEFAULT NULL,
+  GROUP_ID varchar(36) DEFAULT NULL,
+  PRIMARY KEY (FILE_ID)
+);
 
-create table T_XT_ROLE_MENU
-(
-  ROLE_ID VARCHAR(36) not null,
-  MENU_ID VARCHAR(36) not null,
-  YX_BJ   CHAR(1) default '1',
-  LR_SJ   DATETIME not null,
-  XG_SJ   DATETIME
-)
-;
-alter table T_XT_ROLE_MENU
-  add constraint PK_T_XT_ROLE_MENU primary key (ROLE_ID, MENU_ID);
+DROP TABLE IF EXISTS t_xt_cache_table;
+CREATE TABLE t_xt_cache_table (
+  ID varchar(36) NOT NULL,
+  CACHE_TYPE varchar(200) DEFAULT NULL,
+  TABLE_NAME varchar(60) DEFAULT NULL,
+  QUERY_SQL varchar(4000) DEFAULT NULL,
+  CREATE_USER_ID varchar(36) DEFAULT NULL,
+  CREATE_ORG_ID varchar(36) DEFAULT NULL,
+  FLAG char(1) DEFAULT NULL,
+  CREATE_TIME datetime DEFAULT NULL,
+  UPDATE_TIME datetime DEFAULT NULL,
+  PRIMARY KEY (ID)
+);
 
-create table T_XT_ROLE_USER
-(
-  ROLE_ID VARCHAR(36) not null,
-  U_ID    VARCHAR(36) not null,
-  YX_BJ   CHAR(1) default '1',
-  LR_SJ   DATETIME not null,
-  XG_SJ   DATETIME
-)
-;
-alter table T_XT_ROLE_USER
-  add constraint PK_T_XT_ROLE_USER primary key (ROLE_ID, U_ID);
+DROP TABLE IF EXISTS t_xt_emp;
+CREATE TABLE t_xt_emp (
+  ID varchar(36) NOT NULL,
+  USER_ID varchar(36) NOT NULL,
+  USER_PWD varchar(36) DEFAULT NULL,
+  USER_NAME varchar(200) DEFAULT NULL,
+  ORG_ID varchar(36) DEFAULT NULL,
+  WORK_ADDR varchar(2000) DEFAULT NULL,
+  TELPHONE varchar(50) DEFAULT NULL,
+  MOBILE varchar(11) DEFAULT NULL,
+  FAX varchar(50) DEFAULT NULL,
+  SEX char(1) DEFAULT NULL,
+  EMAIL varchar(50) DEFAULT NULL,
+  REMARK varchar(500) DEFAULT NULL,
+  POSITION_ID varchar(36) DEFAULT NULL,
+  VALIDATE_DOMAIN varchar(72) DEFAULT NULL,
+  VALIDATE_IP varchar(15) DEFAULT NULL,
+  PCUSERNAME varchar(100) DEFAULT NULL,
+  FLAG char(1) DEFAULT NULL,
+  PRIMARY KEY (ID)
+);
 
-create table T_XT_USER
-(
-  U_ID     VARCHAR(36) not null,
-  U_PWD    VARCHAR(36),
-  U_NAME   VARCHAR(200),
-  U_REMARK VARCHAR(2000),
-  YX_BJ    CHAR(1) default '1',
-  LR_SJ    DATETIME not null,
-  XG_SJ    DATETIME,
-  ORDER_   int
-)
-;
-alter table T_XT_USER
-  add primary key (U_ID);
+INSERT INTO t_xt_emp VALUES ('d6ce7860-a122-41bd-80d7-cb80f437044c', 'admin', '123456', '系统管理员', '81277dc5-6c4b-4246-97b9-47aafcb3d573', null, null, null, null, '0', null, null, '5bfad0ff-8227-4979-a5ad-6435564b020b', 'YANGCW-PC', '127.0.0.1', null, '1');
 
-create table T_XT_WORKDAY
-(
-  DAY         VARCHAR(10) not null,
-  WORKDAY     CHAR(1),
-  REMARK      VARCHAR(200),
-  FLAG        CHAR(1) default '1',
-  CREATE_TIME DATETIME,
-  UPDATE_TIME DATETIME
-)
-;
-alter table T_XT_WORKDAY
-  add primary key (DAY);
+DROP TABLE IF EXISTS t_xt_group;
+CREATE TABLE t_xt_group (
+  ID varchar(36) NOT NULL,
+  GROUP_NAME varchar(60) NOT NULL,
+  BUSINESS_TYPE varchar(60) NOT NULL,
+  FLAG char(1) NOT NULL DEFAULT '1',
+  CREATE_TIME datetime NOT NULL,
+  UPDATE_TIME datetime DEFAULT NULL,
+  PRIMARY KEY (ID)
+);
 
-insert into T_XT_EMP (ID, USER_ID, USER_PWD, USER_NAME, ORG_ID, WORK_ADDR, TELPHONE, MOBILE, FAX, SEX, EMAIL, REMARK, POSITION_ID, VALIDATE_DOMAIN, VALIDATE_IP, PCUSERNAME, FLAG)
-values ('d6ce7860-a122-41bd-80d7-cb80f437044c', 'admin', '123456', '系统管理员', '81277dc5-6c4b-4246-97b9-47aafcb3d573', null, null, null, null, '0', null, null, '5bfad0ff-8227-4979-a5ad-6435564b020b', 'YANGCW-PC', '127.0.0.1', null, '1');
-commit;
+DROP TABLE IF EXISTS t_xt_group_user;
+CREATE TABLE t_xt_group_user (
+  ID varchar(36) NOT NULL,
+  USER_ID varchar(36) NOT NULL,
+  USER_TYPE char(1) NOT NULL,
+  GROUP_ID varchar(36) DEFAULT NULL,
+  BUSINESS_TYPE varchar(60) NOT NULL,
+  FLAG char(1) NOT NULL DEFAULT '1',
+  CREATE_TIME datetime NOT NULL,
+  UPDATE_TIME datetime DEFAULT NULL,
+  PRIMARY KEY (ID)
+);
 
-insert into T_XT_MENU (MENU_ID, MENU_NAME, MENU_PARENT_ID, MENU_PARENT_IDS, URL, PX_XH, OPEN_METHOD, YX_BJ, LR_SJ, XG_SJ, LOGO)
-values ('fd8fc71c-d011-4484-9e39-bedd4bcd7506', '机构管理', 'ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,ca795db5-52ce-4fc8-a02d-ea0da2adb8b1,fd8fc71c-d011-4484-9e39-bedd4bcd7506', '/view/system/orgtree.jsp', 2, 'tab', '1', now(), now(), '/images/logos/jigouguanli.png');
-insert into T_XT_MENU (MENU_ID, MENU_NAME, MENU_PARENT_ID, MENU_PARENT_IDS, URL, PX_XH, OPEN_METHOD, YX_BJ, LR_SJ, XG_SJ, LOGO)
-values ('0ff033aa-51fe-4600-a113-d771a03f08fa', '菜单管理', 'ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,ca795db5-52ce-4fc8-a02d-ea0da2adb8b1,0ff033aa-51fe-4600-a113-d771a03f08fa', '/view/system/tree.jsp', 3, 'tab', '1', now(),now(), '/images/logos/caidanguanli.png');
-insert into T_XT_MENU (MENU_ID, MENU_NAME, MENU_PARENT_ID, MENU_PARENT_IDS, URL, PX_XH, OPEN_METHOD, YX_BJ, LR_SJ, XG_SJ, LOGO)
-values ('b782816d-cb7e-40ce-beab-949d6d7b8512', '角色菜单管理', 'ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,ca795db5-52ce-4fc8-a02d-ea0da2adb8b1,b782816d-cb7e-40ce-beab-949d6d7b8512', '/view/system/role_menu_config.jsp', 5, 'tab', '1', now(),now(), '/images/logos/jiaosecaidanguanli.png');
-insert into T_XT_MENU (MENU_ID, MENU_NAME, MENU_PARENT_ID, MENU_PARENT_IDS, URL, PX_XH, OPEN_METHOD, YX_BJ, LR_SJ, XG_SJ, LOGO)
-values ('2456aacc-2776-49ad-b8ce-b7a893703033', '角色管理', 'ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,ca795db5-52ce-4fc8-a02d-ea0da2adb8b1,2456aacc-2776-49ad-b8ce-b7a893703033', '/view/system/role.jsp', 4, 'tab', '1', now(),now(), '/images/logos/jiaoseguanli.png');
-insert into T_XT_MENU (MENU_ID, MENU_NAME, MENU_PARENT_ID, MENU_PARENT_IDS, URL, PX_XH, OPEN_METHOD, YX_BJ, LR_SJ, XG_SJ, LOGO)
-values ('e9f55cad-2593-427c-9427-48ebeee935cf', '角色人员管理', 'ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,ca795db5-52ce-4fc8-a02d-ea0da2adb8b1,e9f55cad-2593-427c-9427-48ebeee935cf', '/view/system/role_user_config.jsp', 6, 'tab', '1', now(),now(), '/images/logos/jiaoserenyuanguanli.png');
-insert into T_XT_MENU (MENU_ID, MENU_NAME, MENU_PARENT_ID, MENU_PARENT_IDS, URL, PX_XH, OPEN_METHOD, YX_BJ, LR_SJ, XG_SJ, LOGO)
-values ('ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', '人员权限管理', '7846b141-65c8-4eb9-9fc5-ae63bb236836', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', null, 1, null, '1', now(), null, null);
-insert into T_XT_MENU (MENU_ID, MENU_NAME, MENU_PARENT_ID, MENU_PARENT_IDS, URL, PX_XH, OPEN_METHOD, YX_BJ, LR_SJ, XG_SJ, LOGO)
-values ('48d1dc9a-e401-417e-91fe-2bd7baab78c8', '用户管理', 'ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,ca795db5-52ce-4fc8-a02d-ea0da2adb8b1,48d1dc9a-e401-417e-91fe-2bd7baab78c8', '/view/system/user.jsp', 1, 'tab', '1', now(),now(), '/images/logos/yonghuguanli.png');
-insert into T_XT_MENU (MENU_ID, MENU_NAME, MENU_PARENT_ID, MENU_PARENT_IDS, URL, PX_XH, OPEN_METHOD, YX_BJ, LR_SJ, XG_SJ, LOGO)
-values ('xt', '系统', 'root', 'root,xt', null, 1, null, '1', now(), null, null);
-insert into T_XT_MENU (MENU_ID, MENU_NAME, MENU_PARENT_ID, MENU_PARENT_IDS, URL, PX_XH, OPEN_METHOD, YX_BJ, LR_SJ, XG_SJ, LOGO)
-values ('7846b141-65c8-4eb9-9fc5-ae63bb236836', '系统管理', 'xt', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836', null, 6, 'tab', '1', now(),now(), '/images/logos/4-xitongguanli.png');
-commit;
+DROP TABLE IF EXISTS t_xt_key_value;
+CREATE TABLE t_xt_key_value (
+  KV_KEY varchar(200) NOT NULL,
+  KV_VALUE varchar(2000) DEFAULT NULL,
+  YX_BJ char(1) DEFAULT '1',
+  LR_SJ datetime NOT NULL,
+  XG_SJ datetime DEFAULT NULL,
+  PRIMARY KEY (KV_KEY)
+);
 
-insert into T_XT_ORG (ID, ORG_ID, ORG_NAME, PARENT_ORG_ID, ORDER_, ROOT, ORG_CODE, SHORT_NAME, ORG_PATH, ORG_LEVEL)
-values ('9ee3fed0-d4cb-414b-959b-e381dc0f18b5', '001001', '办公室', '001', 1, null, null, '办公室', '企业1/办公室', 2);
-insert into T_XT_ORG (ID, ORG_ID, ORG_NAME, PARENT_ORG_ID, ORDER_, ROOT, ORG_CODE, SHORT_NAME, ORG_PATH, ORG_LEVEL)
-values ('097e835f-52cd-412a-984b-8c8b06e0fcca', '001002', '人力资源部', '001', 2, null, null, '人力资源部', '企业1/人力资源部', 2);
-insert into T_XT_ORG (ID, ORG_ID, ORG_NAME, PARENT_ORG_ID, ORDER_, ROOT, ORG_CODE, SHORT_NAME, ORG_PATH, ORG_LEVEL)
-values ('81277dc5-6c4b-4246-97b9-47aafcb3d573', '001', '所有机构', 'root', 1, '1', null, '所有机构', '所有机构', 0);
-commit;
+DROP TABLE IF EXISTS t_xt_menu;
+CREATE TABLE t_xt_menu (
+  MENU_ID varchar(36) NOT NULL,
+  MENU_NAME varchar(400) NOT NULL,
+  MENU_PARENT_ID varchar(36) NOT NULL,
+  MENU_PARENT_IDS varchar(2000) NOT NULL,
+  URL varchar(2000) DEFAULT NULL,
+  PX_XH int(11) DEFAULT NULL,
+  OPEN_METHOD varchar(24) DEFAULT NULL,
+  YX_BJ char(1) DEFAULT '1',
+  LR_SJ datetime NOT NULL,
+  XG_SJ datetime DEFAULT NULL,
+  LOGO varchar(200) DEFAULT NULL,
+  PRIMARY KEY (MENU_ID)
+);
 
-insert into T_XT_POSITION (POSITION_ID, POSITION_NAME, POSITION_DESC)
-values ('5bfad0ff-8227-4979-a5ad-6435564b020b', '系统管理员', '系统管理员');
-commit;
+INSERT INTO t_xt_menu VALUES ('0ff033aa-51fe-4600-a113-d771a03f08fa', '菜单管理', 'ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,ca795db5-52ce-4fc8-a02d-ea0da2adb8b1,0ff033aa-51fe-4600-a113-d771a03f08fa', '/view/system/tree.jsp', '3', 'tab', '1', '2016-10-13 14:01:05', '2016-10-13 14:01:05', '/images/logos/caidanguanli.png');
+INSERT INTO t_xt_menu VALUES ('2456aacc-2776-49ad-b8ce-b7a893703033', '角色管理', 'ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,ca795db5-52ce-4fc8-a02d-ea0da2adb8b1,2456aacc-2776-49ad-b8ce-b7a893703033', '/view/system/role.jsp', '4', 'tab', '1', '2016-10-13 14:01:05', '2016-10-13 14:01:05', '/images/logos/jiaoseguanli.png');
+INSERT INTO t_xt_menu VALUES ('310628ba-3e28-4766-a187-ad732544b2a9', '操作角色管理', '7846b141-65c8-4eb9-9fc5-ae63bb236836', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,310628ba-3e28-4766-a187-ad732544b2a9', '/view/system/role.jsp', '4', null, '1', '2016-10-13 15:20:06', '2016-10-13 15:25:20', null);
+INSERT INTO t_xt_menu VALUES ('32cc9f12-65c1-4f0d-bcc2-6bbc43190dcf', '系统菜单管理', '7846b141-65c8-4eb9-9fc5-ae63bb236836', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,32cc9f12-65c1-4f0d-bcc2-6bbc43190dcf', '/view/system/tree.jsp', '1', null, '1', '2016-10-13 15:24:40', '2016-10-13 15:32:53', null);
+INSERT INTO t_xt_menu VALUES ('48d1dc9a-e401-417e-91fe-2bd7baab78c8', '账户管理', 'ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,ca795db5-52ce-4fc8-a02d-ea0da2adb8b1,48d1dc9a-e401-417e-91fe-2bd7baab78c8', '/view/system/user.jsp', '1', null, '1', '2016-10-13 14:01:05', '2016-10-13 14:01:05', null);
+INSERT INTO t_xt_menu VALUES ('4995b0ca-2523-4fcb-a886-89c515b08a39', '商品维护', '9779cbff-cb36-4598-aaab-f9be42349c74', 'root,xt,9779cbff-cb36-4598-aaab-f9be42349c74,4995b0ca-2523-4fcb-a886-89c515b08a39', '2', '2', null, '1', '2016-10-13 15:36:52', null, null);
+INSERT INTO t_xt_menu VALUES ('53fc11af-d8f7-49bc-a35a-98df87cc987e', '操作权限管理', '7846b141-65c8-4eb9-9fc5-ae63bb236836', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,53fc11af-d8f7-49bc-a35a-98df87cc987e', '/view/system/role_menu_config.jsp', '3', null, '1', '2016-10-13 15:21:16', null, null);
+INSERT INTO t_xt_menu VALUES ('59a326f9-31a5-4bb7-b973-e51fe379b48c', '订单管理', 'xt', 'root,xt,59a326f9-31a5-4bb7-b973-e51fe379b48c', '', '2', null, '1', '2016-10-13 14:12:52', '2016-10-13 14:13:01', null);
+INSERT INTO t_xt_menu VALUES ('65c489f1-6f86-4d82-a381-45be4dedf09b', '订单状态变更', '59a326f9-31a5-4bb7-b973-e51fe379b48c', 'root,xt,59a326f9-31a5-4bb7-b973-e51fe379b48c,65c489f1-6f86-4d82-a381-45be4dedf09b', '1', '3', null, '1', '2016-10-13 15:51:54', null, null);
+INSERT INTO t_xt_menu VALUES ('6c0167ad-89da-4857-865e-54c7fe8dde4c', '基础设置', 'xt', 'root,xt,6c0167ad-89da-4857-865e-54c7fe8dde4c', '', '3', null, '1', '2016-10-13 15:52:17', null, null);
+INSERT INTO t_xt_menu VALUES ('7846b141-65c8-4eb9-9fc5-ae63bb236836', '权限管理', 'xt', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836', '', '9', null, '1', '2016-10-13 14:01:05', '2016-10-13 14:01:05', null);
+INSERT INTO t_xt_menu VALUES ('80cbe605-3dc6-445b-a79d-5d20f404cb2f', '订单查询', '59a326f9-31a5-4bb7-b973-e51fe379b48c', 'root,xt,59a326f9-31a5-4bb7-b973-e51fe379b48c,80cbe605-3dc6-445b-a79d-5d20f404cb2f', '1', '1', null, '1', '2016-10-13 14:13:50', '2016-10-13 15:51:16', null);
+INSERT INTO t_xt_menu VALUES ('9779cbff-cb36-4598-aaab-f9be42349c74', '商品管理', 'xt', 'root,xt,9779cbff-cb36-4598-aaab-f9be42349c74', '', '1', null, '1', '2016-10-13 14:14:57', '2016-10-13 15:36:13', null);
+INSERT INTO t_xt_menu VALUES ('ab88f2b9-d108-4f8b-9d8a-c43181c62ae9', '字典管理', '6c0167ad-89da-4857-865e-54c7fe8dde4c', 'root,xt,6c0167ad-89da-4857-865e-54c7fe8dde4c,ab88f2b9-d108-4f8b-9d8a-c43181c62ae9', '1', '1', null, '1', '2016-10-13 15:52:44', null, null);
+INSERT INTO t_xt_menu VALUES ('afa5485d-5d1b-45fb-8d8d-57b7a83fbbe5', '操作日志查询', '7846b141-65c8-4eb9-9fc5-ae63bb236836', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,afa5485d-5d1b-45fb-8d8d-57b7a83fbbe5', '/view/log/log.jsp', '6', null, '1', '2016-10-13 14:15:31', '2016-10-13 15:20:23', null);
+INSERT INTO t_xt_menu VALUES ('b782816d-cb7e-40ce-beab-949d6d7b8512', '角色菜单管理', 'ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,ca795db5-52ce-4fc8-a02d-ea0da2adb8b1,b782816d-cb7e-40ce-beab-949d6d7b8512', '/view/system/role_menu_config.jsp', '5', 'tab', '1', '2016-10-13 14:01:05', '2016-10-13 14:01:05', '/images/logos/jiaosecaidanguanli.png');
+INSERT INTO t_xt_menu VALUES ('ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', '人员权限管理', '7846b141-65c8-4eb9-9fc5-ae63bb236836', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', '', '99', null, '1', '2016-10-13 14:01:05', '2016-10-13 15:20:17', null);
+INSERT INTO t_xt_menu VALUES ('de21e498-6d9e-47d1-b724-0205263609fd', '操作角色人员管理', '7846b141-65c8-4eb9-9fc5-ae63bb236836', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,de21e498-6d9e-47d1-b724-0205263609fd', '/view/system/role_user_config.jsp', '5', null, '1', '2016-10-13 15:33:59', '2016-10-13 15:34:07', null);
+INSERT INTO t_xt_menu VALUES ('e40ec219-da7b-441f-9f41-cd95aa79e874', '物流信息录入', '59a326f9-31a5-4bb7-b973-e51fe379b48c', 'root,xt,59a326f9-31a5-4bb7-b973-e51fe379b48c,e40ec219-da7b-441f-9f41-cd95aa79e874', '1', '2', null, '1', '2016-10-13 15:51:26', '2016-10-13 15:51:29', null);
+INSERT INTO t_xt_menu VALUES ('e9f55cad-2593-427c-9427-48ebeee935cf', '角色人员管理', 'ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,ca795db5-52ce-4fc8-a02d-ea0da2adb8b1,e9f55cad-2593-427c-9427-48ebeee935cf', '/view/system/role_user_config.jsp', '6', 'tab', '1', '2016-10-13 14:01:05', '2016-10-13 14:01:05', '/images/logos/jiaoserenyuanguanli.png');
+INSERT INTO t_xt_menu VALUES ('f4e5a984-a02e-4c12-b903-3801d6d8e3c8', '操作人员管理', '7846b141-65c8-4eb9-9fc5-ae63bb236836', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,f4e5a984-a02e-4c12-b903-3801d6d8e3c8', '/view/system/user.jsp', '2', null, '1', '2016-10-13 15:19:23', '2016-10-13 15:32:58', null);
+INSERT INTO t_xt_menu VALUES ('fa8b8df9-2559-4f48-b1c3-5ee8b21a58f1', '商品录入', '9779cbff-cb36-4598-aaab-f9be42349c74', 'root,xt,9779cbff-cb36-4598-aaab-f9be42349c74,fa8b8df9-2559-4f48-b1c3-5ee8b21a58f1', '1', '1', null, '1', '2016-10-13 14:15:07', '2016-10-13 15:36:36', null);
+INSERT INTO t_xt_menu VALUES ('fd8fc71c-d011-4484-9e39-bedd4bcd7506', '机构管理', 'ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,ca795db5-52ce-4fc8-a02d-ea0da2adb8b1,fd8fc71c-d011-4484-9e39-bedd4bcd7506', '/view/system/orgtree.jsp', '2', 'tab', '1', '2016-10-13 14:01:05', '2016-10-13 14:01:05', '/images/logos/jigouguanli.png');
+INSERT INTO t_xt_menu VALUES ('xt', '系统', 'root', 'root,xt', null, '1', null, '1', '2016-10-13 14:01:05', null, null);
 
-insert into T_XT_ROLE (ROLE_ID, ROLE_NAME, ROLE_TYPE, ROLE_REMARK, ROLE_STATE_VALUE, YX_BJ, LR_SJ, XG_SJ)
-values ('e97b1283-8fc2-44d5-9627-18795097df31', '系统管理员', '0', null, null, '1', now(),now());
-insert into T_XT_ROLE (ROLE_ID, ROLE_NAME, ROLE_TYPE, ROLE_REMARK, ROLE_STATE_VALUE, YX_BJ, LR_SJ, XG_SJ)
-values ('7ca85c1b-d710-4eb7-b284-49f607fdd586', '普通用户', '0', '普通用户', null, '1', now(),now());
-commit;
+DROP TABLE IF EXISTS t_xt_message;
+CREATE TABLE t_xt_message (
+  ID varchar(36) NOT NULL,
+  BATCH_ID varchar(36) DEFAULT NULL,
+  REPLY_MESSAGE_ID varchar(36) DEFAULT NULL,
+  TO_USER_ID varchar(36) NOT NULL,
+  TITLE varchar(36) NOT NULL,
+  MESSAGE varchar(4000) NOT NULL,
+  MESSAGE_TYPE char(1) NOT NULL,
+  MESSAGE_STATUS int(11) NOT NULL DEFAULT '0',
+  MESSAGE_LEVEL int(11) NOT NULL,
+  URL varchar(1000) DEFAULT NULL,
+  CREATE_USER_ID varchar(36) NOT NULL,
+  FLAG char(1) DEFAULT '1',
+  CREATE_TIME datetime DEFAULT NULL,
+  UPDATE_TIME datetime DEFAULT NULL,
+  PRIMARY KEY (ID)
+);
 
-insert into T_XT_ROLE_MENU (ROLE_ID, MENU_ID, YX_BJ, LR_SJ, XG_SJ)
-values ('7ca85c1b-d710-4eb7-b284-49f607fdd586', 'xt', '1', now(), null);
-insert into T_XT_ROLE_MENU (ROLE_ID, MENU_ID, YX_BJ, LR_SJ, XG_SJ)
-values ('7ca85c1b-d710-4eb7-b284-49f607fdd586', '7846b141-65c8-4eb9-9fc5-ae63bb236836', '1', now(), null);
-insert into T_XT_ROLE_MENU (ROLE_ID, MENU_ID, YX_BJ, LR_SJ, XG_SJ)
-values ('7ca85c1b-d710-4eb7-b284-49f607fdd586', 'ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', '1', now(), null);
-insert into T_XT_ROLE_MENU (ROLE_ID, MENU_ID, YX_BJ, LR_SJ, XG_SJ)
-values ('7ca85c1b-d710-4eb7-b284-49f607fdd586', '48d1dc9a-e401-417e-91fe-2bd7baab78c8', '1', now(), null);
-insert into T_XT_ROLE_MENU (ROLE_ID, MENU_ID, YX_BJ, LR_SJ, XG_SJ)
-values ('7ca85c1b-d710-4eb7-b284-49f607fdd586', 'fd8fc71c-d011-4484-9e39-bedd4bcd7506', '1', now(), null);
-insert into T_XT_ROLE_MENU (ROLE_ID, MENU_ID, YX_BJ, LR_SJ, XG_SJ)
-values ('7ca85c1b-d710-4eb7-b284-49f607fdd586', '0ff033aa-51fe-4600-a113-d771a03f08fa', '1', now(), null);
-insert into T_XT_ROLE_MENU (ROLE_ID, MENU_ID, YX_BJ, LR_SJ, XG_SJ)
-values ('7ca85c1b-d710-4eb7-b284-49f607fdd586', '2456aacc-2776-49ad-b8ce-b7a893703033', '1', now(), null);
-insert into T_XT_ROLE_MENU (ROLE_ID, MENU_ID, YX_BJ, LR_SJ, XG_SJ)
-values ('7ca85c1b-d710-4eb7-b284-49f607fdd586', 'b782816d-cb7e-40ce-beab-949d6d7b8512', '1', now(), null);
-insert into T_XT_ROLE_MENU (ROLE_ID, MENU_ID, YX_BJ, LR_SJ, XG_SJ)
-values ('7ca85c1b-d710-4eb7-b284-49f607fdd586', 'e9f55cad-2593-427c-9427-48ebeee935cf', '1', now(), null);
-insert into T_XT_ROLE_MENU (ROLE_ID, MENU_ID, YX_BJ, LR_SJ, XG_SJ)
-values ('e97b1283-8fc2-44d5-9627-18795097df31', 'xt', '1', now(), null);
-insert into T_XT_ROLE_MENU (ROLE_ID, MENU_ID, YX_BJ, LR_SJ, XG_SJ)
-values ('e97b1283-8fc2-44d5-9627-18795097df31', '7846b141-65c8-4eb9-9fc5-ae63bb236836', '1', now(), null);
-insert into T_XT_ROLE_MENU (ROLE_ID, MENU_ID, YX_BJ, LR_SJ, XG_SJ)
-values ('e97b1283-8fc2-44d5-9627-18795097df31', 'ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', '1', now(), null);
-insert into T_XT_ROLE_MENU (ROLE_ID, MENU_ID, YX_BJ, LR_SJ, XG_SJ)
-values ('e97b1283-8fc2-44d5-9627-18795097df31', '48d1dc9a-e401-417e-91fe-2bd7baab78c8', '1', now(), null);
-insert into T_XT_ROLE_MENU (ROLE_ID, MENU_ID, YX_BJ, LR_SJ, XG_SJ)
-values ('e97b1283-8fc2-44d5-9627-18795097df31', 'fd8fc71c-d011-4484-9e39-bedd4bcd7506', '1', now(), null);
-insert into T_XT_ROLE_MENU (ROLE_ID, MENU_ID, YX_BJ, LR_SJ, XG_SJ)
-values ('e97b1283-8fc2-44d5-9627-18795097df31', '0ff033aa-51fe-4600-a113-d771a03f08fa', '1', now(), null);
-insert into T_XT_ROLE_MENU (ROLE_ID, MENU_ID, YX_BJ, LR_SJ, XG_SJ)
-values ('e97b1283-8fc2-44d5-9627-18795097df31', '2456aacc-2776-49ad-b8ce-b7a893703033', '1', now(), null);
-insert into T_XT_ROLE_MENU (ROLE_ID, MENU_ID, YX_BJ, LR_SJ, XG_SJ)
-values ('e97b1283-8fc2-44d5-9627-18795097df31', 'b782816d-cb7e-40ce-beab-949d6d7b8512', '1', now(), null);
-insert into T_XT_ROLE_MENU (ROLE_ID, MENU_ID, YX_BJ, LR_SJ, XG_SJ)
-values ('e97b1283-8fc2-44d5-9627-18795097df31', 'e9f55cad-2593-427c-9427-48ebeee935cf', '1', now(), null);
-commit;
+DROP TABLE IF EXISTS t_xt_org;
+CREATE TABLE t_xt_org (
+  ID varchar(36) NOT NULL,
+  ORG_ID varchar(50) DEFAULT NULL,
+  ORG_NAME varchar(500) DEFAULT NULL,
+  PARENT_ORG_ID varchar(36) DEFAULT NULL,
+  ORDER_ int(11) DEFAULT NULL,
+  ROOT char(1) DEFAULT NULL,
+  ORG_CODE varchar(36) DEFAULT NULL,
+  SHORT_NAME varchar(500) DEFAULT NULL,
+  ORG_PATH varchar(1000) DEFAULT NULL,
+  ORG_LEVEL int(11) DEFAULT NULL,
+  PRIMARY KEY (ID)
+);
 
-insert into T_XT_ROLE_USER (ROLE_ID, U_ID, YX_BJ, LR_SJ, XG_SJ)
-values ('e97b1283-8fc2-44d5-9627-18795097df31', 'admin', '1', now(), null);
-insert into T_XT_ROLE_USER (ROLE_ID, U_ID, YX_BJ, LR_SJ, XG_SJ)
-values ('7ca85c1b-d710-4eb7-b284-49f607fdd586', 'admin', '1', now(),now());
-commit;
+INSERT INTO t_xt_org VALUES ('097e835f-52cd-412a-984b-8c8b06e0fcca', '001002', '人力资源部', '001', '2', null, null, '人力资源部', '企业1/人力资源部', '2');
+INSERT INTO t_xt_org VALUES ('81277dc5-6c4b-4246-97b9-47aafcb3d573', '001', '所有机构', 'root', '1', '1', null, '所有机构', '所有机构', '0');
+INSERT INTO t_xt_org VALUES ('9ee3fed0-d4cb-414b-959b-e381dc0f18b5', '001001', '办公室', '001', '1', null, null, '办公室', '企业1/办公室', '2');
 
-insert into T_XT_USER (U_ID, U_PWD, U_NAME, U_REMARK, YX_BJ, LR_SJ, XG_SJ, ORDER_)
-values ('admin', '123456', '系统管理员', null, '1', now(), null, null);
-commit;
+DROP TABLE IF EXISTS t_xt_position;
+CREATE TABLE t_xt_position (
+  POSITION_ID varchar(36) NOT NULL,
+  POSITION_NAME varchar(200) DEFAULT NULL,
+  POSITION_DESC varchar(200) DEFAULT NULL,
+  PRIMARY KEY (POSITION_ID)
+);
+
+DROP TABLE IF EXISTS t_xt_role;
+CREATE TABLE t_xt_role (
+  ROLE_ID varchar(36) NOT NULL,
+  ROLE_NAME varchar(200) NOT NULL,
+  ROLE_TYPE char(1) NOT NULL,
+  ROLE_REMARK varchar(2000) DEFAULT NULL,
+  ROLE_STATE_VALUE varchar(12) DEFAULT NULL,
+  YX_BJ char(1) DEFAULT '1',
+  LR_SJ datetime NOT NULL,
+  XG_SJ datetime DEFAULT NULL,
+  PRIMARY KEY (ROLE_ID)
+);
+
+INSERT INTO t_xt_role VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', '普通用户', '0', '普通用户', null, '1', '2016-10-13 14:01:06', '2016-10-13 14:01:06');
+INSERT INTO t_xt_role VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '系统管理员', '0', null, null, '1', '2016-10-13 14:01:06', '2016-10-13 14:01:06');
+
+DROP TABLE IF EXISTS t_xt_role_menu;
+CREATE TABLE t_xt_role_menu (
+  ROLE_ID varchar(36) NOT NULL,
+  MENU_ID varchar(36) NOT NULL,
+  YX_BJ char(1) DEFAULT '1',
+  LR_SJ datetime NOT NULL,
+  XG_SJ datetime DEFAULT NULL,
+  PRIMARY KEY (ROLE_ID,MENU_ID)
+);
+
+INSERT INTO t_xt_role_menu VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', '4995b0ca-2523-4fcb-a886-89c515b08a39', '1', '2016-10-13 16:15:37', null);
+INSERT INTO t_xt_role_menu VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', '59a326f9-31a5-4bb7-b973-e51fe379b48c', '1', '2016-10-13 16:15:37', null);
+INSERT INTO t_xt_role_menu VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', '65c489f1-6f86-4d82-a381-45be4dedf09b', '1', '2016-10-13 16:15:37', null);
+INSERT INTO t_xt_role_menu VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', '6c0167ad-89da-4857-865e-54c7fe8dde4c', '1', '2016-10-13 16:15:37', null);
+INSERT INTO t_xt_role_menu VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', '80cbe605-3dc6-445b-a79d-5d20f404cb2f', '1', '2016-10-13 16:15:37', null);
+INSERT INTO t_xt_role_menu VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', '9779cbff-cb36-4598-aaab-f9be42349c74', '1', '2016-10-13 16:15:37', null);
+INSERT INTO t_xt_role_menu VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', 'ab88f2b9-d108-4f8b-9d8a-c43181c62ae9', '1', '2016-10-13 16:15:37', null);
+INSERT INTO t_xt_role_menu VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', 'e40ec219-da7b-441f-9f41-cd95aa79e874', '1', '2016-10-13 16:15:37', null);
+INSERT INTO t_xt_role_menu VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', 'fa8b8df9-2559-4f48-b1c3-5ee8b21a58f1', '1', '2016-10-13 16:15:37', null);
+INSERT INTO t_xt_role_menu VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', 'xt', '1', '2016-10-13 16:15:37', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '20f22cac-3654-4a55-8e87-751e3329d54e', '1', '2016-10-14 14:14:42', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '310628ba-3e28-4766-a187-ad732544b2a9', '1', '2016-10-14 14:14:42', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '32cc9f12-65c1-4f0d-bcc2-6bbc43190dcf', '1', '2016-10-14 14:14:42', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '4995b0ca-2523-4fcb-a886-89c515b08a39', '1', '2016-10-14 14:14:42', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '53fc11af-d8f7-49bc-a35a-98df87cc987e', '1', '2016-10-14 14:14:42', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '59a326f9-31a5-4bb7-b973-e51fe379b48c', '1', '2016-10-14 14:14:42', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '65c489f1-6f86-4d82-a381-45be4dedf09b', '1', '2016-10-14 14:14:42', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '6c0167ad-89da-4857-865e-54c7fe8dde4c', '1', '2016-10-14 14:14:42', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '7846b141-65c8-4eb9-9fc5-ae63bb236836', '1', '2016-10-14 14:14:42', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '80cbe605-3dc6-445b-a79d-5d20f404cb2f', '1', '2016-10-14 14:14:42', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '9779cbff-cb36-4598-aaab-f9be42349c74', '1', '2016-10-14 14:14:42', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', 'ab88f2b9-d108-4f8b-9d8a-c43181c62ae9', '1', '2016-10-14 14:14:42', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', 'afa5485d-5d1b-45fb-8d8d-57b7a83fbbe5', '1', '2016-10-14 14:14:42', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', 'de21e498-6d9e-47d1-b724-0205263609fd', '1', '2016-10-14 14:14:42', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', 'e40ec219-da7b-441f-9f41-cd95aa79e874', '1', '2016-10-14 14:14:42', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', 'f4e5a984-a02e-4c12-b903-3801d6d8e3c8', '1', '2016-10-14 14:14:42', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', 'fa8b8df9-2559-4f48-b1c3-5ee8b21a58f1', '1', '2016-10-14 14:14:42', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', 'xt', '1', '2016-10-14 14:14:42', null);
+
+DROP TABLE IF EXISTS t_xt_role_user;
+CREATE TABLE t_xt_role_user (
+  ROLE_ID varchar(36) NOT NULL,
+  U_ID varchar(36) NOT NULL,
+  YX_BJ char(1) DEFAULT '1',
+  LR_SJ datetime NOT NULL,
+  XG_SJ datetime DEFAULT NULL,
+  PRIMARY KEY (ROLE_ID,U_ID)
+);
+
+INSERT INTO t_xt_role_user VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', 'admin', '0', '2016-10-13 14:01:08', '2016-10-13 16:15:21');
+INSERT INTO t_xt_role_user VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', 'admin', '1', '2016-10-13 14:01:08', null);
+
+DROP TABLE IF EXISTS t_xt_user;
+CREATE TABLE t_xt_user (
+  U_ID varchar(36) NOT NULL,
+  U_PWD varchar(36) DEFAULT NULL,
+  U_NAME varchar(200) DEFAULT NULL,
+  U_REMARK varchar(2000) DEFAULT NULL,
+  YX_BJ char(1) DEFAULT '1',
+  LR_SJ datetime NOT NULL,
+  XG_SJ datetime DEFAULT NULL,
+  ORDER_ int(11) DEFAULT NULL,
+  PRIMARY KEY (U_ID)
+);
+
+INSERT INTO t_xt_user VALUES ('admin', '123456', '系统管理员', null, '1', '2016-10-13 14:01:08', null, null);
+
+DROP TABLE IF EXISTS t_xt_workday;
+CREATE TABLE t_xt_workday (
+  DAY varchar(10) NOT NULL,
+  WORKDAY char(1) DEFAULT NULL,
+  REMARK varchar(200) DEFAULT NULL,
+  FLAG char(1) DEFAULT '1',
+  CREATE_TIME datetime DEFAULT NULL,
+  UPDATE_TIME datetime DEFAULT NULL,
+  PRIMARY KEY (DAY)
+);

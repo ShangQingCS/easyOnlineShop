@@ -217,6 +217,7 @@ public class DBUtil {
         	query.setFirstResult(firstResult);
         	query.setMaxResults(pageSize);
         }
+        query.setResultTransformer(resultTransformer==null?RESULT_TRANSFORMER_HASHMAP:resultTransformer);
         return query.list();
 	}
 	

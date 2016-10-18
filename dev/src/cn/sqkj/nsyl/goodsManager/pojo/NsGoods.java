@@ -1,14 +1,12 @@
-package cn.sqkj.nsyl.db.po;
-// default package
-
-/**
- * NsGoods entity. @author MyEclipse Persistence Tools
- */
+package cn.sqkj.nsyl.goodsManager.pojo;
 
 public class NsGoods implements java.io.Serializable {
 
-	// Fields
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4533970991297808751L;
+	
 	private Long id;
 	private String gname;
 	private Double price;
@@ -20,18 +18,13 @@ public class NsGoods implements java.io.Serializable {
 	private Integer isuser;
 	private String gfullname;
 
-	// Constructors
-
-	/** default constructor */
 	public NsGoods() {
 	}
 
-	/** minimal constructor */
 	public NsGoods(Long id) {
 		this.id = id;
 	}
 
-	/** full constructor */
 	public NsGoods(Long id, String gname, Double price, Long category,
 			Long kind, Long brand, String detail, String goodimglist,
 			Integer isuser, String gfullname) {
@@ -46,8 +39,6 @@ public class NsGoods implements java.io.Serializable {
 		this.isuser = isuser;
 		this.gfullname = gfullname;
 	}
-
-	// Property accessors
 
 	public Long getId() {
 		return this.id;

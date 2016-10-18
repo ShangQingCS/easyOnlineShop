@@ -287,7 +287,11 @@ public class UserAction extends FenyeBase {
 			TXtUser user = (TXtUser)db.get(TXtUser.class, uid);
 			HashMap params = new HashMap();
 			params.put("userId", uid);
-			TXtEmp emp = (TXtEmp)db.queryByPojo(TXtEmp.class, params).get(0); 
+			List<TXtEmp> emps = db.queryByPojo(TXtEmp.class, params);
+			TXtEmp emp = null;
+			if(emps!=null && !emps.isEmpty()) {
+				emp = (TXtEmp) emps.get(0);
+			}
 			
 			if("admin".equals(uid)){
 				this.message = "管理员不可删除";
@@ -303,9 +307,11 @@ public class UserAction extends FenyeBase {
 				db.update(ru);
 			}
 			
-			emp.setFlag("0");
+			if(emp!=null) {
+				emp.setFlag("0");
+				db.update(emp);
+			}
 			user.setYxBj("0");
-			db.update(emp);
 			db.update(user);
 		}
 		this.message="success";

@@ -1,34 +1,31 @@
 package framework.action;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.xwork.StringUtils;
+import com.opensymphony.xwork2.Action;
 
 import framework.bean.UserMsg;
 import framework.config.SysDict;
 import framework.db.DBUtil;
+import framework.db.pojo.TAuditLog;
 import framework.db.pojo.TXtEmp;
 import framework.db.pojo.TXtOrg;
 import framework.db.pojo.TXtRoleUser;
 import framework.db.pojo.TXtUser;
 import framework.helper.RequestHelper;
-
-import com.opensymphony.xwork2.Action;
+import framework.logger.AuditLogger;
 
 @SuppressWarnings("unchecked")
 public class LoginAction {
-	public static final String SQL_USER_MSG = "select * from t_xt_emp where user_id=?";
-	//public static final String SQL_XT_USER_MSG = "select * from t_xt_user where u_id=?";
-	
 	private String code;
 	private TXtUser user;
 	private boolean success;
 	private String msg;
 	private String pcUserInfo;
 	private String verifyCode;
+	private AuditLogger logger = AuditLogger.getLogger();
 	
 	/**
 	 * 用户退出登录 清理session
@@ -63,6 +60,8 @@ public class LoginAction {
 				usermsg.setUPwd("");
 			}
 		}
+		TAuditLog message = new TAuditLog(user.getUId(), "登录成功！");
+		logger.info(message);
 		return Action.SUCCESS; 
 	}
 	

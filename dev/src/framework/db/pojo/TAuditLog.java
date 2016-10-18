@@ -4,20 +4,10 @@ import java.util.Date;
 
 /**
  * 审计日志.
- * @author chengqiang.wu
- *
+ * @author yangchaowen
  */
 @SuppressWarnings("serial")
-public class TAuditLog implements  java.io.Serializable{
-	public TAuditLog() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	public TAuditLog(String loginName,String logDetail) {
-		this.loginname = loginName;
-		this.logdetail = logDetail;
-	}
-	
+public class TAuditLog implements java.io.Serializable {
 	private String id;//日志ID
 	private String loginname;//登录名称
 	private String logdetail;//登录详情
@@ -26,6 +16,15 @@ public class TAuditLog implements  java.io.Serializable{
 	private Date createdate;//创建日期
     private Date startdate;//起始时间
     private Date enddate;//终止时间
+    
+    public TAuditLog() {
+	}
+	
+	public TAuditLog(String loginName,String logDetail) {
+		this.loginname = loginName;
+		this.logdetail = logDetail;
+	}
+	
 	public String getId() {
 		return id;
 	}

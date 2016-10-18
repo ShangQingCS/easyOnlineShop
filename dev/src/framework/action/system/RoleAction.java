@@ -16,7 +16,8 @@ import framework.db.pojo.TXtRoleMenu;
 import framework.db.pojo.TXtRoleMenuId;
 import framework.util.DateUtils;
 
-public class RoleAction  extends FenyeBase{
+@SuppressWarnings({"unchecked","rawtypes"})
+public class RoleAction extends FenyeBase {
 	private TXtRole role;
 	private String[] treeIds;
 	private String message;

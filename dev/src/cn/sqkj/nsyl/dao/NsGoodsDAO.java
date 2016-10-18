@@ -9,7 +9,7 @@ import org.hibernate.LockMode;
 import org.hibernate.Query;
 import org.hibernate.criterion.Example;
 
-import cn.sqkj.nsyl.db.po.NsGoods;
+import cn.sqkj.nsyl.goodsManager.pojo.NsGoods;
 
 /**
  * A data access object (DAO) providing persistence and search support for

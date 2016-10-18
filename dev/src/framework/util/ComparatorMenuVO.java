@@ -10,10 +10,13 @@ public class ComparatorMenuVO implements Comparator<Object> {
 		Map item_1 = (Map) arg1;
 		int i1 = Integer.parseInt(((Map)item_1.get("attributes")).get("pxXh").toString());
 		int i0 = Integer.parseInt(((Map)item_0.get("attributes")).get("pxXh").toString());
-		if (i1 > i0) {
+		//jdk1.6
+		/*if (i1 > i0) {
 			return 0;
 		} else {
 			return 1;
-		}
+		}*/
+		//jdk1。7
+		return i0-i1;
 	}
 }

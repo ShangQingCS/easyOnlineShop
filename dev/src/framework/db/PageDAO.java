@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import framework.bean.PageBean;
 
-@SuppressWarnings("unchecked")
+@SuppressWarnings({"unchecked","rawtypes"})
 @Component("pageDAO")
 public class PageDAO {
 	protected List query(String sql, PageBean pageBean) {
@@ -24,6 +24,18 @@ public class PageDAO {
 		int startRowIndex = pageBean.getPage() * pageBean.getRows() - pageBean.getRows();
 		//查询数据并返回
 		List resultData = db.queryBySQL(sql, params, startRowIndex, pageBean.getRows());
+		return resultData;
+	}
+	
+	protected List queryByHql(String hql, Map params, PageBean pageBean) {
+		return queryByHql(hql, params, DBUtil.getDBUtilByRequest(), pageBean);
+	}
+	
+	protected List queryByHql(String hql, Map params, DBUtil db, PageBean pageBean) {
+		//计算起始行
+		int startRowIndex = pageBean.getPage() * pageBean.getRows() - pageBean.getRows();
+		//查询数据并返回
+		List resultData = db.queryByHql(hql, params, startRowIndex, pageBean.getRows());
 		return resultData;
 	}
 

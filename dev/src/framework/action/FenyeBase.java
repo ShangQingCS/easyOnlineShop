@@ -1,6 +1,5 @@
 package framework.action;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +8,7 @@ import org.apache.struts2.json.annotations.JSON;
 
 import framework.db.DBUtil;
 
-
+@SuppressWarnings({"unchecked","rawtypes"})
 public class FenyeBase {
 	protected int page = 1;//当前页数
 	protected int total;//返回数据行数
@@ -22,15 +21,19 @@ public class FenyeBase {
 		this.dataRows = db.queryBySQL(sql, params, firstResult, this.getRowCount());
 		return dataRows;
 	}
+	
 	public List query(String sql, List params ){
 		return query(sql, params, DBUtil.getDBUtilByRequest());
 	}
+	
 	public List query(String sql){
 		return query(sql, DBUtil.getDBUtilByRequest(), "");
 	}
+	
 	public List query(String sql,String addSql){
 		return query(sql, DBUtil.getDBUtilByRequest(), addSql);
 	}
+	
 	public List query(String sql, DBUtil db, String addSql){
 		StringBuffer plsql = new StringBuffer(sql);
 		List params = new ArrayList(queryParams==null?0:queryParams.size());
@@ -49,15 +52,19 @@ public class FenyeBase {
 	public int getPage() {
 		return page;
 	}
+	
 	public void setPage(int page) {
 		this.page = page;
 	}
+	
 	public int getTotal() {
 		return total;
 	}
+	
 	public void setTotal(int total) {
 		this.total = total;
 	}
+	
 	public void setRows(int rows) {
 		this.rows = rows;
 	}
@@ -82,8 +89,4 @@ public class FenyeBase {
 	public void setQueryParams(Map<String, String> queryParams) {
 		this.queryParams = queryParams;
 	}
-
-	
-
-	
 }

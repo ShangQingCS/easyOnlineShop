@@ -159,6 +159,23 @@ CREATE TABLE ns_goods (
 -- Records of ns_goods
 -- ----------------------------
 
+DROP TABLE IF EXISTS ns_goods_category;
+CREATE TABLE ns_goods_category (
+	id INT(11) NOT NULL AUTO_INCREMENT,
+	cate_name VARCHAR(100) NULL DEFAULT NULL,
+	desc_ VARCHAR(100) NULL DEFAULT NULL,
+	cate_order INT(11) NULL DEFAULT NULL,
+	level INT(11) NULL DEFAULT NULL,
+	logo VARCHAR(100) NULL DEFAULT NULL,
+	url VARCHAR(100) NULL DEFAULT NULL,
+	isuser CHAR(1) NULL DEFAULT '1',
+	parent_id INT(11) NULL DEFAULT NULL,
+	create_time DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+	update_time DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+	flag CHAR(1) NULL DEFAULT '0',
+	PRIMARY KEY (id)
+);
+
 -- ----------------------------
 -- Table structure for ns_order
 -- ----------------------------

@@ -176,6 +176,8 @@ CREATE TABLE ns_goods_category (
 	PRIMARY KEY (id)
 );
 
+INSERT INTO `ns_goods_category` VALUES ('1', '全部商品分类', '全部商品分类', '0', '0', null, null, '0', '-1', now(), '0');
+
 -- ----------------------------
 -- Table structure for ns_order
 -- ----------------------------
@@ -441,6 +443,7 @@ CREATE TABLE t_xt_menu (
 INSERT INTO t_xt_menu VALUES ('007ac06f-aadc-4eb5-9af9-d085ad56aafc', '人工退单管理', '59a326f9-31a5-4bb7-b973-e51fe379b48c', 'root,xt,59a326f9-31a5-4bb7-b973-e51fe379b48c,007ac06f-aadc-4eb5-9af9-d085ad56aafc', '1', '4', null, '1', '2016-10-18 12:21:54', null, null);
 INSERT INTO t_xt_menu VALUES ('0ff033aa-51fe-4600-a113-d771a03f08fa', '菜单管理', 'ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,ca795db5-52ce-4fc8-a02d-ea0da2adb8b1,0ff033aa-51fe-4600-a113-d771a03f08fa', '/view/system/tree.jsp', '3', 'tab', '1', '2016-10-13 14:01:05', '2016-10-13 14:01:05', '/images/logos/caidanguanli.png');
 INSERT INTO t_xt_menu VALUES ('115e3d38-c04d-43b7-bbd6-1f970783724c', '广告管理', 'xt', 'root,xt,115e3d38-c04d-43b7-bbd6-1f970783724c', '', '4', null, '1', '2016-10-18 12:22:54', null, null);
+INSERT INTO `t_xt_menu` VALUES ('1893b8a1-6fd6-4ec1-bc28-a9c67b1e4a01', '商品类别维护', '9779cbff-cb36-4598-aaab-f9be42349c74', 'root,xt,9779cbff-cb36-4598-aaab-f9be42349c74,1893b8a1-6fd6-4ec1-bc28-a9c67b1e4a01', '/view/goodsManager/goodsCategory.jsp', '4', null, '1', '2016-10-19 15:58:07', null, null);
 INSERT INTO t_xt_menu VALUES ('2456aacc-2776-49ad-b8ce-b7a893703033', '角色管理', 'ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,ca795db5-52ce-4fc8-a02d-ea0da2adb8b1,2456aacc-2776-49ad-b8ce-b7a893703033', '/view/system/role.jsp', '4', 'tab', '1', '2016-10-13 14:01:05', '2016-10-13 14:01:05', '/images/logos/jiaoseguanli.png');
 INSERT INTO t_xt_menu VALUES ('310628ba-3e28-4766-a187-ad732544b2a9', '操作角色管理', '7846b141-65c8-4eb9-9fc5-ae63bb236836', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,310628ba-3e28-4766-a187-ad732544b2a9', '/view/system/role.jsp', '4', null, '1', '2016-10-13 15:20:06', '2016-10-13 15:25:20', null);
 INSERT INTO t_xt_menu VALUES ('32cc9f12-65c1-4f0d-bcc2-6bbc43190dcf', '系统菜单管理', '7846b141-65c8-4eb9-9fc5-ae63bb236836', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,32cc9f12-65c1-4f0d-bcc2-6bbc43190dcf', '/view/system/tree.jsp', '1', null, '1', '2016-10-13 15:24:40', '2016-10-13 15:32:53', null);

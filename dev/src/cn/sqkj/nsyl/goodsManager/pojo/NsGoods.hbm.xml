@@ -35,6 +35,15 @@
         <property name="gfullname" type="java.lang.String">
             <column name="Gfullname" length="150" />
         </property>
+        <property name="storenumb" type="java.lang.Integer">
+            <column name="storenumb" length="11" />
+        </property>
+        <property name="goodimg" type="java.lang.String">
+            <column name="goodimg" length="60" />
+        </property>
+        <property name="freazes" type="java.lang.Integer">
+            <column name="freazes" length="11" />
+        </property>
     </class>
     <!--  配置HQ语句L查询 -->
     <query name="goods_query">

@@ -17,6 +17,9 @@ public class NsGoods implements java.io.Serializable {
 	private String goodimglist;
 	private Integer isuser;
 	private String gfullname;
+	private Integer storenumb;
+	private String goodimg;
+	private Integer freazes;
 
 	public NsGoods() {
 	}
@@ -118,6 +121,30 @@ public class NsGoods implements java.io.Serializable {
 
 	public void setGfullname(String gfullname) {
 		this.gfullname = gfullname;
+	}
+
+	public Integer getStorenumb() {
+		return storenumb;
+	}
+
+	public void setStorenumb(Integer storenumb) {
+		this.storenumb = storenumb;
+	}
+
+	public String getGoodimg() {
+		return goodimg;
+	}
+
+	public void setGoodimg(String goodimg) {
+		this.goodimg = goodimg;
+	}
+
+	public Integer getFreazes() {
+		return freazes;
+	}
+
+	public void setFreazes(Integer freazes) {
+		this.freazes = freazes;
 	}
 
 }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="cn.sqkj.nsyl.goodsManager.pojo.NsGoodsCategory" table="ns_goods_category">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="cateName" type="java.lang.String">
+            <column name="cate_name" length="100" />
+        </property>
+        <property name="desc_" type="java.lang.String">
+            <column name="desc_" length="100" />
+        </property>
+        <property name="cateOrder" type="java.lang.Integer">
+            <column name="cate_order" length="11" />
+        </property>
+        <property name="level" type="java.lang.Integer">
+            <column name="level" length="11" />
+        </property>
+        <property name="logo" type="java.lang.String">
+            <column name="logo" length="100" />
+        </property>
+        <property name="url" type="java.lang.String">
+            <column name="url" length="100" />
+        </property>
+        <property name="isuser" type="java.lang.String">
+            <column name="isuser" length="1" />
+        </property>
+        <property name="parentId" type="java.lang.Integer">
+            <column name="parent_id" length="11" />
+        </property>
+        <property name="createTime" type="java.util.Date">
+            <column name="create_time" />
+        </property>
+        <property name="updateTime" type="java.util.Date">
+            <column name="update_time" />
+        </property>
+        <property name="flag" type="java.lang.String">
+            <column name="flag" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

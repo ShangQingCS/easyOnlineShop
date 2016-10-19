@@ -1,3 +1,21 @@
+/*
+Navicat MySQL Data Transfer
+
+Source Server         : localhost_57
+Source Server Version : 50716
+Source Host           : localhost:3306
+Source Database       : dev
+
+Target Server Type    : MYSQL
+Target Server Version : 50716
+File Encoding         : 65001
+
+Date: 2016-10-19 11:56:39
+*/
+
+-- ----------------------------
+-- Table structure for ns_address
+-- ----------------------------
 DROP TABLE IF EXISTS ns_address;
 CREATE TABLE ns_address (
   id bigint(20) NOT NULL,
@@ -7,11 +25,18 @@ CREATE TABLE ns_address (
   post varchar(10) DEFAULT NULL,
   phonenumb varchar(20) DEFAULT NULL,
   telnumb varchar(20) DEFAULT NULL,
-  isuse int(11) NOT NULL DEFAULT '1',
+  isuse int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (id),
   UNIQUE KEY id_UNIQUE (id)
 );
 
+-- ----------------------------
+-- Records of ns_address
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for ns_advertise
+-- ----------------------------
 DROP TABLE IF EXISTS ns_advertise;
 CREATE TABLE ns_advertise (
   id bigint(20) NOT NULL,
@@ -23,10 +48,18 @@ CREATE TABLE ns_advertise (
   ordernumb int(11) DEFAULT '0',
   type int(11) DEFAULT NULL,
   isuse int(11) DEFAULT NULL,
+  kind bigint(20) DEFAULT NULL,
   PRIMARY KEY (id),
   UNIQUE KEY id_UNIQUE (id)
 );
 
+-- ----------------------------
+-- Records of ns_advertise
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for ns_cart
+-- ----------------------------
 DROP TABLE IF EXISTS ns_cart;
 CREATE TABLE ns_cart (
   userid bigint(20) NOT NULL,
@@ -34,10 +67,18 @@ CREATE TABLE ns_cart (
   count int(11) DEFAULT '1',
   price decimal(10,2) DEFAULT '0.00',
   id bigint(20) NOT NULL,
+  create_time datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
   UNIQUE KEY id_UNIQUE (id)
 );
 
+-- ----------------------------
+-- Records of ns_cart
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for ns_comment
+-- ----------------------------
 DROP TABLE IF EXISTS ns_comment;
 CREATE TABLE ns_comment (
   id bigint(20) NOT NULL,
@@ -46,10 +87,18 @@ CREATE TABLE ns_comment (
   create_time datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   score int(11) DEFAULT '0',
   userid bigint(20) DEFAULT NULL,
+  ishidden int(11) DEFAULT '0',
   PRIMARY KEY (id),
   UNIQUE KEY id_UNIQUE (id)
 );
 
+-- ----------------------------
+-- Records of ns_comment
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for ns_dictionaries
+-- ----------------------------
 DROP TABLE IF EXISTS ns_dictionaries;
 CREATE TABLE ns_dictionaries (
   id bigint(20) NOT NULL,
@@ -60,6 +109,13 @@ CREATE TABLE ns_dictionaries (
   UNIQUE KEY id_UNIQUE (id)
 );
 
+-- ----------------------------
+-- Records of ns_dictionaries
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for ns_eventsinfo
+-- ----------------------------
 DROP TABLE IF EXISTS ns_eventsinfo;
 CREATE TABLE ns_eventsinfo (
   id bigint(20) NOT NULL,
@@ -73,9 +129,16 @@ CREATE TABLE ns_eventsinfo (
   UNIQUE KEY id_UNIQUE (id)
 );
 
+-- ----------------------------
+-- Records of ns_eventsinfo
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for ns_goods
+-- ----------------------------
 DROP TABLE IF EXISTS ns_goods;
 CREATE TABLE ns_goods (
-  id bigint(20) NOT NULL AUTO_INCREMENT,
+  id bigint(20) NOT NULL,
   gname varchar(50) DEFAULT NULL,
   price decimal(12,2) DEFAULT NULL,
   category bigint(20) DEFAULT NULL,
@@ -85,9 +148,20 @@ CREATE TABLE ns_goods (
   goodimglist varchar(100) DEFAULT NULL,
   isuser int(11) DEFAULT '1',
   Gfullname varchar(150) DEFAULT NULL,
-  PRIMARY KEY (id)
+  storenumb int(11) DEFAULT '0',
+  goodimg varchar(60) DEFAULT NULL,
+  freazes int(11) DEFAULT '0',
+  PRIMARY KEY (id),
+  UNIQUE KEY id_UNIQUE (id)
 );
 
+-- ----------------------------
+-- Records of ns_goods
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for ns_order
+-- ----------------------------
 DROP TABLE IF EXISTS ns_order;
 CREATE TABLE ns_order (
   id bigint(20) NOT NULL,
@@ -109,15 +183,22 @@ CREATE TABLE ns_order (
   invoice int(11) DEFAULT NULL,
   companyname varchar(200) DEFAULT NULL,
   content varchar(45) DEFAULT NULL,
+  remark varchar(200) DEFAULT NULL,
   PRIMARY KEY (id),
   UNIQUE KEY id_UNIQUE (id)
 );
 
+-- ----------------------------
+-- Records of ns_order
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for ns_order_detail
+-- ----------------------------
 DROP TABLE IF EXISTS ns_order_detail;
 CREATE TABLE ns_order_detail (
   id bigint(20) NOT NULL,
   orderid bigint(20) NOT NULL,
-  userid bigint(20) NOT NULL,
   goodsid bigint(20) NOT NULL,
   count int(11) NOT NULL DEFAULT '1',
   price decimal(10,0) NOT NULL DEFAULT '0',
@@ -125,6 +206,13 @@ CREATE TABLE ns_order_detail (
   UNIQUE KEY id_UNIQUE (id)
 );
 
+-- ----------------------------
+-- Records of ns_order_detail
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for sys_code
+-- ----------------------------
 DROP TABLE IF EXISTS sys_code;
 CREATE TABLE sys_code (
   ID varchar(36) NOT NULL,
@@ -136,17 +224,13 @@ CREATE TABLE sys_code (
   PRIMARY KEY (ID)
 );
 
-DROP TABLE IF EXISTS t_xt_audit_log;
-CREATE TABLE t_xt_audit_log (
-  id int(10) NOT NULL AUTO_INCREMENT,
-  loginname varchar(10) DEFAULT NULL COMMENT '登录名',
-  logdetail varchar(2000) DEFAULT NULL,
-  logsource varchar(200) DEFAULT NULL,
-  ip varchar(30) DEFAULT NULL COMMENT 'IP地址',
-  createdate datetime DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (id)
-);
+-- ----------------------------
+-- Records of sys_code
+-- ----------------------------
 
+-- ----------------------------
+-- Table structure for t_pb_datasource
+-- ----------------------------
 DROP TABLE IF EXISTS t_pb_datasource;
 CREATE TABLE t_pb_datasource (
   ID varchar(36) NOT NULL,
@@ -161,6 +245,13 @@ CREATE TABLE t_pb_datasource (
   PRIMARY KEY (ID)
 );
 
+-- ----------------------------
+-- Records of t_pb_datasource
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for t_pb_uploadfile
+-- ----------------------------
 DROP TABLE IF EXISTS t_pb_uploadfile;
 CREATE TABLE t_pb_uploadfile (
   FILE_ID varchar(36) NOT NULL,
@@ -180,6 +271,31 @@ CREATE TABLE t_pb_uploadfile (
   PRIMARY KEY (FILE_ID)
 );
 
+-- ----------------------------
+-- Records of t_pb_uploadfile
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for t_xt_audit_log
+-- ----------------------------
+DROP TABLE IF EXISTS t_xt_audit_log;
+CREATE TABLE t_xt_audit_log (
+  id int(10) NOT NULL AUTO_INCREMENT,
+  loginname varchar(10) DEFAULT NULL COMMENT '登录名',
+  logdetail varchar(2000) DEFAULT NULL,
+  logsource varchar(200) DEFAULT NULL,
+  ip varchar(30) DEFAULT NULL COMMENT 'IP地址',
+  createdate datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (id)
+);
+
+-- ----------------------------
+-- Records of t_xt_audit_log
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for t_xt_cache_table
+-- ----------------------------
 DROP TABLE IF EXISTS t_xt_cache_table;
 CREATE TABLE t_xt_cache_table (
   ID varchar(36) NOT NULL,
@@ -194,6 +310,13 @@ CREATE TABLE t_xt_cache_table (
   PRIMARY KEY (ID)
 );
 
+-- ----------------------------
+-- Records of t_xt_cache_table
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for t_xt_emp
+-- ----------------------------
 DROP TABLE IF EXISTS t_xt_emp;
 CREATE TABLE t_xt_emp (
   ID varchar(36) NOT NULL,
@@ -216,8 +339,14 @@ CREATE TABLE t_xt_emp (
   PRIMARY KEY (ID)
 );
 
+-- ----------------------------
+-- Records of t_xt_emp
+-- ----------------------------
 INSERT INTO t_xt_emp VALUES ('d6ce7860-a122-41bd-80d7-cb80f437044c', 'admin', '123456', '系统管理员', '81277dc5-6c4b-4246-97b9-47aafcb3d573', null, null, null, null, '0', null, null, '5bfad0ff-8227-4979-a5ad-6435564b020b', 'YANGCW-PC', '127.0.0.1', null, '1');
 
+-- ----------------------------
+-- Table structure for t_xt_group
+-- ----------------------------
 DROP TABLE IF EXISTS t_xt_group;
 CREATE TABLE t_xt_group (
   ID varchar(36) NOT NULL,
@@ -229,6 +358,13 @@ CREATE TABLE t_xt_group (
   PRIMARY KEY (ID)
 );
 
+-- ----------------------------
+-- Records of t_xt_group
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for t_xt_group_user
+-- ----------------------------
 DROP TABLE IF EXISTS t_xt_group_user;
 CREATE TABLE t_xt_group_user (
   ID varchar(36) NOT NULL,
@@ -242,6 +378,13 @@ CREATE TABLE t_xt_group_user (
   PRIMARY KEY (ID)
 );
 
+-- ----------------------------
+-- Records of t_xt_group_user
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for t_xt_key_value
+-- ----------------------------
 DROP TABLE IF EXISTS t_xt_key_value;
 CREATE TABLE t_xt_key_value (
   KV_KEY varchar(200) NOT NULL,
@@ -252,6 +395,13 @@ CREATE TABLE t_xt_key_value (
   PRIMARY KEY (KV_KEY)
 );
 
+-- ----------------------------
+-- Records of t_xt_key_value
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for t_xt_menu
+-- ----------------------------
 DROP TABLE IF EXISTS t_xt_menu;
 CREATE TABLE t_xt_menu (
   MENU_ID varchar(36) NOT NULL,
@@ -268,6 +418,9 @@ CREATE TABLE t_xt_menu (
   PRIMARY KEY (MENU_ID)
 );
 
+-- ----------------------------
+-- Records of t_xt_menu
+-- ----------------------------
 INSERT INTO t_xt_menu VALUES ('007ac06f-aadc-4eb5-9af9-d085ad56aafc', '人工退单管理', '59a326f9-31a5-4bb7-b973-e51fe379b48c', 'root,xt,59a326f9-31a5-4bb7-b973-e51fe379b48c,007ac06f-aadc-4eb5-9af9-d085ad56aafc', '1', '4', null, '1', '2016-10-18 12:21:54', null, null);
 INSERT INTO t_xt_menu VALUES ('0ff033aa-51fe-4600-a113-d771a03f08fa', '菜单管理', 'ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,ca795db5-52ce-4fc8-a02d-ea0da2adb8b1,0ff033aa-51fe-4600-a113-d771a03f08fa', '/view/system/tree.jsp', '3', 'tab', '1', '2016-10-13 14:01:05', '2016-10-13 14:01:05', '/images/logos/caidanguanli.png');
 INSERT INTO t_xt_menu VALUES ('115e3d38-c04d-43b7-bbd6-1f970783724c', '广告管理', 'xt', 'root,xt,115e3d38-c04d-43b7-bbd6-1f970783724c', '', '4', null, '1', '2016-10-18 12:22:54', null, null);
@@ -301,6 +454,9 @@ INSERT INTO t_xt_menu VALUES ('fa8b8df9-2559-4f48-b1c3-5ee8b21a58f1', '商品录
 INSERT INTO t_xt_menu VALUES ('fd8fc71c-d011-4484-9e39-bedd4bcd7506', '机构管理', 'ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,ca795db5-52ce-4fc8-a02d-ea0da2adb8b1,fd8fc71c-d011-4484-9e39-bedd4bcd7506', '/view/system/orgtree.jsp', '2', 'tab', '1', '2016-10-13 14:01:05', '2016-10-13 14:01:05', '/images/logos/jigouguanli.png');
 INSERT INTO t_xt_menu VALUES ('xt', '系统', 'root', 'root,xt', null, '1', null, '1', '2016-10-13 14:01:05', null, null);
 
+-- ----------------------------
+-- Table structure for t_xt_message
+-- ----------------------------
 DROP TABLE IF EXISTS t_xt_message;
 CREATE TABLE t_xt_message (
   ID varchar(36) NOT NULL,
@@ -320,6 +476,13 @@ CREATE TABLE t_xt_message (
   PRIMARY KEY (ID)
 );
 
+-- ----------------------------
+-- Records of t_xt_message
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for t_xt_org
+-- ----------------------------
 DROP TABLE IF EXISTS t_xt_org;
 CREATE TABLE t_xt_org (
   ID varchar(36) NOT NULL,
@@ -335,10 +498,16 @@ CREATE TABLE t_xt_org (
   PRIMARY KEY (ID)
 );
 
+-- ----------------------------
+-- Records of t_xt_org
+-- ----------------------------
 INSERT INTO t_xt_org VALUES ('097e835f-52cd-412a-984b-8c8b06e0fcca', '001002', '人力资源部', '001', '2', null, null, '人力资源部', '企业1/人力资源部', '2');
 INSERT INTO t_xt_org VALUES ('81277dc5-6c4b-4246-97b9-47aafcb3d573', '001', '所有机构', 'root', '1', '1', null, '所有机构', '所有机构', '0');
 INSERT INTO t_xt_org VALUES ('9ee3fed0-d4cb-414b-959b-e381dc0f18b5', '001001', '办公室', '001', '1', null, null, '办公室', '企业1/办公室', '2');
 
+-- ----------------------------
+-- Table structure for t_xt_position
+-- ----------------------------
 DROP TABLE IF EXISTS t_xt_position;
 CREATE TABLE t_xt_position (
   POSITION_ID varchar(36) NOT NULL,
@@ -347,8 +516,14 @@ CREATE TABLE t_xt_position (
   PRIMARY KEY (POSITION_ID)
 );
 
+-- ----------------------------
+-- Records of t_xt_position
+-- ----------------------------
 INSERT INTO t_xt_position VALUES ('5bfad0ff-8227-4979-a5ad-6435564b020b', '系统管理员', '系统管理员');
 
+-- ----------------------------
+-- Table structure for t_xt_role
+-- ----------------------------
 DROP TABLE IF EXISTS t_xt_role;
 CREATE TABLE t_xt_role (
   ROLE_ID varchar(36) NOT NULL,
@@ -362,9 +537,15 @@ CREATE TABLE t_xt_role (
   PRIMARY KEY (ROLE_ID)
 );
 
+-- ----------------------------
+-- Records of t_xt_role
+-- ----------------------------
 INSERT INTO t_xt_role VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', '普通用户', '0', '普通用户', null, '1', '2016-10-13 14:01:06', '2016-10-13 14:01:06');
 INSERT INTO t_xt_role VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '系统管理员', '0', null, null, '1', '2016-10-13 14:01:06', '2016-10-13 14:01:06');
 
+-- ----------------------------
+-- Table structure for t_xt_role_menu
+-- ----------------------------
 DROP TABLE IF EXISTS t_xt_role_menu;
 CREATE TABLE t_xt_role_menu (
   ROLE_ID varchar(36) NOT NULL,
@@ -375,6 +556,9 @@ CREATE TABLE t_xt_role_menu (
   PRIMARY KEY (ROLE_ID,MENU_ID)
 );
 
+-- ----------------------------
+-- Records of t_xt_role_menu
+-- ----------------------------
 INSERT INTO t_xt_role_menu VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', '4995b0ca-2523-4fcb-a886-89c515b08a39', '1', '2016-10-13 16:15:37', null);
 INSERT INTO t_xt_role_menu VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', '59a326f9-31a5-4bb7-b973-e51fe379b48c', '1', '2016-10-13 16:15:37', null);
 INSERT INTO t_xt_role_menu VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', '65c489f1-6f86-4d82-a381-45be4dedf09b', '1', '2016-10-13 16:15:37', null);
@@ -411,6 +595,9 @@ INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', 'f72f
 INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', 'fa8b8df9-2559-4f48-b1c3-5ee8b21a58f1', '1', '2016-10-18 12:24:56', null);
 INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', 'xt', '1', '2016-10-18 12:24:56', null);
 
+-- ----------------------------
+-- Table structure for t_xt_role_user
+-- ----------------------------
 DROP TABLE IF EXISTS t_xt_role_user;
 CREATE TABLE t_xt_role_user (
   ROLE_ID varchar(36) NOT NULL,
@@ -421,9 +608,15 @@ CREATE TABLE t_xt_role_user (
   PRIMARY KEY (ROLE_ID,U_ID)
 );
 
+-- ----------------------------
+-- Records of t_xt_role_user
+-- ----------------------------
 INSERT INTO t_xt_role_user VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', 'admin', '0', '2016-10-13 14:01:08', '2016-10-13 16:15:21');
 INSERT INTO t_xt_role_user VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', 'admin', '1', '2016-10-13 14:01:08', null);
 
+-- ----------------------------
+-- Table structure for t_xt_user
+-- ----------------------------
 DROP TABLE IF EXISTS t_xt_user;
 CREATE TABLE t_xt_user (
   U_ID varchar(36) NOT NULL,
@@ -437,8 +630,14 @@ CREATE TABLE t_xt_user (
   PRIMARY KEY (U_ID)
 );
 
+-- ----------------------------
+-- Records of t_xt_user
+-- ----------------------------
 INSERT INTO t_xt_user VALUES ('admin', '123456', '系统管理员', null, '1', '2016-10-13 14:01:08', null, null);
 
+-- ----------------------------
+-- Table structure for t_xt_workday
+-- ----------------------------
 DROP TABLE IF EXISTS t_xt_workday;
 CREATE TABLE t_xt_workday (
   DAY varchar(10) NOT NULL,
@@ -449,3 +648,7 @@ CREATE TABLE t_xt_workday (
   UPDATE_TIME datetime DEFAULT NULL,
   PRIMARY KEY (DAY)
 );
+
+-- ----------------------------
+-- Records of t_xt_workday
+-- ----------------------------

@@ -27,6 +27,10 @@ public class PageDAO {
 		return resultData;
 	}
 	
+	protected List query(String sql, String addSql, PageBean pageBean) {
+		return query(sql, DBUtil.getDBUtilByRequest(), addSql, pageBean);
+	}
+	
 	protected List queryByHql(String hql, Map params, PageBean pageBean) {
 		return queryByHql(hql, params, DBUtil.getDBUtilByRequest(), pageBean);
 	}
@@ -38,9 +42,29 @@ public class PageDAO {
 		List resultData = db.queryByHql(hql, params, startRowIndex, pageBean.getRows());
 		return resultData;
 	}
-
-	protected List query(String sql, String addSql, PageBean pageBean) {
-		return query(sql, DBUtil.getDBUtilByRequest(), addSql, pageBean);
+	
+	protected List queryByHql(String hql, List params, PageBean pageBean) {
+		return queryByHql(hql, params, DBUtil.getDBUtilByRequest(), pageBean);
+	}
+	
+	protected List queryByHql(String hql, List params, DBUtil db, PageBean pageBean) {
+		//计算起始行
+		int startRowIndex = pageBean.getPage() * pageBean.getRows() - pageBean.getRows();
+		//查询数据并返回
+		List resultData = db.queryByHql(hql, params, startRowIndex, pageBean.getRows());
+		return resultData;
+	}
+	
+	protected List queryByName(String name, Map params, PageBean pageBean) {
+		return queryByName(name, params, DBUtil.getDBUtilByRequest(), pageBean);
+	}
+	
+	protected List queryByName(String name, Map params, DBUtil db, PageBean pageBean) {
+		//计算起始行
+		int startRowIndex = pageBean.getPage() * pageBean.getRows() - pageBean.getRows();
+		//查询数据并返回
+		List resultData = db.queryByName(name, params, startRowIndex, pageBean.getRows());
+		return resultData;
 	}
 	
 	/**

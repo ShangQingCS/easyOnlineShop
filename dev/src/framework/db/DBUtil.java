@@ -29,9 +29,9 @@ import framework.config.SysDict;
 import framework.helper.RequestHelper;
 import framework.util.DateUtils;
 import framework.util.ToUtils;
-
 import common.Logger;
 
+@SuppressWarnings({"rawtypes","unchecked"})
 public class DBUtil {
 	public final static String DB_SESSION_NAME = "REQUEST_DB_UTIL_NUMBER_"+UUID.randomUUID().toString();
 	
@@ -222,6 +222,33 @@ public class DBUtil {
 	}
 	
 	/**
+	 * 根据别名执行查询
+	 * @param hql
+	 * @param params
+	 * @param pageIndex
+	 * @param pageSize
+	 * @return
+	 */
+	public List queryByName(String name, Map params, int pageIndex , int pageSize){
+		Query query = this.session.getNamedQuery(name);
+		if(params!=null && params.size()>0){
+			Iterator iter = params.keySet().iterator();
+			while(iter.hasNext()){
+				String key = iter.next().toString();
+				Object value = params.get(key);
+				query.setParameter(key, value);
+			}
+		}
+		if(pageSize>0){
+			int firstResult = pageIndex * pageSize - pageSize;
+			query.setFirstResult(firstResult);
+			query.setMaxResults(pageSize);
+		}
+		query.setResultTransformer(resultTransformer==null?RESULT_TRANSFORMER_HASHMAP:resultTransformer);
+		return query.list();
+	}
+	
+	/**
 	 * 查询hql数据行数
 	 * @param hql
 	 * @param params
@@ -350,6 +377,21 @@ public class DBUtil {
 	}
 	
 	/**
+	 * 查询总行数(自动替换Sql语句，暂不能支持复杂的语句，如列有子查询的语句，或其他复杂语句)
+	 * @param sql 语句
+	 * @param params 参数
+	 * @return ArrayList<Map>
+	 */
+	public int queryCountByHql(String hql, List params){
+		int startIndex = hql.indexOf("from");
+		hql = " select count(*) as rowcount "+hql.subSequence(startIndex, hql.length());
+		List list = this.queryByHql(hql, params, 0, 0);
+		return Integer.parseInt(((Map)list.get(0)).get("rowcount").toString());
+		/*Query query = DBUtil.getDBUtilByRequest().getSession().createQuery(hql);
+	    return ((Number)query.uniqueResult()).intValue();*/
+	}
+	
+	/**
 	 * 执行sql语句
 	 * @param sql 语句 
 	 * @param params 参数
@@ -369,6 +411,29 @@ public class DBUtil {
 	 */
 	public List queryBySQL(String sql, List params , int startRowIndex, int maxResults){
 		Query query = this.session.createSQLQuery(sql);
+		if(params!=null && params.size()>0){
+			for (int i = 0; i < params.size(); i++) {
+				query.setParameter(i, params.get(i));
+			}
+		}
+		if(maxResults>0){
+			query.setFirstResult(startRowIndex);
+			query.setMaxResults(maxResults);
+		}
+		query.setResultTransformer(resultTransformer==null?RESULT_TRANSFORMER_HASHMAP:resultTransformer);
+		return query.list();
+	}
+	
+	/**
+	 * 执行hql语句，并分页查询
+	 * @param sql 语句
+	 * @param params 参数
+	 * @param firstResult 起始行数
+	 * @param maxResults 最大行数
+	 * @return ArrayList<Map>
+	 */
+	public List queryByHql(String hql, List params , int startRowIndex, int maxResults){
+		Query query = this.session.createQuery(hql);
 		if(params!=null && params.size()>0){
 			for (int i = 0; i < params.size(); i++) {
 				query.setParameter(i, params.get(i));
@@ -1002,6 +1067,7 @@ public class DBUtil {
  * @author Administrator
  *
  */
+@SuppressWarnings({"rawtypes","unchecked", "serial"})
 class ListResultTransformer implements ResultTransformer{
 	public List transformList(List arg0) {
 		return arg0;
@@ -1020,6 +1086,7 @@ class ListResultTransformer implements ResultTransformer{
  * @author Administrator
  *
  */
+@SuppressWarnings({"rawtypes", "serial"})
 class ArrayResultTransformer implements ResultTransformer{
 	public List transformList(List arg0) {
 		return arg0;
@@ -1038,6 +1105,7 @@ class ArrayResultTransformer implements ResultTransformer{
  * @author Administrator
  *
  */
+@SuppressWarnings({"rawtypes","unchecked", "serial"})
 class MapResultTransformer implements ResultTransformer{
 	public final static Logger log = Logger.getLogger(MapResultTransformer.class);
 	
@@ -1072,6 +1140,7 @@ class MapResultTransformer implements ResultTransformer{
  * @author Administrator
  *
  */
+@SuppressWarnings({"rawtypes", "serial"})
 class ListOrderedMapResultTransformer implements ResultTransformer{
 	public final static Logger log = Logger.getLogger(MapResultTransformer.class);
 	
@@ -1105,6 +1174,7 @@ class ListOrderedMapResultTransformer implements ResultTransformer{
  * @author Administrator
  *
  */
+@SuppressWarnings({"rawtypes", "serial"})
 class JsonResultTransformer implements ResultTransformer{
 	public final static Logger log = Logger.getLogger(JsonResultTransformer.class);
 

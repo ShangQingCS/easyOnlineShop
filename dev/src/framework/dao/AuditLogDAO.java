@@ -16,8 +16,8 @@ import framework.db.pojo.TAuditLog;
 @Repository("auditLogDAO")
 public class AuditLogDAO extends PageDAO {
 	
-	private final String T_DRAFT_LOG_SELECT = "select t.id,t.loginname,"
-			+ "t.logdetail,t.logsource,t.ip,t.createdate from t_draft_log t where 1=1 ";
+	private final String T_XT_AUDIT_LOG_SELECT = "select t.id,t.loginname,"
+			+ "t.logdetail,t.logsource,t.ip,t.createdate from t_xt_audit_log t where 1=1 ";
 	
 	/**
 	 * 添加日志.
@@ -43,7 +43,7 @@ public class AuditLogDAO extends PageDAO {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<TAuditLog> queryLogPagination(PageBean pageBean, String whereSql,String orderbySql) {
-		List<TAuditLog> pageData = this.query(T_DRAFT_LOG_SELECT + whereSql + orderbySql, null, DBUtil.getDBUtilByRequest(), pageBean);
+		List<TAuditLog> pageData = this.query(T_XT_AUDIT_LOG_SELECT + whereSql + orderbySql, null, DBUtil.getDBUtilByRequest(), pageBean);
 		return pageData;
 	}
 	/**
@@ -53,6 +53,6 @@ public class AuditLogDAO extends PageDAO {
 	 * @return
 	 */
 	public int queryLogCount(PageBean pageBean, String whereSql) {
-		return DBUtil.getDBUtilByRequest().queryCountBySQL(T_DRAFT_LOG_SELECT + whereSql, null);
+		return DBUtil.getDBUtilByRequest().queryCountBySQL(T_XT_AUDIT_LOG_SELECT + whereSql, null);
 	}
 }

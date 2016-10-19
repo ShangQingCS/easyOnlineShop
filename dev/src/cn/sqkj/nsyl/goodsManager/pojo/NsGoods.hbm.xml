@@ -36,4 +36,8 @@
             <column name="Gfullname" length="150" />
         </property>
     </class>
+    <!--  配置HQ语句L查询 -->
+    <query name="goods_query">
+    	<![CDATA[ select id as id ,gname as gname from NsGoods as goods]]>
+    </query>
 </hibernate-mapping>

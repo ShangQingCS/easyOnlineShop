@@ -8,10 +8,10 @@
   	</head>
   
  	<body class="easyui-layout">
-	  	<div region="north" class="easyui-panel bgColor" collapsible="false" title="日志列表" style="height:100px; width:100%">
+	  	<div region="north" class="easyui-panel bgColor" collapsible="false" title="商品列表" style="height:100px; width:100%">
 	  		<table id="from_query"  border=0 dataType="text" class="tablestyle01" style="width:100%">
 	  			<tr>
-	  				<td align="left" style="width: 100">操作人员:<input name="queryParams.loginname"/>
+	  				<td align="left" style="width: 100">商品名称:<input name="queryParams.gname"/>
 	  				 操作时间:
 	  				<input name="queryParams.beginDate" class="easyui-datebox" value="${currBeginDate }" editable="false"/>~
 					<input name="queryParams.endDate" class="easyui-datebox" value="${currEndDate }" editable="false"/>
@@ -21,7 +21,7 @@
 	  		<table border=0 dataType="text" class="tablestyle01" style="width:100%">
 	  			<tr>
 	  				<td align="left">
-	  					<a href="#" class="easyui-linkbutton" onclick="queryLogInfo(); return false;">查询</a>
+	  					<a href="#" class="easyui-linkbutton" onclick="queryGoods(); return false;">查询</a>
 				 		<a href="#" class="easyui-linkbutton" onclick="winReload();">刷新</a>
 			 		</td>
 			 	</tr>
@@ -34,9 +34,8 @@
 		    	pagination="true" singleSelect="true">
 				<thead>
 					<tr>
-						<!-- <th style="display: none;" checkbox="true" field="id" width="5%">ID</th> -->
-						<th field="id" width="17%">序号</th>
-						<th field="gname" width="7%">操作人员</th>
+						<!-- <th style="display: block;" checkbox="true" field="id" width="5%">ID</th> -->
+						<th field="gname" width="20%">商品名称</th>
 					</tr>
 				</thead>
 			</table>
@@ -44,7 +43,7 @@
   	</body>
   
   	<script type="text/javascript">
-		function queryLogInfo(){
+		function queryGoods() {
 			var data = formGet("from_query");
 			$("#tab_list").datagrid({"queryParams":data});
 		}

@@ -3,63 +3,11 @@
 <html>
 <head>
 <jsp:include page="/include/default.jsp"></jsp:include>
-<title>商品分类管理</title>
-<script type="text/javascript">
-		
-		
-		
-		
-		function saveTree(json){
-			var pid = document.getElementById("inp_menuParentIds").value;
-			var url = document.getElementById("inp_url").value;
-			if(pid != null && pid.length > 0) {
-				var pids = pid.split(",");
-				if(pids.length >= 3) {
-					if(url.length == 0) {
-						//alert("请填写链接地址！");
-						//return;
-					}
-					//$('#inp_url').validatebox({   
-						//required:true  
-					//}); 
-				} else {
-					if(url.length > 0) {
-						alert("此节点不为根节点，不能输入链接地址！");
-						return;
-					}
-				}
-			}
-			
-			if(json == null) {
-				$("#div_config").attr("action","treeSave.action");
-				formSubmit('div_config',saveTree);
-			} else {
-				document.getElementById("inp_menuId").value = json.tree.menuId;
-				document.getElementById("inp_menuParentIds").value = json.tree.menuParentIds;
-				initMenuTree();//初始化菜单
-				alert("保存成功");
-			}
-		}
-		
-		function deleteTree(json){
-			if(json==null){
-				window.confirm("提示","确认删除?", function(r){
-					if(r){
-						$("#div_config").attr("action","treeDelete.action");
-						formSubmit('div_config',deleteTree);
-					}
-				});
-			}else{
-				$("#div_config input").each(function(i,n){n.value = "";});
-				initMenuTree();//初始化菜单
-				alert("删除成功");
-			}
-		}
-	</script>
+<title>商品类别维护</title>
 </head>
   
 <body class="easyui-layout">
-   	<div region="north" class="easyui-panel bgColor" title="人员列表" style="height:65px; ">
+   	<div region="north" class="easyui-panel bgColor" title="商品类别维护" style="height:66px; ">
   		<table border=0 dataType="text" class="tablestyle01" style="width:100%">
   			<tr>
   				<td align="left">
@@ -71,30 +19,42 @@
 		 	</tr>
   		</table>
   	</div>
-  	<div region="west" class="easyui-panel bgColor" split="true" title="商品分类列表" style="width:200px;overflow: auto;">
+  	<div region="west" class="easyui-panel bgColor" split="true" title="商品类别" style="width:200px;overflow: auto;">
   		<ul id="ul_tree" class="easyui-tree" data-options="onClick:treeClick"></ul>
   	</div>
-  	<div id="div_config" region="center" title="商品分类信息" class="easyui-panel bgColor" style="overflow: auto;">
+  	<div id="div_config" region="center" title="类别信息" class="easyui-panel bgColor" style="overflow: auto;">
 		<table class="tablestyle01" style="margin-top:5px;" width="100%">
 			<tr>
-				<td width="110">分类ID：</td>
-				<td><input name="tree.id" id="inp_id" readonly="readonly" style="width: 460px;" /></td>
+				<td width="110">类别ID：</td>
+				<td>
+					<input name="goodsCategoryVO.level" id="inp_level" type="hidden" />
+					<input name="goodsCategoryVO.id" id="inp_id" readonly="readonly" style="width: 460px;" />
+				</td>
 			</tr>
 			<tr>
-				<td>上级分类ID：</td>
-				<td><input name="tree.parentId" id="inp_parentId" readonly="readonly" style="width: 460px;" /></td>
+				<td>上级类别ID：</td>
+				<td><input name="goodsCategoryVO.parentId" id="inp_parentId" readonly="readonly" style="width: 460px;" /></td>
 			</tr>
 			<tr>
-				<td>上级分类名称：</td>
+				<td>上级类别名称：</td>
 				<td><input name="parentCateName" id="inp_parentCateName" readonly="readonly" style="width: 460px;" /></td>
 			</tr>
 			<tr>
-				<td>排序序号：</td>
-				<td><input name="tree.cateOrder" id="inp_cateOrder" class="easyui-validatebox" required="true" validType="number" maxlength="3" style="width: 50px;" /></td>
+				<td>显示顺序：</td>
+				<td><input name="goodsCategoryVO.cateOrder" id="inp_cateOrder" class="easyui-validatebox" required="true" validType="number" maxlength="3" style="width: 50px;" /></td>
 			</tr>
 			<tr>
-				<td>商品名称：</td>
-				<td><input name="tree.cateName" id="inp_cateName" class="easyui-validatebox" required="true" maxlength="100" style="width: 320px;" /></td>
+				<td>类别名称：</td>
+				<td><input name="goodsCategoryVO.cateName" id="inp_cateName" class="easyui-validatebox" required="true" maxlength="100" style="width: 320px;" /></td>
+			</tr>
+			<tr>
+				<td>是否有效：</td>
+				<td>
+					<select name="goodsCategoryVO.isuser" id="inp_isuser">
+						<option value="1">无效</option>
+						<option value="0">有效</option>
+					</select>
+				</td>
 			</tr>
 		</table>
   	</div>
@@ -112,10 +72,10 @@
 			url : "${basePath }/view/goodsManager/goodsManager!goodsCategoryTree.action",
 			dataType : "json",
 			success : function(json) {
-				var root = json.trees[0];
+				var root = json.goodsCategoryTree[0];
 				root.state = "open";
 				//root.children[root.children.length - 1].state = "open";
-				$("#ul_tree").tree("loadData", json.trees);
+				$("#ul_tree").tree("loadData", json.goodsCategoryTree);
 			}
 		});
 	}
@@ -135,6 +95,7 @@
 		if(node.attributes!=null){
 			obj.cateOrder = node.attributes.cateOrder;
 			obj.level = node.attributes.level;
+			obj.isuser = node.attributes.isuser;
 		}
 		var pnode = $('#ul_tree').tree('getParent',node.target); 
 		if(pnode!=null){
@@ -144,21 +105,71 @@
 		return obj;
 	}
 	
-	//添加分类
-	function addGoodsCategory() {
+	//添加类别
+	var addGoodsCategory = function() {
 		var node = $("#ul_tree").tree("getSelected");
 		if(node==null){
-			alert("请选择一个分类");
-			return false;
+			alert("请选择一个类别");
+			return;
 		}
+		
 		var nodeInfo = getNodeInfo(node);
 		if(nodeInfo.level==3) {
-			alert("该分类下不允许添加子分类");
-			return false;
+			alert("该类别下不允许添加子类别");
+			return;
 		}
+		//清空和重置
+		$("#inp_isuser").val("1");
 		$("#div_config input").each(function(i,n){n.value = "";});
-		document.getElementById("inp_parentId").value = nodeInfo.id;
-		document.getElementById("inp_parentCateName").value = nodeInfo.cateName;
+		//赋值
+		$("#inp_level").val(parseInt(nodeInfo.level)+1);
+		$("#inp_parentId").val(nodeInfo.id);
+		$("#inp_parentCateName").val(nodeInfo.cateName);
+		if(node.children && node.children.length > 0) {
+			var lastChildNode = node.children[node.children.length-1];
+			if(lastChildNode.attributes!=null) {
+				$("#inp_cateOrder").val(parseInt(lastChildNode.attributes.cateOrder)+1);
+			}
+		} else {
+			$("#inp_cateOrder").val(1);
+		}
+	}
+	
+	var saveTree = function(json) {
+		if(json == null) {
+			$("#div_config").attr("action","${basePath }/view/goodsManager/goodsManager!save.action");
+			formSubmit('div_config',saveTree);
+		} else {
+			alert("保存成功");
+			$("#inp_id").val(json.goodsCategoryVO.id);
+			initTree();//初始化菜单
+		}
+	}
+	
+	var deleteTree = function(json) {
+		var node = $("#ul_tree").tree("getSelected");
+		if(node==null){
+			alert("请选择一个类别");
+			return;
+		}
+		var pnode = $('#ul_tree').tree('getParent',node.target); 
+		if(pnode==null) {
+			alert(node.text+"不能删除！");
+			return;
+		}
+		
+		if(json==null) {
+			window.confirm("提示","确认删除?", function(r){
+				if(r){
+					$("#div_config").attr("action","${basePath }/view/goodsManager/goodsManager!delete.action");
+					formSubmit('div_config',deleteTree);
+				}
+			});
+		} else {
+			alert("删除成功");
+			$("#div_config input").each(function(i,n){n.value = "";});
+			initTree();//初始化菜单
+		}
 	}
 </script>
 </html>

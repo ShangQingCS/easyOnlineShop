@@ -9,8 +9,10 @@ import java.util.TreeMap;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
+import cn.sqkj.nsyl.goodsManager.pojo.NsGoodsCategory;
 import cn.sqkj.nsyl.goodsManager.service.IGoodsManagerService;
 import cn.sqkj.nsyl.goodsManager.util.ComparatorGoodsCategoryVO;
 
@@ -29,15 +31,17 @@ import framework.logger.AuditLogger;
  * 2016年10月18日
  * 商品维护Action类
  */
+@SuppressWarnings("unchecked")
 public class GoodsManagerAction extends PageAction {
 	@Resource(name="goodsManagerService")
 	private IGoodsManagerService goodsManagerService;
 	private AuditLogger logger = AuditLogger.getLogger(); //审计日志对象
 	private Logger log = Logger.getLogger(GoodsManagerAction.class); //系统log日志对象
-	private List<Map> trees;
+	private List<Map<String,Object>> goodsCategoryTree;
+	private NsGoodsCategory goodsCategoryVO;
+	private TXtUser user = (TXtUser) RequestHelper.getSession().getAttribute("user");
 	
 	public String queryGoods() {
-		TXtUser user = (TXtUser) RequestHelper.getSession().getAttribute("user");
 		try {
 			//传入分页信息查询数据库
 			PageBean resultData = this.goodsManagerService.queryGoodsList(this.getPageBean());
@@ -50,7 +54,7 @@ public class GoodsManagerAction extends PageAction {
 			TAuditLog message = new TAuditLog(user.getUId(), "查询商品列表成功！");
 			logger.info(message);
 		} catch (Exception e) {
-			e.printStackTrace();
+			/*e.printStackTrace();*/
 			log.error("查询商品列表失败！", e);
 			TAuditLog message = new TAuditLog(user.getUId(), "查询商品列表失败！");
 			logger.info(message);
@@ -67,20 +71,21 @@ public class GoodsManagerAction extends PageAction {
 		sql.append(" from ns_goods_category c ");
 		sql.append(" where c.flag='0' order by c.cate_order ");
 		DBUtil db = DBUtil.getDBUtilByRequest();
-		List<Map> list = db.queryBySQL(sql.toString());
+		List<Map<String,Object>> list = db.queryBySQL(sql.toString());
 		
-		Map root = null;
-		Map<String,Map> temp = new TreeMap();
-		for (Map pojo : list) {
-			Map node = new TreeMap();
+		Map<String,Object> root = null;
+		Map<String,Map<String,Object>> temp = new TreeMap<String,Map<String,Object>>();
+		for (Map<String,Object> pojo : list) {
+			Map<String,Object> node = new TreeMap<String,Object>();
 			node.put("id", pojo.get("id"));
 			node.put("text", pojo.get("cateName"));
 			node.put("parentId", pojo.get("parentId"));
 			
-			Map attrs = new HashMap(5);
+			Map<String,Object> attrs = new HashMap<String,Object>(5);
 			attrs.put("cateOrder", pojo.get("cateOrder"));
 			attrs.put("logo", pojo.get("logo"));
 			attrs.put("level", pojo.get("level"));
+			attrs.put("isuser", pojo.get("isuser"));
 			if(pojo.get("level") != null && !"3".equals(pojo.get("level").toString())) {
 				node.put("state", "closed");
 			}
@@ -93,35 +98,84 @@ public class GoodsManagerAction extends PageAction {
 		
 		//组装父子关系
 		for(String key : temp.keySet()) {
-			Map node = temp.get(key);
-			Map parentMap = temp.get(node.get("parentId").toString());
+			Map<String,Object> node = temp.get(key);
+			Map<String,Object> parentMap = temp.get(node.get("parentId").toString());
 			if(parentMap != null) {
 				if(parentMap.get("children") == null) {
-					parentMap.put("children", new ArrayList());
+					parentMap.put("children", new ArrayList<Map<String,Object>>());
 				}
-				((ArrayList) parentMap.get("children")).add(node);
+				((ArrayList<Map<String,Object>>) parentMap.get("children")).add(node);
 			}
 		}
 		
 		//排序
 		for(String key : temp.keySet()) {
-			Map node = temp.get(key);
+			Map<String,Object> node = temp.get(key);
 			if(node.get("children") != null) {
-				List childOrgList = (ArrayList) node.get("children");
+				List<Map<String,Object>> childOrgList = (ArrayList<Map<String,Object>>) node.get("children");
 				if(!childOrgList.isEmpty()) {
 					Collections.sort(childOrgList, new ComparatorGoodsCategoryVO());
 				}
 			} 
 		}
 		
-		trees = new ArrayList(1);
+		goodsCategoryTree = new ArrayList<Map<String,Object>>(1);
 		if(root != null) {
-			trees.add(root);
+			goodsCategoryTree.add(root);
+		}
+		//打印审计日志
+		TAuditLog message = new TAuditLog(user.getUId(), "查询商品类别成功！");
+		logger.info(message);
+		return Action.SUCCESS;
+	}
+	
+	public String save() {
+		try {
+			this.goodsManagerService.saveGoodsCategory(this.goodsCategoryVO);
+			
+			//打印审计日志
+			TAuditLog message = new TAuditLog(user.getUId(), "保存商品类别成功："+this.goodsCategoryVO.getId());
+			logger.info(message);
+		} catch (Exception e) {
+			/*e.printStackTrace();*/
+			log.error("保存商品类别异常！", e);
+			TAuditLog message = new TAuditLog(user.getUId(), "保存商品类别失败；"+this.goodsCategoryVO.getId());
+			logger.info(message);
 		}
 		return Action.SUCCESS;
 	}
 	
-	public List getTrees() {
-		return trees;
+	public String delete() {
+		String msg = null;
+		try {
+			msg = this.goodsManagerService.deleteGoodsCategory(this.goodsCategoryVO);
+			
+			//打印审计日志
+			TAuditLog message = new TAuditLog(user.getUId(), "删除商品类别成功："+this.goodsCategoryVO.getId());
+			logger.info(message);
+		} catch (Exception e) {
+			/*e.printStackTrace();*/
+			log.error("删除商品类别异常！", e);
+			TAuditLog message = new TAuditLog(user.getUId(), "删除商品类别失败；"+this.goodsCategoryVO.getId());
+			logger.info(message);
+		}
+		
+		if(StringUtils.isNotBlank(msg)) {
+			return Action.ERROR;
+		}
+		return Action.SUCCESS;
 	}
+	
+	public List<Map<String,Object>> getGoodsCategoryTree() {
+		return goodsCategoryTree;
+	}
+
+	public NsGoodsCategory getGoodsCategoryVO() {
+		return goodsCategoryVO;
+	}
+
+	public void setGoodsCategoryVO(NsGoodsCategory goodsCategoryVO) {
+		this.goodsCategoryVO = goodsCategoryVO;
+	}
+	
 }

@@ -10,8 +10,14 @@ import org.springframework.stereotype.Service;
 
 import cn.sqkj.nsyl.goodsManager.dao.NsGoodsDAO;
 import cn.sqkj.nsyl.goodsManager.pojo.NsGoods;
+import cn.sqkj.nsyl.goodsManager.pojo.NsGoodsCategory;
 import cn.sqkj.nsyl.goodsManager.service.IGoodsManagerService;
+
+import com.opensymphony.xwork2.Action;
+
 import framework.bean.PageBean;
+import framework.db.DBUtil;
+import framework.util.DateUtils;
 
 /**
  * @author yangchaowen
@@ -49,5 +55,58 @@ public class GoodsManagerServiceImpl implements IGoodsManagerService {
 		pageBean.setTotal(total);
 		pageBean.setPageData(goods);
 		return pageBean;
+	}
+
+	/**
+	 * 删除商品分类
+	 * @return
+	 * @throws Exception
+	 */
+	public String deleteGoodsCategory(NsGoodsCategory goodsCategoryVO) throws Exception {
+		DBUtil db = DBUtil.getDBUtilByRequest();
+		if(goodsCategoryVO.getParentId() == null) {
+			return "根节点不能被删除";
+		}
+		
+		//查询是否有子分类
+		String hql = " select t.id from NsGoodsCategory as t where t.flag='0' and t.parentId=? ";
+		List<NsGoodsCategory> childs = db.queryByHql(hql, goodsCategoryVO.getId());
+		if(childs != null && !childs.isEmpty()) {
+			return "该分类下存在子分类，不能被删除";
+		}
+		
+		hql = " update NsGoodsCategory set flag='1', isuser='1' where id=? ";
+		int count = db.executeHql(hql, goodsCategoryVO.getId());
+		db.commit();
+		if(count==0) {
+			return "删除失败";
+		}
+		return null;
+	}
+
+	/**
+	 * 保存商品分类
+	 * @throws Exception
+	 */
+	public NsGoodsCategory saveGoodsCategory(NsGoodsCategory goodsCategoryVO) throws Exception {
+		DBUtil db = DBUtil.getDBUtilByRequest();
+		if(goodsCategoryVO.getId()==null) {
+			goodsCategoryVO.setCreateTime(DateUtils.getDate());
+			goodsCategoryVO.setUpdateTime(DateUtils.getDate());
+			goodsCategoryVO.setFlag("0");
+			goodsCategoryVO.setIsuser("1");
+			Integer id = (Integer) db.insert(goodsCategoryVO);
+			goodsCategoryVO.setId(id);
+		} else {
+			NsGoodsCategory goodsCategory = (NsGoodsCategory)db.get(NsGoodsCategory.class, goodsCategoryVO.getId());
+			goodsCategory.setCateName(goodsCategoryVO.getCateName());
+			goodsCategory.setCateOrder(goodsCategoryVO.getCateOrder());
+			goodsCategory.setLogo(goodsCategoryVO.getLogo());
+			goodsCategory.setUrl(goodsCategoryVO.getUrl());
+			goodsCategory.setUpdateTime(DateUtils.getDate());
+			goodsCategory.setIsuser(goodsCategoryVO.getIsuser());
+			db.update(goodsCategory);
+		}
+		return goodsCategoryVO;
 	}
 }

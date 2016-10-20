@@ -236,7 +236,7 @@ public class DataAction  extends ActionSupport{
 			where = new String(where.getBytes("ISO8859-1"),"UTF-8");
 		}
 		for(String name : names){
-			List list = db.queryByHql("from "+name+" tmp where 1=1 "+(where==null?"":where), null);
+			List list = db.queryByHql("from "+name+" tmp where 1=1 "+(where==null?"":where), new HashMap());
 			pkg.addAll(list);
 		}
 		
@@ -256,7 +256,7 @@ public class DataAction  extends ActionSupport{
 		String[] names = pojos.split(",");
 		List pkg = new ArrayList();
 		for(String name : names){
-			List list = db.queryByHql("from "+name+" tmp "+(where==null?"":where), null);
+			List list = db.queryByHql("from "+name+" tmp "+(where==null?"":where), new HashMap());
 			if(list.size()>0){
 				HashMap map = new HashMap();
 				map.put("pojoClassName", list.get(0).getClass().getName());
@@ -294,7 +294,7 @@ public class DataAction  extends ActionSupport{
 			DBUtil db = DBUtil.getDBUtilByRequest();
 			String[] names = pojos.split(",");
 			for(String name : names){
-				List list = db.queryByHql("from "+name+" tmp "+(where==null?"":where), null);
+				List list = db.queryByHql("from "+name+" tmp "+(where==null?"":where), new HashMap());
 				int len = list.size();
 				for (int i = 0; i < len; i++) {
 					fos.writeObject(list.get(i));

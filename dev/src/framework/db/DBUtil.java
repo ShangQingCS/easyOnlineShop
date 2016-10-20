@@ -363,6 +363,22 @@ public class DBUtil {
 	}
 	
 	/**
+	 * 执行HQL语句
+	 * @param hql 语句
+	 * @param params 参数（按参数先后循序为sql语句的替代符赋值）
+	 * @return ArrayList<Map>
+	 */
+	public List queryByHql(String hql, Object... params){
+		List plist = new ArrayList(params.length);
+		if(params!=null && params.length>0){
+			for (int i = 0; i < params.length; i++) {
+				plist.add(params[i]);
+			}
+		}
+		return queryByHql(hql, plist,0,0);
+	}
+	
+	/**
 	 * 查询总行数(自动替换Sql语句，暂不能支持复杂的语句，如列有子查询的语句，或其他复杂语句)
 	 * @param sql 语句
 	 * @param params 参数
@@ -520,6 +536,26 @@ public class DBUtil {
 	}
 	
 	/**
+	 * 执行hql语句，按循序填充参数
+	 * @param hql hql语句
+	 * @param params 参数
+	 * @return 影响行数
+	 */
+	public int executeHql(String hql, Object... params){
+		this.beginTransaction();
+		Query query = this.session.createQuery(hql);
+		int paramIndex = 0;
+		if(params!=null && params.length>0){
+			for (int i = 0; i < params.length; i++) {
+				if(params[i]!=null){
+					query.setParameter(paramIndex++, params[i]);
+				}
+			}
+		}
+		return query.executeUpdate();
+	}
+	
+	/**
 	 * 执行sql语句
 	 * @param sql sql语句
 	 * @param params 参数集合
@@ -547,10 +583,10 @@ public class DBUtil {
 	 * 插入一个pojo（当会话未自动开启事务，将自动开启事务）
 	 * @param pojo对象
 	 */
-	public void insert(Object pojo){
+	public Object insert(Object pojo){
 		this.beginTransaction();
 		setDefaultValueByInsert(pojo);//自动输入录入人员 录入时间
-		this.session.save(pojo);
+		return this.session.save(pojo);
 	}
 	
 	

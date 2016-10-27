@@ -11,9 +11,9 @@
   		<table border=0 dataType="text" class="tablestyle01" style="width:100%">
   			<tr>
   				<td align="left">
-		  			<a href="#" class="easyui-linkbutton" onclick="saveTree();">保存</a>
+		  			<a href="#" class="easyui-linkbutton" onclick="saveGoodsCategory();">保存</a>
 			 		<a href="#" class="easyui-linkbutton" onclick="addGoodsCategory();">新增</a>
-			 		<a href="#" class="easyui-linkbutton" onclick="deleteTree();">删除</a>
+			 		<a href="#" class="easyui-linkbutton" onclick="delGoodsCategory();">删除</a>
 			 		<a href="#" class="easyui-linkbutton" onclick="winReload();">刷新</a>
 		 		</td>
 		 	</tr>
@@ -62,11 +62,11 @@
   
 <script type="text/javascript">
 	$(function(){
-		initTree();
+		queryGoodsCategoryTree();
 	});
 	
 	//初始化功能菜单
-	function initTree() {
+	function queryGoodsCategoryTree() {
 		$.ajax( {
 			type : "POST",
 			url : "${basePath }/view/goodsManager/goodsManager!goodsCategoryTree.action",
@@ -135,18 +135,18 @@
 		}
 	}
 	
-	var saveTree = function(json) {
+	var saveGoodsCategory = function(json) {
 		if(json == null) {
-			$("#div_config").attr("action","${basePath }/view/goodsManager/goodsManager!save.action");
-			formSubmit('div_config',saveTree);
+			$("#div_config").attr("action","${basePath }/view/goodsManager/goodsManager!saveGoodsCategory.action");
+			formSubmit('div_config',saveGoodsCategory);
 		} else {
 			alert("保存成功");
 			$("#inp_id").val(json.goodsCategoryVO.id);
-			initTree();//初始化菜单
+			queryGoodsCategoryTree();//初始化菜单
 		}
 	}
 	
-	var deleteTree = function(json) {
+	var delGoodsCategory = function(json) {
 		var node = $("#ul_tree").tree("getSelected");
 		if(node==null){
 			alert("请选择一个类别");
@@ -161,14 +161,14 @@
 		if(json==null) {
 			window.confirm("提示","确认删除?", function(r){
 				if(r){
-					$("#div_config").attr("action","${basePath }/view/goodsManager/goodsManager!delete.action");
-					formSubmit('div_config',deleteTree);
+					$("#div_config").attr("action","${basePath }/view/goodsManager/goodsManager!deleteGoodsCategory.action");
+					formSubmit('div_config',delGoodsCategory);
 				}
 			});
 		} else {
 			alert("删除成功");
 			$("#div_config input").each(function(i,n){n.value = "";});
-			initTree();//初始化菜单
+			queryGoodsCategoryTree();//初始化菜单
 		}
 	}
 </script>

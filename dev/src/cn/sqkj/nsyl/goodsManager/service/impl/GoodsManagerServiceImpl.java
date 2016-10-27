@@ -38,7 +38,7 @@ public class GoodsManagerServiceImpl implements IGoodsManagerService {
 	 */
 	public PageBean queryGoodsList(PageBean pageBean) throws Exception {
 		
-		StringBuffer hql = new StringBuffer(" select id as id ,gname as gname from NsGoods as goods where 1=1 ");
+		StringBuffer hql = new StringBuffer(" select id,gname as gname,price,category,kind,brand,detail,goodimglist,isuser,gfullname,storenumb,goodimg,freazes from NsGoods as goods where 1=1 ");
 		List params = new ArrayList();
 		if(pageBean.getQueryParams() != null && !pageBean.getQueryParams().isEmpty()) {
 			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("gname"))) {

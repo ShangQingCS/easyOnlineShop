@@ -29,7 +29,7 @@
 			}
 			var bj = url.indexOf("?")>-1?"&":"?";
 			url += bj+"break_time_number_"+Math.random()+"="+Math.random();
-			var content = "<iframe src=\""+url+"\" frameborder=\"0\" style=\"width:100%; height: 100%;\"></iframe>";
+			var content = "<iframe src=\""+url+"\" scrolling=\"no\" frameborder=\"0\" style=\"width:100%; height: 99.5%;overflow: hidden;\"></iframe>";
 			var tab = $("#div_tabs").tabs("add",{
 				title: stitle,
 				content: content,
@@ -114,7 +114,7 @@
 	</div>
 
 	<div id="div_tabs" region="center" class="easyui-tabs" style="padding:0px;background:#eee;" noheader="true">
-		<div title="欢迎页面" closable="false"><iframe id="iframe1" src="welcome.jsp" frameBorder="0" style="width: 100%; height: 100%;"></iframe></div>
+		<div title="欢迎页面" closable="false"><iframe id="iframe1" src="welcome.jsp" scrolling="no" frameBorder="0" style="width: 100%; height: 100%;"></iframe></div>
 	</div>
 </body>
 </html>

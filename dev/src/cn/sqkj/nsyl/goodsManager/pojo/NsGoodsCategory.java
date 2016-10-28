@@ -9,7 +9,7 @@ public class NsGoodsCategory implements java.io.Serializable {
 	 */
 	private static final long serialVersionUID = -7393347006869359438L;
 	
-	private Integer id;
+	private Long id;
 	private String cateName;
 	private String desc_;
 	private Integer cateOrder;
@@ -17,7 +17,7 @@ public class NsGoodsCategory implements java.io.Serializable {
 	private String logo;
 	private String url;
 	private String isuser;
-	private Integer parentId;
+	private Long parentId;
 	private Date createTime;
 	private Date updateTime;
 	private String flag;
@@ -25,11 +25,11 @@ public class NsGoodsCategory implements java.io.Serializable {
 	public NsGoodsCategory() {
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -89,11 +89,11 @@ public class NsGoodsCategory implements java.io.Serializable {
 		this.isuser = isuser;
 	}
 
-	public Integer getParentId() {
+	public Long getParentId() {
 		return parentId;
 	}
 
-	public void setParentId(Integer parentId) {
+	public void setParentId(Long parentId) {
 		this.parentId = parentId;
 	}
 

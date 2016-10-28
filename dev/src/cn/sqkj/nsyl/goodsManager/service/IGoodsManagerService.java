@@ -1,5 +1,6 @@
 package cn.sqkj.nsyl.goodsManager.service;
 
+import cn.sqkj.nsyl.goodsManager.pojo.NsGoods;
 import cn.sqkj.nsyl.goodsManager.pojo.NsGoodsCategory;
 import framework.bean.PageBean;
 
@@ -12,6 +13,14 @@ public interface IGoodsManagerService {
 	 * @throws Exception
 	 */
 	public PageBean queryGoodsList(PageBean pageBean) throws Exception;
+	
+	/**
+	 * 根据id查询商品
+	 * @param id
+	 * @return
+	 * @throws exception
+	 */
+	public NsGoods queryGoodsById(Long id) throws Exception;
 	
 	/**
 	 * 保存商品分类

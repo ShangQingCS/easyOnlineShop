@@ -44,6 +44,17 @@
         <property name="freazes" type="java.lang.Integer">
             <column name="freazes" length="11" />
         </property>
+        <!-- <many-to-one name="kindName" foreign-key="id" update="false" insert="false" fetch="join"
+        	class="cn.sqkj.nsyl.goodsManager.pojo.NsGoodsCategory">
+        	<column name="kind" />
+        </many-to-one> -->
+        <!-- <many-to-one name="categoryName" foreign-key="id" update="false" insert="false" fetch="join"
+        	class="cn.sqkj.nsyl.goodsManager.pojo.NsGoodsCategory">
+        	<column name="category" />
+        </many-to-one> -->
+      	<!-- <many-to-one name="categoryName" class="cn.sqkj.nsyl.goodsManager.pojo.NsGoodsCategory" fetch="join" property-ref="id" insert="false" update="false">
+            <column name="category" />
+        </many-to-one> -->
     </class>
     <!--  配置HQ语句L查询 -->
     <query name="goods_query">

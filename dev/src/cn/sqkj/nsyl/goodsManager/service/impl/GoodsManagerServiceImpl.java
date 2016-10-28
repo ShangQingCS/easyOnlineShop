@@ -12,9 +12,6 @@ import cn.sqkj.nsyl.goodsManager.dao.NsGoodsDAO;
 import cn.sqkj.nsyl.goodsManager.pojo.NsGoods;
 import cn.sqkj.nsyl.goodsManager.pojo.NsGoodsCategory;
 import cn.sqkj.nsyl.goodsManager.service.IGoodsManagerService;
-
-import com.opensymphony.xwork2.Action;
-
 import framework.bean.PageBean;
 import framework.db.DBUtil;
 import framework.util.DateUtils;
@@ -37,8 +34,12 @@ public class GoodsManagerServiceImpl implements IGoodsManagerService {
 	 * @throws Exception
 	 */
 	public PageBean queryGoodsList(PageBean pageBean) throws Exception {
-		
-		StringBuffer hql = new StringBuffer(" select id,gname as gname,price,category,kind,brand,detail,goodimglist,isuser,gfullname,storenumb,goodimg,freazes from NsGoods as goods where 1=1 ");
+		//HQL方式 
+		/*StringBuffer hql = new StringBuffer(" select id as id,gname as gname,price as price,category as category,kind as kind,brand as brand,detail as detail,goodimglist as goodimglist,isuser as isuser,gfullname as gfullname,storenumb as storenumb,goodimg as goodimg,freazes as freazes "
+				+ ",categoryName as categoryName "
+				//+ ",kindName as kindName "
+				//+ ",brandName as brandName "
+				+ "from NsGoods as goods where 1=1 ");
 		List params = new ArrayList();
 		if(pageBean.getQueryParams() != null && !pageBean.getQueryParams().isEmpty()) {
 			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("gname"))) {
@@ -51,6 +52,28 @@ public class GoodsManagerServiceImpl implements IGoodsManagerService {
 		int total = goodsDAO.findGoodsCount(hql.toString(), params);
 		//查询数据
 		List<NsGoods> goods = goodsDAO.findGoodsPage(hql.toString(), params, pageBean);
+		
+		pageBean.setTotal(total);
+		pageBean.setPageData(goods);*/
+		
+		//SQL方式
+		StringBuffer sql = new StringBuffer("select t1.*,t2.cate_name categoryName ,t3.cate_name as kindName, t4.cate_name as brandName from ns_goods t1 ");
+		sql.append(" left join ns_goods_category t2 on t1.category=t2.id ");
+		sql.append(" left join ns_goods_category t3 on t1.kind=t3.id ");
+		sql.append(" left join ns_goods_category t4 on t1.brand=t4.id ");
+		sql.append(" where 1=1 ");
+		List params = new ArrayList();
+		/*if(pageBean.getQueryParams() != null && !pageBean.getQueryParams().isEmpty()) {
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("gname"))) {
+				hql.append(" and gname like ? ");
+				params.add("%"+pageBean.getQueryParams().get("gname")+"%");
+			}
+		}*/
+		
+		//查询总计路数
+		int total = goodsDAO.findGoodsCount(sql.toString(), params);
+		//查询数据
+		List<NsGoods> goods = goodsDAO.findGoodsPage(sql.toString(), params, pageBean);
 		
 		pageBean.setTotal(total);
 		pageBean.setPageData(goods);
@@ -95,7 +118,7 @@ public class GoodsManagerServiceImpl implements IGoodsManagerService {
 			goodsCategoryVO.setUpdateTime(DateUtils.getDate());
 			goodsCategoryVO.setFlag("0");
 			goodsCategoryVO.setIsuser("1");
-			Integer id = (Integer) db.insert(goodsCategoryVO);
+			Long id = (Long) db.insert(goodsCategoryVO);
 			goodsCategoryVO.setId(id);
 		} else {
 			NsGoodsCategory goodsCategory = (NsGoodsCategory)db.get(NsGoodsCategory.class, goodsCategoryVO.getId());
@@ -108,5 +131,14 @@ public class GoodsManagerServiceImpl implements IGoodsManagerService {
 			db.update(goodsCategory);
 		}
 		return goodsCategoryVO;
+	}
+
+	public NsGoods queryGoodsById(Long id) throws Exception {
+		if(id!=null) {
+			DBUtil db = DBUtil.getDBUtilByRequest();
+			NsGoods ng = (NsGoods) db.getSession().load(NsGoods.class, id);
+			System.out.println(ng);
+		}
+		return null;
 	}
 }

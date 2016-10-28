@@ -1,5 +1,6 @@
 package cn.sqkj.nsyl.goodsManager.pojo;
 
+
 public class NsGoods implements java.io.Serializable {
 
 	/**
@@ -20,7 +21,10 @@ public class NsGoods implements java.io.Serializable {
 	private Integer storenumb;
 	private String goodimg;
 	private Integer freazes;
-
+	/*private NsGoodsCategory categoryName;
+	private NsGoodsCategory kindName;
+	private NsGoodsCategory brandName;*/
+	
 	public NsGoods() {
 	}
 
@@ -146,5 +150,29 @@ public class NsGoods implements java.io.Serializable {
 	public void setFreazes(Integer freazes) {
 		this.freazes = freazes;
 	}
+	
+	/*public NsGoodsCategory getCategoryName() {
+		return categoryName;
+	}
 
+	public void setCategoryName(NsGoodsCategory categoryName) {
+		this.categoryName = categoryName;
+	}
+	
+	public NsGoodsCategory getKindName() {
+		return kindName;
+	}
+
+	public void setKindName(NsGoodsCategory kindName) {
+		this.kindName = kindName;
+	}
+
+	public NsGoodsCategory getBrandName() {
+		return brandName;
+	}
+
+	public void setBrandName(NsGoodsCategory brandName) {
+		this.brandName = brandName;
+	}*/
+	
 }

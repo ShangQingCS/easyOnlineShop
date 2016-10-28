@@ -1,5 +1,8 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-
+<%
+String id = request.getParameter("id");
+request.setAttribute("id",id);
+%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -126,7 +129,25 @@
 		$("#goodimglist2").uploadPreview({ Img: "goodimglistPr2", Width: 200, Height: 200 });
 		$("#goodimglist3").uploadPreview({ Img: "goodimglistPr3", Width: 200, Height: 200 });
 		$("#goodimglist4").uploadPreview({ Img: "goodimglistPr4", Width: 200, Height: 200 });
+		
+		
+		var id = "${id}";
+		if(id!="") {
+			loadGoods(id);
+			queryCategorys();
+		}
 	});
+	
+	function loadGoods(id) {
+		$.ajax({
+			url: "${basePath }/view/goodsManager/goodsManager!loadGoods.action?goods.id="+id,
+			cache: false,
+			dataType:"json",
+			success: function(json){
+			   alert("ok");
+			}
+		});
+	}
 	
 	var initPage = function() {
 		queryCategorys();
@@ -137,8 +158,8 @@
 		$('#ff').form('clear');
 		resetEditor();
 		$("#goodimglistDiv").html(goodimglistDivHtml);
-		$("#button").click(addFile);
 		$("#goodimg").val("");
+		$("#goodimgPr").attr("src","");
 	}
 	
 	var submitForm = function() {
@@ -191,7 +212,7 @@
 		}
 		return true;
 	}
-		
+	
 	//查询一级类别  
 	var queryCategorys = function() {
 		$.ajax({

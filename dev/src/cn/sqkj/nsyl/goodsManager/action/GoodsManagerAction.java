@@ -85,6 +85,17 @@ public class GoodsManagerAction extends PageAction {
 		return Action.SUCCESS;
 	}
 	
+	public String loadGoods() {
+		System.out.println(this.goods);
+		try {
+			this.goodsManagerService.queryGoodsById(this.goods.getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("查询商品失败！"+this.goods.getId(), e);
+		}
+		return Action.SUCCESS;
+	}
+	
 	public String saveGoods() {
 		//从配置文件读取
 		String imgPathPrefix = "http://127.0.0.1:8080/dev/upload/"; 

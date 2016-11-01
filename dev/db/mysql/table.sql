@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost_57
-Source Server Version : 50716
-Source Host           : localhost:3306
-Source Database       : dev
+Source Server         : 192.168.1.101
+Source Server Version : 50711
+Source Host           : 192.168.1.101:3306
+Source Database       : nssc
 
 Target Server Type    : MYSQL
-Target Server Version : 50716
+Target Server Version : 50711
 File Encoding         : 65001
 
-Date: 2016-10-19 11:56:39
+Date: 2016-11-01 12:28:32
 */
 
 -- ----------------------------
@@ -28,7 +28,7 @@ CREATE TABLE ns_address (
   isuse int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (id),
   UNIQUE KEY id_UNIQUE (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ns_address
@@ -51,7 +51,7 @@ CREATE TABLE ns_advertise (
   kind bigint(20) DEFAULT NULL,
   PRIMARY KEY (id),
   UNIQUE KEY id_UNIQUE (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ns_advertise
@@ -68,9 +68,12 @@ CREATE TABLE ns_cart (
   price decimal(10,2) DEFAULT '0.00',
   id bigint(20) NOT NULL,
   create_time datetime DEFAULT CURRENT_TIMESTAMP,
+  commission_charge decimal(10,2) DEFAULT '0.00',
+  cash decimal(10,2) DEFAULT '0.00',
+  account_amount decimal(10,2) DEFAULT '0.00',
   PRIMARY KEY (id),
   UNIQUE KEY id_UNIQUE (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ns_cart
@@ -90,7 +93,7 @@ CREATE TABLE ns_comment (
   ishidden int(11) DEFAULT '0',
   PRIMARY KEY (id),
   UNIQUE KEY id_UNIQUE (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ns_comment
@@ -107,7 +110,7 @@ CREATE TABLE ns_dictionaries (
   memo varchar(200) DEFAULT NULL,
   PRIMARY KEY (id),
   UNIQUE KEY id_UNIQUE (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ns_dictionaries
@@ -127,7 +130,7 @@ CREATE TABLE ns_eventsinfo (
   goods text,
   PRIMARY KEY (id),
   UNIQUE KEY id_UNIQUE (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ns_eventsinfo
@@ -151,31 +154,34 @@ CREATE TABLE ns_goods (
   storenumb int(11) DEFAULT '0',
   goodimg varchar(500) DEFAULT NULL,
   freazes int(11) DEFAULT '0',
+  costprice decimal(10,0) DEFAULT '0',
+  sellnumb int(11) DEFAULT '0',
   PRIMARY KEY (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ns_goods
 -- ----------------------------
 
+-- ----------------------------
+-- Table structure for ns_goods_category
+-- ----------------------------
 DROP TABLE IF EXISTS ns_goods_category;
 CREATE TABLE ns_goods_category (
-	id INT(11) NOT NULL AUTO_INCREMENT,
-	cate_name VARCHAR(100) NULL DEFAULT NULL,
-	desc_ VARCHAR(100) NULL DEFAULT NULL,
-	cate_order INT(11) NULL DEFAULT NULL,
-	level INT(11) NULL DEFAULT NULL,
-	logo VARCHAR(100) NULL DEFAULT NULL,
-	url VARCHAR(100) NULL DEFAULT NULL,
-	isuser CHAR(1) NULL DEFAULT '1',
-	parent_id INT(11) NULL DEFAULT NULL,
-	create_time DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
-	update_time DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
-	flag CHAR(1) NULL DEFAULT '0',
-	PRIMARY KEY (id)
-);
-
-INSERT INTO `ns_goods_category` VALUES ('1', '全部商品分类', '全部商品分类', '0', '0', null, null, '0', '-1', now(), '0');
+  id int(11) NOT NULL AUTO_INCREMENT,
+  cate_name varchar(100) DEFAULT NULL,
+  desc_ varchar(100) DEFAULT NULL,
+  cate_order int(11) DEFAULT NULL,
+  level int(11) DEFAULT NULL,
+  logo varchar(100) DEFAULT NULL,
+  url varchar(100) DEFAULT NULL,
+  isuser char(1) DEFAULT '1',
+  parent_id int(11) DEFAULT NULL,
+  create_time datetime DEFAULT CURRENT_TIMESTAMP,
+  update_time datetime DEFAULT CURRENT_TIMESTAMP,
+  flag char(1) DEFAULT '0',
+  PRIMARY KEY (id)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for ns_order
@@ -202,9 +208,12 @@ CREATE TABLE ns_order (
   companyname varchar(200) DEFAULT NULL,
   content varchar(45) DEFAULT NULL,
   remark varchar(200) DEFAULT NULL,
+  commision_charge decimal(10,2) DEFAULT '0.00',
+  cash decimal(10,2) DEFAULT '0.00',
+  account_amount decimal(10,2) DEFAULT '0.00',
   PRIMARY KEY (id),
   UNIQUE KEY id_UNIQUE (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ns_order
@@ -222,7 +231,7 @@ CREATE TABLE ns_order_detail (
   price decimal(10,0) NOT NULL DEFAULT '0',
   PRIMARY KEY (id),
   UNIQUE KEY id_UNIQUE (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ns_order_detail
@@ -240,7 +249,7 @@ CREATE TABLE sys_code (
   REMARK varchar(200) DEFAULT NULL,
   FLAG char(1) DEFAULT NULL,
   PRIMARY KEY (ID)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_code
@@ -261,7 +270,7 @@ CREATE TABLE t_pb_datasource (
   CREATE_TIME datetime NOT NULL,
   UPDATE_TIME datetime DEFAULT NULL,
   PRIMARY KEY (ID)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_pb_datasource
@@ -287,7 +296,7 @@ CREATE TABLE t_pb_uploadfile (
   XG_SJ datetime DEFAULT NULL,
   GROUP_ID varchar(36) DEFAULT NULL,
   PRIMARY KEY (FILE_ID)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_pb_uploadfile
@@ -305,11 +314,7 @@ CREATE TABLE t_xt_audit_log (
   ip varchar(30) DEFAULT NULL COMMENT 'IP地址',
   createdate datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (id)
-);
-
--- ----------------------------
--- Records of t_xt_audit_log
--- ----------------------------
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for t_xt_cache_table
@@ -326,7 +331,7 @@ CREATE TABLE t_xt_cache_table (
   CREATE_TIME datetime DEFAULT NULL,
   UPDATE_TIME datetime DEFAULT NULL,
   PRIMARY KEY (ID)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_xt_cache_table
@@ -355,12 +360,7 @@ CREATE TABLE t_xt_emp (
   PCUSERNAME varchar(100) DEFAULT NULL,
   FLAG char(1) DEFAULT NULL,
   PRIMARY KEY (ID)
-);
-
--- ----------------------------
--- Records of t_xt_emp
--- ----------------------------
-INSERT INTO t_xt_emp VALUES ('d6ce7860-a122-41bd-80d7-cb80f437044c', 'admin', '123456', '系统管理员', '81277dc5-6c4b-4246-97b9-47aafcb3d573', null, null, null, null, '0', null, null, '5bfad0ff-8227-4979-a5ad-6435564b020b', 'YANGCW-PC', '127.0.0.1', null, '1');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for t_xt_group
@@ -374,7 +374,7 @@ CREATE TABLE t_xt_group (
   CREATE_TIME datetime NOT NULL,
   UPDATE_TIME datetime DEFAULT NULL,
   PRIMARY KEY (ID)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_xt_group
@@ -394,7 +394,7 @@ CREATE TABLE t_xt_group_user (
   CREATE_TIME datetime NOT NULL,
   UPDATE_TIME datetime DEFAULT NULL,
   PRIMARY KEY (ID)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_xt_group_user
@@ -411,7 +411,7 @@ CREATE TABLE t_xt_key_value (
   LR_SJ datetime NOT NULL,
   XG_SJ datetime DEFAULT NULL,
   PRIMARY KEY (KV_KEY)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_xt_key_value
@@ -434,44 +434,7 @@ CREATE TABLE t_xt_menu (
   XG_SJ datetime DEFAULT NULL,
   LOGO varchar(200) DEFAULT NULL,
   PRIMARY KEY (MENU_ID)
-);
-
--- ----------------------------
--- Records of t_xt_menu
--- ----------------------------
-INSERT INTO t_xt_menu VALUES ('007ac06f-aadc-4eb5-9af9-d085ad56aafc', '人工退单管理', '59a326f9-31a5-4bb7-b973-e51fe379b48c', 'root,xt,59a326f9-31a5-4bb7-b973-e51fe379b48c,007ac06f-aadc-4eb5-9af9-d085ad56aafc', '1', '4', null, '1', '2016-10-18 12:21:54', null, null);
-INSERT INTO t_xt_menu VALUES ('0ff033aa-51fe-4600-a113-d771a03f08fa', '菜单管理', 'ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,ca795db5-52ce-4fc8-a02d-ea0da2adb8b1,0ff033aa-51fe-4600-a113-d771a03f08fa', '/view/system/tree.jsp', '3', 'tab', '1', '2016-10-13 14:01:05', '2016-10-13 14:01:05', '/images/logos/caidanguanli.png');
-INSERT INTO t_xt_menu VALUES ('115e3d38-c04d-43b7-bbd6-1f970783724c', '广告管理', 'xt', 'root,xt,115e3d38-c04d-43b7-bbd6-1f970783724c', '', '4', null, '1', '2016-10-18 12:22:54', null, null);
-INSERT INTO `t_xt_menu` VALUES ('1893b8a1-6fd6-4ec1-bc28-a9c67b1e4a01', '商品类别维护', '9779cbff-cb36-4598-aaab-f9be42349c74', 'root,xt,9779cbff-cb36-4598-aaab-f9be42349c74,1893b8a1-6fd6-4ec1-bc28-a9c67b1e4a01', '/view/goodsManager/goodsCategory.jsp', '4', null, '1', '2016-10-19 15:58:07', null, null);
-INSERT INTO t_xt_menu VALUES ('2456aacc-2776-49ad-b8ce-b7a893703033', '角色管理', 'ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,ca795db5-52ce-4fc8-a02d-ea0da2adb8b1,2456aacc-2776-49ad-b8ce-b7a893703033', '/view/system/role.jsp', '4', 'tab', '1', '2016-10-13 14:01:05', '2016-10-13 14:01:05', '/images/logos/jiaoseguanli.png');
-INSERT INTO t_xt_menu VALUES ('310628ba-3e28-4766-a187-ad732544b2a9', '操作角色管理', '7846b141-65c8-4eb9-9fc5-ae63bb236836', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,310628ba-3e28-4766-a187-ad732544b2a9', '/view/system/role.jsp', '4', null, '1', '2016-10-13 15:20:06', '2016-10-13 15:25:20', null);
-INSERT INTO t_xt_menu VALUES ('32cc9f12-65c1-4f0d-bcc2-6bbc43190dcf', '系统菜单管理', '7846b141-65c8-4eb9-9fc5-ae63bb236836', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,32cc9f12-65c1-4f0d-bcc2-6bbc43190dcf', '/view/system/tree.jsp', '1', null, '1', '2016-10-13 15:24:40', '2016-10-13 15:32:53', null);
-INSERT INTO t_xt_menu VALUES ('41606f0c-e3f4-4363-8dcb-62f1f534d3ea', '评论管理', 'xt', 'root,xt,41606f0c-e3f4-4363-8dcb-62f1f534d3ea', '', '3', null, '1', '2016-10-18 12:22:12', null, null);
-INSERT INTO t_xt_menu VALUES ('48d1dc9a-e401-417e-91fe-2bd7baab78c8', '账户管理', 'ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,ca795db5-52ce-4fc8-a02d-ea0da2adb8b1,48d1dc9a-e401-417e-91fe-2bd7baab78c8', '/view/system/user.jsp', '1', null, '1', '2016-10-13 14:01:05', '2016-10-13 14:01:05', null);
-INSERT INTO t_xt_menu VALUES ('4995b0ca-2523-4fcb-a886-89c515b08a39', '商品维护', '9779cbff-cb36-4598-aaab-f9be42349c74', 'root,xt,9779cbff-cb36-4598-aaab-f9be42349c74,4995b0ca-2523-4fcb-a886-89c515b08a39', '/view/goodsManager/goods.jsp', '2', null, '1', '2016-10-13 15:36:52', '2016-10-18 11:26:19', null);
-INSERT INTO t_xt_menu VALUES ('53fc11af-d8f7-49bc-a35a-98df87cc987e', '操作权限管理', '7846b141-65c8-4eb9-9fc5-ae63bb236836', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,53fc11af-d8f7-49bc-a35a-98df87cc987e', '/view/system/role_menu_config.jsp', '3', null, '1', '2016-10-13 15:21:16', null, null);
-INSERT INTO t_xt_menu VALUES ('59a326f9-31a5-4bb7-b973-e51fe379b48c', '订单管理', 'xt', 'root,xt,59a326f9-31a5-4bb7-b973-e51fe379b48c', '', '2', null, '1', '2016-10-13 14:12:52', '2016-10-13 14:13:01', null);
-INSERT INTO t_xt_menu VALUES ('5a7bfa0e-05cc-4204-b3c9-1e9a7c796398', '商品入库', '9779cbff-cb36-4598-aaab-f9be42349c74', 'root,xt,9779cbff-cb36-4598-aaab-f9be42349c74,5a7bfa0e-05cc-4204-b3c9-1e9a7c796398', '1', '3', null, '1', '2016-10-18 12:21:36', null, null);
-INSERT INTO t_xt_menu VALUES ('65c489f1-6f86-4d82-a381-45be4dedf09b', '订单状态变更', '59a326f9-31a5-4bb7-b973-e51fe379b48c', 'root,xt,59a326f9-31a5-4bb7-b973-e51fe379b48c,65c489f1-6f86-4d82-a381-45be4dedf09b', '1', '3', null, '1', '2016-10-13 15:51:54', null, null);
-INSERT INTO t_xt_menu VALUES ('6c0167ad-89da-4857-865e-54c7fe8dde4c', '基础设置', 'xt', 'root,xt,6c0167ad-89da-4857-865e-54c7fe8dde4c', '', '5', null, '1', '2016-10-13 15:52:17', '2016-10-18 12:22:05', null);
-INSERT INTO t_xt_menu VALUES ('6e5174f8-29c5-4cc2-9ec3-4b7f5608bfc3', '查询统计', 'xt', 'root,xt,6e5174f8-29c5-4cc2-9ec3-4b7f5608bfc3', '', '6', null, '1', '2016-10-18 12:24:07', null, null);
-INSERT INTO t_xt_menu VALUES ('727df0ce-48c9-4744-b8ec-4c3115fca915', '活动管理', '115e3d38-c04d-43b7-bbd6-1f970783724c', 'root,xt,115e3d38-c04d-43b7-bbd6-1f970783724c,727df0ce-48c9-4744-b8ec-4c3115fca915', '1', '2', null, '1', '2016-10-18 12:23:28', null, null);
-INSERT INTO t_xt_menu VALUES ('7846b141-65c8-4eb9-9fc5-ae63bb236836', '权限管理', 'xt', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836', '', '9', null, '1', '2016-10-13 14:01:05', '2016-10-13 14:01:05', null);
-INSERT INTO t_xt_menu VALUES ('80cbe605-3dc6-445b-a79d-5d20f404cb2f', '订单查询', '59a326f9-31a5-4bb7-b973-e51fe379b48c', 'root,xt,59a326f9-31a5-4bb7-b973-e51fe379b48c,80cbe605-3dc6-445b-a79d-5d20f404cb2f', '1', '1', null, '1', '2016-10-13 14:13:50', '2016-10-13 15:51:16', null);
-INSERT INTO t_xt_menu VALUES ('9779cbff-cb36-4598-aaab-f9be42349c74', '商品管理', 'xt', 'root,xt,9779cbff-cb36-4598-aaab-f9be42349c74', '', '1', null, '1', '2016-10-13 14:14:57', '2016-10-13 15:36:13', null);
-INSERT INTO t_xt_menu VALUES ('ab88f2b9-d108-4f8b-9d8a-c43181c62ae9', '字典管理', '6c0167ad-89da-4857-865e-54c7fe8dde4c', 'root,xt,6c0167ad-89da-4857-865e-54c7fe8dde4c,ab88f2b9-d108-4f8b-9d8a-c43181c62ae9', '1', '1', null, '1', '2016-10-13 15:52:44', null, null);
-INSERT INTO t_xt_menu VALUES ('afa5485d-5d1b-45fb-8d8d-57b7a83fbbe5', '操作日志查询', '7846b141-65c8-4eb9-9fc5-ae63bb236836', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,afa5485d-5d1b-45fb-8d8d-57b7a83fbbe5', '/view/log/log.jsp', '6', null, '1', '2016-10-13 14:15:31', '2016-10-13 15:20:23', null);
-INSERT INTO t_xt_menu VALUES ('b782816d-cb7e-40ce-beab-949d6d7b8512', '角色菜单管理', 'ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,ca795db5-52ce-4fc8-a02d-ea0da2adb8b1,b782816d-cb7e-40ce-beab-949d6d7b8512', '/view/system/role_menu_config.jsp', '5', 'tab', '1', '2016-10-13 14:01:05', '2016-10-13 14:01:05', '/images/logos/jiaosecaidanguanli.png');
-INSERT INTO t_xt_menu VALUES ('c690495e-d8b5-4765-8dc5-6e771b246c24', '评论维护', '41606f0c-e3f4-4363-8dcb-62f1f534d3ea', 'root,xt,41606f0c-e3f4-4363-8dcb-62f1f534d3ea,c690495e-d8b5-4765-8dc5-6e771b246c24', '1', '1', null, '1', '2016-10-18 12:22:35', null, null);
-INSERT INTO t_xt_menu VALUES ('ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', '人员权限管理', '7846b141-65c8-4eb9-9fc5-ae63bb236836', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', '', '99', null, '1', '2016-10-13 14:01:05', '2016-10-13 15:20:17', null);
-INSERT INTO t_xt_menu VALUES ('de21e498-6d9e-47d1-b724-0205263609fd', '操作角色人员管理', '7846b141-65c8-4eb9-9fc5-ae63bb236836', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,de21e498-6d9e-47d1-b724-0205263609fd', '/view/system/role_user_config.jsp', '5', null, '1', '2016-10-13 15:33:59', '2016-10-13 15:34:07', null);
-INSERT INTO t_xt_menu VALUES ('e40ec219-da7b-441f-9f41-cd95aa79e874', '物流信息录入', '59a326f9-31a5-4bb7-b973-e51fe379b48c', 'root,xt,59a326f9-31a5-4bb7-b973-e51fe379b48c,e40ec219-da7b-441f-9f41-cd95aa79e874', '1', '2', null, '1', '2016-10-13 15:51:26', '2016-10-13 15:51:29', null);
-INSERT INTO t_xt_menu VALUES ('e9f55cad-2593-427c-9427-48ebeee935cf', '角色人员管理', 'ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,ca795db5-52ce-4fc8-a02d-ea0da2adb8b1,e9f55cad-2593-427c-9427-48ebeee935cf', '/view/system/role_user_config.jsp', '6', 'tab', '1', '2016-10-13 14:01:05', '2016-10-13 14:01:05', '/images/logos/jiaoserenyuanguanli.png');
-INSERT INTO t_xt_menu VALUES ('f4e5a984-a02e-4c12-b903-3801d6d8e3c8', '操作人员管理', '7846b141-65c8-4eb9-9fc5-ae63bb236836', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,f4e5a984-a02e-4c12-b903-3801d6d8e3c8', '/view/system/user.jsp', '2', null, '1', '2016-10-13 15:19:23', '2016-10-13 15:32:58', null);
-INSERT INTO t_xt_menu VALUES ('f72fb176-0bba-452f-95a1-dd82c91dd374', '广告录入', '115e3d38-c04d-43b7-bbd6-1f970783724c', 'root,xt,115e3d38-c04d-43b7-bbd6-1f970783724c,f72fb176-0bba-452f-95a1-dd82c91dd374', '1', '1', null, '1', '2016-10-18 12:23:07', null, null);
-INSERT INTO t_xt_menu VALUES ('fa8b8df9-2559-4f48-b1c3-5ee8b21a58f1', '商品录入', '9779cbff-cb36-4598-aaab-f9be42349c74', 'root,xt,9779cbff-cb36-4598-aaab-f9be42349c74,fa8b8df9-2559-4f48-b1c3-5ee8b21a58f1', '1', '1', null, '1', '2016-10-13 14:15:07', '2016-10-13 15:36:36', null);
-INSERT INTO t_xt_menu VALUES ('fd8fc71c-d011-4484-9e39-bedd4bcd7506', '机构管理', 'ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,ca795db5-52ce-4fc8-a02d-ea0da2adb8b1,fd8fc71c-d011-4484-9e39-bedd4bcd7506', '/view/system/orgtree.jsp', '2', 'tab', '1', '2016-10-13 14:01:05', '2016-10-13 14:01:05', '/images/logos/jigouguanli.png');
-INSERT INTO t_xt_menu VALUES ('xt', '系统', 'root', 'root,xt', null, '1', null, '1', '2016-10-13 14:01:05', null, null);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for t_xt_message
@@ -493,7 +456,7 @@ CREATE TABLE t_xt_message (
   CREATE_TIME datetime DEFAULT NULL,
   UPDATE_TIME datetime DEFAULT NULL,
   PRIMARY KEY (ID)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_xt_message
@@ -515,14 +478,7 @@ CREATE TABLE t_xt_org (
   ORG_PATH varchar(1000) DEFAULT NULL,
   ORG_LEVEL int(11) DEFAULT NULL,
   PRIMARY KEY (ID)
-);
-
--- ----------------------------
--- Records of t_xt_org
--- ----------------------------
-INSERT INTO t_xt_org VALUES ('097e835f-52cd-412a-984b-8c8b06e0fcca', '001002', '人力资源部', '001', '2', null, null, '人力资源部', '企业1/人力资源部', '2');
-INSERT INTO t_xt_org VALUES ('81277dc5-6c4b-4246-97b9-47aafcb3d573', '001', '所有机构', 'root', '1', '1', null, '所有机构', '所有机构', '0');
-INSERT INTO t_xt_org VALUES ('9ee3fed0-d4cb-414b-959b-e381dc0f18b5', '001001', '办公室', '001', '1', null, null, '办公室', '企业1/办公室', '2');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for t_xt_position
@@ -533,12 +489,7 @@ CREATE TABLE t_xt_position (
   POSITION_NAME varchar(200) DEFAULT NULL,
   POSITION_DESC varchar(200) DEFAULT NULL,
   PRIMARY KEY (POSITION_ID)
-);
-
--- ----------------------------
--- Records of t_xt_position
--- ----------------------------
-INSERT INTO t_xt_position VALUES ('5bfad0ff-8227-4979-a5ad-6435564b020b', '系统管理员', '系统管理员');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for t_xt_role
@@ -554,13 +505,7 @@ CREATE TABLE t_xt_role (
   LR_SJ datetime NOT NULL,
   XG_SJ datetime DEFAULT NULL,
   PRIMARY KEY (ROLE_ID)
-);
-
--- ----------------------------
--- Records of t_xt_role
--- ----------------------------
-INSERT INTO t_xt_role VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', '普通用户', '0', '普通用户', null, '1', '2016-10-13 14:01:06', '2016-10-13 14:01:06');
-INSERT INTO t_xt_role VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '系统管理员', '0', null, null, '1', '2016-10-13 14:01:06', '2016-10-13 14:01:06');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for t_xt_role_menu
@@ -573,46 +518,7 @@ CREATE TABLE t_xt_role_menu (
   LR_SJ datetime NOT NULL,
   XG_SJ datetime DEFAULT NULL,
   PRIMARY KEY (ROLE_ID,MENU_ID)
-);
-
--- ----------------------------
--- Records of t_xt_role_menu
--- ----------------------------
-INSERT INTO t_xt_role_menu VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', '4995b0ca-2523-4fcb-a886-89c515b08a39', '1', '2016-10-13 16:15:37', null);
-INSERT INTO t_xt_role_menu VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', '59a326f9-31a5-4bb7-b973-e51fe379b48c', '1', '2016-10-13 16:15:37', null);
-INSERT INTO t_xt_role_menu VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', '65c489f1-6f86-4d82-a381-45be4dedf09b', '1', '2016-10-13 16:15:37', null);
-INSERT INTO t_xt_role_menu VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', '6c0167ad-89da-4857-865e-54c7fe8dde4c', '1', '2016-10-13 16:15:37', null);
-INSERT INTO t_xt_role_menu VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', '80cbe605-3dc6-445b-a79d-5d20f404cb2f', '1', '2016-10-13 16:15:37', null);
-INSERT INTO t_xt_role_menu VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', '9779cbff-cb36-4598-aaab-f9be42349c74', '1', '2016-10-13 16:15:37', null);
-INSERT INTO t_xt_role_menu VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', 'ab88f2b9-d108-4f8b-9d8a-c43181c62ae9', '1', '2016-10-13 16:15:37', null);
-INSERT INTO t_xt_role_menu VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', 'e40ec219-da7b-441f-9f41-cd95aa79e874', '1', '2016-10-13 16:15:37', null);
-INSERT INTO t_xt_role_menu VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', 'fa8b8df9-2559-4f48-b1c3-5ee8b21a58f1', '1', '2016-10-13 16:15:37', null);
-INSERT INTO t_xt_role_menu VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', 'xt', '1', '2016-10-13 16:15:37', null);
-INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '007ac06f-aadc-4eb5-9af9-d085ad56aafc', '1', '2016-10-18 12:24:56', null);
-INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '115e3d38-c04d-43b7-bbd6-1f970783724c', '1', '2016-10-18 12:24:56', null);
-INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '310628ba-3e28-4766-a187-ad732544b2a9', '1', '2016-10-18 12:24:56', null);
-INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '32cc9f12-65c1-4f0d-bcc2-6bbc43190dcf', '1', '2016-10-18 12:24:56', null);
-INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '41606f0c-e3f4-4363-8dcb-62f1f534d3ea', '1', '2016-10-18 12:24:56', null);
-INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '4995b0ca-2523-4fcb-a886-89c515b08a39', '1', '2016-10-18 12:24:56', null);
-INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '53fc11af-d8f7-49bc-a35a-98df87cc987e', '1', '2016-10-18 12:24:56', null);
-INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '59a326f9-31a5-4bb7-b973-e51fe379b48c', '1', '2016-10-18 12:24:56', null);
-INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '5a7bfa0e-05cc-4204-b3c9-1e9a7c796398', '1', '2016-10-18 12:24:56', null);
-INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '65c489f1-6f86-4d82-a381-45be4dedf09b', '1', '2016-10-18 12:24:56', null);
-INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '6c0167ad-89da-4857-865e-54c7fe8dde4c', '1', '2016-10-18 12:24:56', null);
-INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '6e5174f8-29c5-4cc2-9ec3-4b7f5608bfc3', '1', '2016-10-18 12:24:56', null);
-INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '727df0ce-48c9-4744-b8ec-4c3115fca915', '1', '2016-10-18 12:24:56', null);
-INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '7846b141-65c8-4eb9-9fc5-ae63bb236836', '1', '2016-10-18 12:24:56', null);
-INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '80cbe605-3dc6-445b-a79d-5d20f404cb2f', '1', '2016-10-18 12:24:56', null);
-INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '9779cbff-cb36-4598-aaab-f9be42349c74', '1', '2016-10-18 12:24:56', null);
-INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', 'ab88f2b9-d108-4f8b-9d8a-c43181c62ae9', '1', '2016-10-18 12:24:56', null);
-INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', 'afa5485d-5d1b-45fb-8d8d-57b7a83fbbe5', '1', '2016-10-18 12:24:56', null);
-INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', 'c690495e-d8b5-4765-8dc5-6e771b246c24', '1', '2016-10-18 12:24:56', null);
-INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', 'de21e498-6d9e-47d1-b724-0205263609fd', '1', '2016-10-18 12:24:56', null);
-INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', 'e40ec219-da7b-441f-9f41-cd95aa79e874', '1', '2016-10-18 12:24:56', null);
-INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', 'f4e5a984-a02e-4c12-b903-3801d6d8e3c8', '1', '2016-10-18 12:24:56', null);
-INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', 'f72fb176-0bba-452f-95a1-dd82c91dd374', '1', '2016-10-18 12:24:56', null);
-INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', 'fa8b8df9-2559-4f48-b1c3-5ee8b21a58f1', '1', '2016-10-18 12:24:56', null);
-INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', 'xt', '1', '2016-10-18 12:24:56', null);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for t_xt_role_user
@@ -625,13 +531,7 @@ CREATE TABLE t_xt_role_user (
   LR_SJ datetime NOT NULL,
   XG_SJ datetime DEFAULT NULL,
   PRIMARY KEY (ROLE_ID,U_ID)
-);
-
--- ----------------------------
--- Records of t_xt_role_user
--- ----------------------------
-INSERT INTO t_xt_role_user VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', 'admin', '0', '2016-10-13 14:01:08', '2016-10-13 16:15:21');
-INSERT INTO t_xt_role_user VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', 'admin', '1', '2016-10-13 14:01:08', null);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for t_xt_user
@@ -647,12 +547,7 @@ CREATE TABLE t_xt_user (
   XG_SJ datetime DEFAULT NULL,
   ORDER_ int(11) DEFAULT NULL,
   PRIMARY KEY (U_ID)
-);
-
--- ----------------------------
--- Records of t_xt_user
--- ----------------------------
-INSERT INTO t_xt_user VALUES ('admin', '123456', '系统管理员', null, '1', '2016-10-13 14:01:08', null, null);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for t_xt_workday
@@ -666,8 +561,124 @@ CREATE TABLE t_xt_workday (
   CREATE_TIME datetime DEFAULT NULL,
   UPDATE_TIME datetime DEFAULT NULL,
   PRIMARY KEY (DAY)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_xt_workday
 -- ----------------------------
+
+-- ----------------------------
+-- Records of ns_goods_category
+-- ----------------------------
+INSERT INTO ns_goods_category VALUES ('1', '全部商品分类', '全部商品分类', '0', '0', null, null, '0', '-1', now(), now(), '0');
+
+-- ----------------------------
+-- Records of t_xt_user
+-- ----------------------------
+INSERT INTO t_xt_user VALUES ('admin', '123456', '系统管理员', null, '1', '2016-10-13 14:01:08', null, null);
+
+-- ----------------------------
+-- Records of t_xt_emp
+-- ----------------------------
+INSERT INTO t_xt_emp VALUES ('d6ce7860-a122-41bd-80d7-cb80f437044c', 'admin', '123456', '系统管理员', '81277dc5-6c4b-4246-97b9-47aafcb3d573', null, null, null, null, '0', null, null, '5bfad0ff-8227-4979-a5ad-6435564b020b', 'YANGCW-PC', '127.0.0.1', null, '1');
+
+-- ----------------------------
+-- Records of t_xt_menu
+-- ----------------------------
+/*INSERT INTO t_xt_menu VALUES ('007ac06f-aadc-4eb5-9af9-d085ad56aafc', '人工退单管理', '59a326f9-31a5-4bb7-b973-e51fe379b48c', 'root,xt,59a326f9-31a5-4bb7-b973-e51fe379b48c,007ac06f-aadc-4eb5-9af9-d085ad56aafc', '1', '4', null, '1', '2016-10-18 12:21:54', null, null);*/
+INSERT INTO t_xt_menu VALUES ('115e3d38-c04d-43b7-bbd6-1f970783724c', '广告管理', 'xt', 'root,xt,115e3d38-c04d-43b7-bbd6-1f970783724c', '', '4', null, '1', '2016-10-18 12:22:54', null, null);
+INSERT INTO t_xt_menu VALUES ('1893b8a1-6fd6-4ec1-bc28-a9c67b1e4a01', '商品类别维护', '9779cbff-cb36-4598-aaab-f9be42349c74', 'root,xt,9779cbff-cb36-4598-aaab-f9be42349c74,1893b8a1-6fd6-4ec1-bc28-a9c67b1e4a01', '/view/goodsManager/goodsCategory.jsp', '4', null, '1', '2016-10-19 15:58:07', null, null);
+INSERT INTO t_xt_menu VALUES ('310628ba-3e28-4766-a187-ad732544b2a9', '操作角色管理', '7846b141-65c8-4eb9-9fc5-ae63bb236836', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,310628ba-3e28-4766-a187-ad732544b2a9', '/view/system/role.jsp', '4', null, '1', '2016-10-13 15:20:06', '2016-10-13 15:25:20', null);
+INSERT INTO t_xt_menu VALUES ('32cc9f12-65c1-4f0d-bcc2-6bbc43190dcf', '系统菜单管理', '7846b141-65c8-4eb9-9fc5-ae63bb236836', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,32cc9f12-65c1-4f0d-bcc2-6bbc43190dcf', '/view/system/tree.jsp', '1', null, '1', '2016-10-13 15:24:40', '2016-10-13 15:32:53', null);
+INSERT INTO t_xt_menu VALUES ('41606f0c-e3f4-4363-8dcb-62f1f534d3ea', '评论管理', 'xt', 'root,xt,41606f0c-e3f4-4363-8dcb-62f1f534d3ea', '', '3', null, '1', '2016-10-18 12:22:12', null, null);
+INSERT INTO t_xt_menu VALUES ('4995b0ca-2523-4fcb-a886-89c515b08a39', '商品维护', '9779cbff-cb36-4598-aaab-f9be42349c74', 'root,xt,9779cbff-cb36-4598-aaab-f9be42349c74,4995b0ca-2523-4fcb-a886-89c515b08a39', '/view/goodsManager/goods.jsp', '2', null, '1', '2016-10-13 15:36:52', '2016-10-18 11:26:19', null);
+INSERT INTO t_xt_menu VALUES ('53fc11af-d8f7-49bc-a35a-98df87cc987e', '操作权限管理', '7846b141-65c8-4eb9-9fc5-ae63bb236836', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,53fc11af-d8f7-49bc-a35a-98df87cc987e', '/view/system/role_menu_config.jsp', '3', null, '1', '2016-10-13 15:21:16', null, null);
+INSERT INTO t_xt_menu VALUES ('59a326f9-31a5-4bb7-b973-e51fe379b48c', '订单管理', 'xt', 'root,xt,59a326f9-31a5-4bb7-b973-e51fe379b48c', '', '2', null, '1', '2016-10-13 14:12:52', '2016-10-13 14:13:01', null);
+INSERT INTO t_xt_menu VALUES ('5a7bfa0e-05cc-4204-b3c9-1e9a7c796398', '商品入库', '9779cbff-cb36-4598-aaab-f9be42349c74', 'root,xt,9779cbff-cb36-4598-aaab-f9be42349c74,5a7bfa0e-05cc-4204-b3c9-1e9a7c796398', '/view/goodsManager/goodsStorage.jsp', '3', null, '1', '2016-10-18 12:21:36', '2016-11-01 12:13:25', null);
+INSERT INTO t_xt_menu VALUES ('65c489f1-6f86-4d82-a381-45be4dedf09b', '订单状态变更', '59a326f9-31a5-4bb7-b973-e51fe379b48c', 'root,xt,59a326f9-31a5-4bb7-b973-e51fe379b48c,65c489f1-6f86-4d82-a381-45be4dedf09b', '1', '3', null, '1', '2016-10-13 15:51:54', null, null);
+INSERT INTO t_xt_menu VALUES ('6c0167ad-89da-4857-865e-54c7fe8dde4c', '基础设置', 'xt', 'root,xt,6c0167ad-89da-4857-865e-54c7fe8dde4c', '', '5', null, '1', '2016-10-13 15:52:17', '2016-10-18 12:22:05', null);
+INSERT INTO t_xt_menu VALUES ('6e5174f8-29c5-4cc2-9ec3-4b7f5608bfc3', '查询统计', 'xt', 'root,xt,6e5174f8-29c5-4cc2-9ec3-4b7f5608bfc3', '', '6', null, '1', '2016-10-18 12:24:07', null, null);
+INSERT INTO t_xt_menu VALUES ('727df0ce-48c9-4744-b8ec-4c3115fca915', '活动管理', '115e3d38-c04d-43b7-bbd6-1f970783724c', 'root,xt,115e3d38-c04d-43b7-bbd6-1f970783724c,727df0ce-48c9-4744-b8ec-4c3115fca915', '1', '2', null, '1', '2016-10-18 12:23:28', null, null);
+INSERT INTO t_xt_menu VALUES ('7846b141-65c8-4eb9-9fc5-ae63bb236836', '权限管理', 'xt', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836', '', '9', null, '1', '2016-10-13 14:01:05', '2016-10-13 14:01:05', null);
+INSERT INTO t_xt_menu VALUES ('80cbe605-3dc6-445b-a79d-5d20f404cb2f', '订单查询', '59a326f9-31a5-4bb7-b973-e51fe379b48c', 'root,xt,59a326f9-31a5-4bb7-b973-e51fe379b48c,80cbe605-3dc6-445b-a79d-5d20f404cb2f', '1', '1', null, '1', '2016-10-13 14:13:50', '2016-10-13 15:51:16', null);
+INSERT INTO t_xt_menu VALUES ('9779cbff-cb36-4598-aaab-f9be42349c74', '商品管理', 'xt', 'root,xt,9779cbff-cb36-4598-aaab-f9be42349c74', '', '1', null, '1', '2016-10-13 14:14:57', '2016-10-13 15:36:13', null);
+INSERT INTO t_xt_menu VALUES ('ab88f2b9-d108-4f8b-9d8a-c43181c62ae9', '字典管理', '6c0167ad-89da-4857-865e-54c7fe8dde4c', 'root,xt,6c0167ad-89da-4857-865e-54c7fe8dde4c,ab88f2b9-d108-4f8b-9d8a-c43181c62ae9', '1', '1', null, '1', '2016-10-13 15:52:44', null, null);
+INSERT INTO t_xt_menu VALUES ('afa5485d-5d1b-45fb-8d8d-57b7a83fbbe5', '操作日志查询', '7846b141-65c8-4eb9-9fc5-ae63bb236836', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,afa5485d-5d1b-45fb-8d8d-57b7a83fbbe5', '/view/log/log.jsp', '6', null, '1', '2016-10-13 14:15:31', '2016-10-13 15:20:23', null);
+INSERT INTO t_xt_menu VALUES ('c690495e-d8b5-4765-8dc5-6e771b246c24', '评论维护', '41606f0c-e3f4-4363-8dcb-62f1f534d3ea', 'root,xt,41606f0c-e3f4-4363-8dcb-62f1f534d3ea,c690495e-d8b5-4765-8dc5-6e771b246c24', '1', '1', null, '1', '2016-10-18 12:22:35', null, null);
+INSERT INTO t_xt_menu VALUES ('de21e498-6d9e-47d1-b724-0205263609fd', '操作角色人员管理', '7846b141-65c8-4eb9-9fc5-ae63bb236836', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,de21e498-6d9e-47d1-b724-0205263609fd', '/view/system/role_user_config.jsp', '5', null, '1', '2016-10-13 15:33:59', '2016-10-13 15:34:07', null);
+INSERT INTO t_xt_menu VALUES ('e40ec219-da7b-441f-9f41-cd95aa79e874', '物流信息录入', '59a326f9-31a5-4bb7-b973-e51fe379b48c', 'root,xt,59a326f9-31a5-4bb7-b973-e51fe379b48c,e40ec219-da7b-441f-9f41-cd95aa79e874', '1', '2', null, '1', '2016-10-13 15:51:26', '2016-10-13 15:51:29', null);
+INSERT INTO t_xt_menu VALUES ('f4e5a984-a02e-4c12-b903-3801d6d8e3c8', '操作人员管理', '7846b141-65c8-4eb9-9fc5-ae63bb236836', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,f4e5a984-a02e-4c12-b903-3801d6d8e3c8', '/view/system/user.jsp', '2', null, '1', '2016-10-13 15:19:23', '2016-10-13 15:32:58', null);
+INSERT INTO t_xt_menu VALUES ('f72fb176-0bba-452f-95a1-dd82c91dd374', '广告录入', '115e3d38-c04d-43b7-bbd6-1f970783724c', 'root,xt,115e3d38-c04d-43b7-bbd6-1f970783724c,f72fb176-0bba-452f-95a1-dd82c91dd374', '1', '1', null, '1', '2016-10-18 12:23:07', null, null);
+INSERT INTO t_xt_menu VALUES ('fa8b8df9-2559-4f48-b1c3-5ee8b21a58f1', '商品录入', '9779cbff-cb36-4598-aaab-f9be42349c74', 'root,xt,9779cbff-cb36-4598-aaab-f9be42349c74,fa8b8df9-2559-4f48-b1c3-5ee8b21a58f1', '/view/goodsManager/goodsAdd.jsp', '1', null, '1', '2016-10-13 14:15:07', '2016-10-13 15:36:36', null);
+INSERT INTO t_xt_menu VALUES ('xt', '系统', 'root', 'root,xt', null, '1', null, '1', '2016-10-13 14:01:05', null, null);
+/*INSERT INTO t_xt_menu VALUES ('0ff033aa-51fe-4600-a113-d771a03f08fa', '菜单管理', 'ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,ca795db5-52ce-4fc8-a02d-ea0da2adb8b1,0ff033aa-51fe-4600-a113-d771a03f08fa', '/view/system/tree.jsp', '3', 'tab', '1', '2016-10-13 14:01:05', '2016-10-13 14:01:05', '/images/logos/caidanguanli.png');*/
+/*INSERT INTO t_xt_menu VALUES ('2456aacc-2776-49ad-b8ce-b7a893703033', '角色管理', 'ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,ca795db5-52ce-4fc8-a02d-ea0da2adb8b1,2456aacc-2776-49ad-b8ce-b7a893703033', '/view/system/role.jsp', '4', 'tab', '1', '2016-10-13 14:01:05', '2016-10-13 14:01:05', '/images/logos/jiaoseguanli.png');*/
+/*INSERT INTO t_xt_menu VALUES ('48d1dc9a-e401-417e-91fe-2bd7baab78c8', '账户管理', 'ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,ca795db5-52ce-4fc8-a02d-ea0da2adb8b1,48d1dc9a-e401-417e-91fe-2bd7baab78c8', '/view/system/user.jsp', '1', null, '1', '2016-10-13 14:01:05', '2016-10-13 14:01:05', null);*/
+/*INSERT INTO t_xt_menu VALUES ('b782816d-cb7e-40ce-beab-949d6d7b8512', '角色菜单管理', 'ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,ca795db5-52ce-4fc8-a02d-ea0da2adb8b1,b782816d-cb7e-40ce-beab-949d6d7b8512', '/view/system/role_menu_config.jsp', '5', 'tab', '1', '2016-10-13 14:01:05', '2016-10-13 14:01:05', '/images/logos/jiaosecaidanguanli.png');*/
+/*INSERT INTO t_xt_menu VALUES ('ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', '人员权限管理', '7846b141-65c8-4eb9-9fc5-ae63bb236836', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', '', '99', null, '1', '2016-10-13 14:01:05', '2016-10-13 15:20:17', null);*/
+/*INSERT INTO t_xt_menu VALUES ('e9f55cad-2593-427c-9427-48ebeee935cf', '角色人员管理', 'ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,ca795db5-52ce-4fc8-a02d-ea0da2adb8b1,e9f55cad-2593-427c-9427-48ebeee935cf', '/view/system/role_user_config.jsp', '6', 'tab', '1', '2016-10-13 14:01:05', '2016-10-13 14:01:05', '/images/logos/jiaoserenyuanguanli.png');*/
+/*INSERT INTO t_xt_menu VALUES ('fd8fc71c-d011-4484-9e39-bedd4bcd7506', '机构管理', 'ca795db5-52ce-4fc8-a02d-ea0da2adb8b1', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,ca795db5-52ce-4fc8-a02d-ea0da2adb8b1,fd8fc71c-d011-4484-9e39-bedd4bcd7506', '/view/system/orgtree.jsp', '2', 'tab', '1', '2016-10-13 14:01:05', '2016-10-13 14:01:05', '/images/logos/jigouguanli.png');*/
+
+-- ----------------------------
+-- Records of t_xt_org
+-- ----------------------------
+INSERT INTO t_xt_org VALUES ('097e835f-52cd-412a-984b-8c8b06e0fcca', '001002', '人力资源部', '001', '2', null, null, '人力资源部', '企业1/人力资源部', '2');
+INSERT INTO t_xt_org VALUES ('81277dc5-6c4b-4246-97b9-47aafcb3d573', '001', '所有机构', 'root', '1', '1', null, '所有机构', '所有机构', '0');
+INSERT INTO t_xt_org VALUES ('9ee3fed0-d4cb-414b-959b-e381dc0f18b5', '001001', '办公室', '001', '1', null, null, '办公室', '企业1/办公室', '2');
+
+-- ----------------------------
+-- Records of t_xt_position
+-- ----------------------------
+INSERT INTO t_xt_position VALUES ('5bfad0ff-8227-4979-a5ad-6435564b020b', '系统管理员', '系统管理员');
+
+-- ----------------------------
+-- Records of t_xt_role
+-- ----------------------------
+INSERT INTO t_xt_role VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', '普通用户', '0', '普通用户', null, '1', '2016-10-13 14:01:06', '2016-10-13 14:01:06');
+INSERT INTO t_xt_role VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '系统管理员', '0', null, null, '1', '2016-10-13 14:01:06', '2016-10-13 14:01:06');
+
+-- ----------------------------
+-- Records of t_xt_role_menu
+-- ----------------------------
+INSERT INTO t_xt_role_menu VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', '4995b0ca-2523-4fcb-a886-89c515b08a39', '1', '2016-10-13 16:15:37', null);
+INSERT INTO t_xt_role_menu VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', '59a326f9-31a5-4bb7-b973-e51fe379b48c', '1', '2016-10-13 16:15:37', null);
+INSERT INTO t_xt_role_menu VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', '65c489f1-6f86-4d82-a381-45be4dedf09b', '1', '2016-10-13 16:15:37', null);
+INSERT INTO t_xt_role_menu VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', '6c0167ad-89da-4857-865e-54c7fe8dde4c', '1', '2016-10-13 16:15:37', null);
+INSERT INTO t_xt_role_menu VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', '80cbe605-3dc6-445b-a79d-5d20f404cb2f', '1', '2016-10-13 16:15:37', null);
+INSERT INTO t_xt_role_menu VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', '9779cbff-cb36-4598-aaab-f9be42349c74', '1', '2016-10-13 16:15:37', null);
+INSERT INTO t_xt_role_menu VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', 'ab88f2b9-d108-4f8b-9d8a-c43181c62ae9', '1', '2016-10-13 16:15:37', null);
+INSERT INTO t_xt_role_menu VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', 'e40ec219-da7b-441f-9f41-cd95aa79e874', '1', '2016-10-13 16:15:37', null);
+INSERT INTO t_xt_role_menu VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', 'fa8b8df9-2559-4f48-b1c3-5ee8b21a58f1', '1', '2016-10-13 16:15:37', null);
+INSERT INTO t_xt_role_menu VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', 'xt', '1', '2016-10-13 16:15:37', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '007ac06f-aadc-4eb5-9af9-d085ad56aafc', '1', '2016-11-01 12:22:30', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '115e3d38-c04d-43b7-bbd6-1f970783724c', '1', '2016-11-01 12:22:30', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '1893b8a1-6fd6-4ec1-bc28-a9c67b1e4a01', '1', '2016-11-01 12:22:30', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '310628ba-3e28-4766-a187-ad732544b2a9', '1', '2016-11-01 12:22:30', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '32cc9f12-65c1-4f0d-bcc2-6bbc43190dcf', '1', '2016-11-01 12:22:30', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '41606f0c-e3f4-4363-8dcb-62f1f534d3ea', '1', '2016-11-01 12:22:30', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '4995b0ca-2523-4fcb-a886-89c515b08a39', '1', '2016-11-01 12:22:30', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '53fc11af-d8f7-49bc-a35a-98df87cc987e', '1', '2016-11-01 12:22:30', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '59a326f9-31a5-4bb7-b973-e51fe379b48c', '1', '2016-11-01 12:22:30', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '5a7bfa0e-05cc-4204-b3c9-1e9a7c796398', '1', '2016-11-01 12:22:30', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '65c489f1-6f86-4d82-a381-45be4dedf09b', '1', '2016-11-01 12:22:30', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '6c0167ad-89da-4857-865e-54c7fe8dde4c', '1', '2016-11-01 12:22:30', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '6e5174f8-29c5-4cc2-9ec3-4b7f5608bfc3', '1', '2016-11-01 12:22:30', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '727df0ce-48c9-4744-b8ec-4c3115fca915', '1', '2016-11-01 12:22:30', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '7846b141-65c8-4eb9-9fc5-ae63bb236836', '1', '2016-11-01 12:22:30', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '80cbe605-3dc6-445b-a79d-5d20f404cb2f', '1', '2016-11-01 12:22:30', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', '9779cbff-cb36-4598-aaab-f9be42349c74', '1', '2016-11-01 12:22:30', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', 'ab88f2b9-d108-4f8b-9d8a-c43181c62ae9', '1', '2016-11-01 12:22:30', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', 'afa5485d-5d1b-45fb-8d8d-57b7a83fbbe5', '1', '2016-11-01 12:22:30', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', 'c690495e-d8b5-4765-8dc5-6e771b246c24', '1', '2016-11-01 12:22:30', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', 'de21e498-6d9e-47d1-b724-0205263609fd', '1', '2016-11-01 12:22:30', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', 'e40ec219-da7b-441f-9f41-cd95aa79e874', '1', '2016-11-01 12:22:30', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', 'f4e5a984-a02e-4c12-b903-3801d6d8e3c8', '1', '2016-11-01 12:22:30', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', 'f72fb176-0bba-452f-95a1-dd82c91dd374', '1', '2016-11-01 12:22:30', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', 'fa8b8df9-2559-4f48-b1c3-5ee8b21a58f1', '1', '2016-11-01 12:22:30', null);
+INSERT INTO t_xt_role_menu VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', 'xt', '1', '2016-11-01 12:22:30', null);
+
+-- ----------------------------
+-- Records of t_xt_role_user
+-- ----------------------------
+INSERT INTO t_xt_role_user VALUES ('7ca85c1b-d710-4eb7-b284-49f607fdd586', 'admin', '0', '2016-10-13 14:01:08', '2016-10-13 16:15:21');
+INSERT INTO t_xt_role_user VALUES ('e97b1283-8fc2-44d5-9627-18795097df31', 'admin', '1', '2016-10-13 14:01:08', null);

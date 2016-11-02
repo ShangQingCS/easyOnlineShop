@@ -27,13 +27,13 @@
 			<tr>
 				<td width="110">类别ID：</td>
 				<td>
-					<input name="goodsCategoryVO.level" id="inp_level" type="hidden" />
-					<input name="goodsCategoryVO.id" id="inp_id" readonly="readonly" style="width: 460px;" />
+					<input name="goodsCategory.level" id="inp_level" type="hidden" />
+					<input name="goodsCategory.id" id="inp_id" readonly="readonly" style="width: 460px;" />
 				</td>
 			</tr>
 			<tr>
 				<td>上级类别ID：</td>
-				<td><input name="goodsCategoryVO.parentId" id="inp_parentId" readonly="readonly" style="width: 460px;" /></td>
+				<td><input name="goodsCategory.parentId" id="inp_parentId" readonly="readonly" style="width: 460px;" /></td>
 			</tr>
 			<tr>
 				<td>上级类别名称：</td>
@@ -41,16 +41,16 @@
 			</tr>
 			<tr>
 				<td>显示顺序：</td>
-				<td><input name="goodsCategoryVO.cateOrder" id="inp_cateOrder" class="easyui-validatebox" required="true" validType="number" maxlength="3" style="width: 50px;" /></td>
+				<td><input name="goodsCategory.cateOrder" id="inp_cateOrder" class="easyui-validatebox" required="true" validType="number" maxlength="3" style="width: 50px;" /></td>
 			</tr>
 			<tr>
 				<td>类别名称：</td>
-				<td><input name="goodsCategoryVO.cateName" id="inp_cateName" class="easyui-validatebox" required="true" maxlength="100" style="width: 320px;" /></td>
+				<td><input name="goodsCategory.cateName" id="inp_cateName" class="easyui-validatebox" required="true" maxlength="100" style="width: 320px;" /></td>
 			</tr>
 			<tr>
 				<td>是否有效：</td>
 				<td>
-					<select name="goodsCategoryVO.isuser" id="inp_isuser">
+					<select name="goodsCategory.isuser" id="inp_isuser">
 						<option value="1">无效</option>
 						<option value="0">有效</option>
 					</select>
@@ -69,7 +69,7 @@
 	function queryGoodsCategoryTree() {
 		$.ajax( {
 			type : "POST",
-			url : "${basePath }/view/goodsManager/goodsManager!goodsCategoryTree.action",
+			url : "${basePath }/view/goodsManager/goodsCagegoryManager!goodsCategoryTree.action",
 			dataType : "json",
 			success : function(json) {
 				var root = json.goodsCategoryTree[0];
@@ -137,11 +137,11 @@
 	
 	var saveGoodsCategory = function(json) {
 		if(json == null) {
-			$("#div_config").attr("action","${basePath }/view/goodsManager/goodsManager!saveGoodsCategory.action");
+			$("#div_config").attr("action","${basePath }/view/goodsManager/goodsCagegoryManager!saveGoodsCategory.action");
 			formSubmit('div_config',saveGoodsCategory);
 		} else {
 			alert("保存成功");
-			$("#inp_id").val(json.goodsCategoryVO.id);
+			$("#inp_id").val(json.goodsCategory.id);
 			queryGoodsCategoryTree();//初始化菜单
 		}
 	}
@@ -161,7 +161,7 @@
 		if(json==null) {
 			window.confirm("提示","确认删除?", function(r){
 				if(r){
-					$("#div_config").attr("action","${basePath }/view/goodsManager/goodsManager!deleteGoodsCategory.action");
+					$("#div_config").attr("action","${basePath }/view/goodsManager/goodsCagegoryManager!deleteGoodsCategory.action");
 					formSubmit('div_config',delGoodsCategory);
 				}
 			});

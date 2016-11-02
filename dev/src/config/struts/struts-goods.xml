@@ -7,5 +7,11 @@
 		<action name="goodsManager" class="cn.sqkj.nsyl.goodsManager.action.GoodsManagerAction">
 			<result type="json"><param name="ignoreHierarchy">false</param></result><!-- 分配列表  -->
 		</action>
+		<action name="goodsCagegoryManager" class="cn.sqkj.nsyl.goodsManager.action.GoodsCagegoryManagerAction">
+			<result type="json"><param name="ignoreHierarchy">false</param></result><!-- 分配列表  -->
+		</action>
+		<action name="goodsStorageManager" class="cn.sqkj.nsyl.goodsManager.action.GoodsStorageManagerAction">
+			<result type="json"><param name="ignoreHierarchy">false</param></result><!-- 分配列表  -->
+		</action>
 	</package>
 </struts>    

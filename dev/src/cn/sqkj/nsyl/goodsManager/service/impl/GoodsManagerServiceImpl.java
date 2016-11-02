@@ -63,12 +63,32 @@ public class GoodsManagerServiceImpl implements IGoodsManagerService {
 		sql.append(" left join ns_goods_category t4 on t1.brand=t4.id ");
 		sql.append(" where 1=1 ");
 		List params = new ArrayList();
-		/*if(pageBean.getQueryParams() != null && !pageBean.getQueryParams().isEmpty()) {
+		if(pageBean.getQueryParams() != null && !pageBean.getQueryParams().isEmpty()) {
 			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("gname"))) {
-				hql.append(" and gname like ? ");
+				sql.append(" and t1.gname like ? ");
 				params.add("%"+pageBean.getQueryParams().get("gname")+"%");
 			}
-		}*/
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("category"))) {
+				sql.append(" and t1.category = ? ");
+				params.add(pageBean.getQueryParams().get("category"));
+			}
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("kind"))) {
+				sql.append(" and t1.kind = ? ");
+				params.add(pageBean.getQueryParams().get("kind"));
+			}
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("brand"))) {
+				sql.append(" and t1.brand = ? ");
+				params.add(pageBean.getQueryParams().get("brand"));
+			}
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("storenumbone"))) {
+				sql.append(" and t1.storenumb >= ? ");
+				params.add(pageBean.getQueryParams().get("storenumbone"));
+			}
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("storenumbtwo"))) {
+				sql.append(" and t1.storenumb <= ? ");
+				params.add(pageBean.getQueryParams().get("storenumbtwo"));
+			}
+		}
 		
 		//查询总计路数
 		int total = goodsDAO.findGoodsCount(sql.toString(), params);
@@ -136,8 +156,8 @@ public class GoodsManagerServiceImpl implements IGoodsManagerService {
 	public NsGoods queryGoodsById(Long id) throws Exception {
 		if(id!=null) {
 			DBUtil db = DBUtil.getDBUtilByRequest();
-			NsGoods ng = (NsGoods) db.getSession().load(NsGoods.class, id);
-			System.out.println(ng);
+			NsGoods ng = (NsGoods) db.getSession().get(NsGoods.class, id);
+			return ng;
 		}
 		return null;
 	}

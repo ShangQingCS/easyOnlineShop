@@ -10,6 +10,13 @@
     	initMenuTree();//初始化菜单
     });
     
+    /*关闭当前选择的tab页*/
+	function removeCurrSelectTab(){
+		Alert("操作成功！");
+		var tab = $("#div_tabs").tabs("getSelected");
+		$("#div_tabs").tabs("close",tab.panel('options').title);
+	}
+	
     //添加tab页
 	function addTab(node){
 		if(node!=null && node.attributes!=null && node.attributes.url!=null && node.attributes.url!=''){

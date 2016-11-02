@@ -1,4 +1,8 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%
+String id = request.getParameter("id");
+request.setAttribute("id",id);
+%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -10,7 +14,7 @@
     <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
     <script type="text/javascript" charset="utf-8" src="${basePath }/ueditor/lang/zh-cn/zh-cn.js"></script>
     <script type="text/javascript" charset="utf-8" src="${basePath }/js/test.js"></script>
-	<title>商品录入</title>
+	<title>商品编辑</title>
 </head>
   
 <body class="easyui-layout">
@@ -21,6 +25,7 @@
 	    			<td width="100" class="righttd">商品名称:</td>
 	    			<td width="400">
 	    				<input class="easyui-textbox" type="text" id="inp_gname" name="goods.gname" data-options="required:true" style="width: 90%"></input>
+	    				<input type="hidden" id="inp_id" name="goods.id" value="${id }"></input>
 	    			</td>
 	    			<td  width="100" class="righttd" rowspan="7" valign="top">封面:</td>
 	    			<td rowspan="7">
@@ -72,19 +77,19 @@
 	    				<div id='goodimglistDiv'>
 	    					<table border="0" cellpadding="0" cellspacing="0" style="margin-left: -5px;">
 	    						<tr>
+	    							<td width="200"><img id='goodimglistPr0' name='goodimglistPr' width='200' height='200' /></td>
 	    							<td width="200"><img id='goodimglistPr1' name='goodimglistPr' width='200' height='200' /></td>
 	    							<td width="200"><img id='goodimglistPr2' name='goodimglistPr' width='200' height='200' /></td>
 	    							<td width="200"><img id='goodimglistPr3' name='goodimglistPr' width='200' height='200' /></td>
 	    							<td width="200"><img id='goodimglistPr4' name='goodimglistPr' width='200' height='200' /></td>
-	    							<td width="200"><img id='goodimglistPr5' name='goodimglistPr' width='200' height='200' /></td>
 	    						</tr>
-	    						<tr>
-	    							<td><input type='file' name='img1' id='img1' style='width:200px;'/><a href="javascript:void(0)" onclick="$('#img1').val('');$('#goodimglistPr1').attr('src','');">清空</a></td>
-	    							<td><input type='file' name='img2' id='img2' style='width:200px;'/><a href="javascript:void(0)" onclick="$('#img2').val('');$('#goodimglistPr2').attr('src','');">清空</a></td>
-	    							<td><input type='file' name='img3' id='img3' style='width:200px;'/><a href="javascript:void(0)" onclick="$('#img3').val('');$('#goodimglistPr3').attr('src','');">清空</a></td>
-	    							<td><input type='file' name='img4' id='img4' style='width:200px;'/><a href="javascript:void(0)" onclick="$('#img4').val('');$('#goodimglistPr4').attr('src','');">清空</a></td>
-	    							<td><input type='file' name='img5' id='img5' style='width:200px;'/><a href="javascript:void(0)" onclick="$('#img5').val('');$('#goodimglistPr5').attr('src','');">清空</a></td>
-	    						</tr>
+	    						<!-- <tr>
+	    							<td><input type='file' name='goodimglist' id='goodimglist0' style='width:200px;'/><a href="javascript:void(0)" onclick="$('#goodimglist0').val('');$('#goodimglistPr0').attr('src','');">清空</a></td>
+	    							<td><input type='file' name='goodimglist' id='goodimglist1' style='width:200px;'/><a href="javascript:void(0)" onclick="$('#goodimglist1').val('');$('#goodimglistPr1').attr('src','');">清空</a></td>
+	    							<td><input type='file' name='goodimglist' id='goodimglist2' style='width:200px;'/><a href="javascript:void(0)" onclick="$('#goodimglist2').val('');$('#goodimglistPr2').attr('src','');">清空</a></td>
+	    							<td><input type='file' name='goodimglist' id='goodimglist3' style='width:200px;'/><a href="javascript:void(0)" onclick="$('#goodimglist3').val('');$('#goodimglistPr3').attr('src','');">清空</a></td>
+	    							<td><input type='file' name='goodimglist' id='goodimglist4' style='width:200px;'/><a href="javascript:void(0)" onclick="$('#goodimglist4').val('');$('#goodimglistPr4').attr('src','');">清空</a></td>
+	    						</tr> -->
 	    					</table>
 	    				</div>
 	    			</td>
@@ -132,11 +137,16 @@
 	$(function(){
 		initPage();
 		$("#goodimg").uploadPreview({ Img: "goodimgPr", Width: 150, Height: 150 });
-		$("#img1").uploadPreview({ Img: "goodimglistPr1", Width: 200, Height: 200 });
-		$("#img2").uploadPreview({ Img: "goodimglistPr2", Width: 200, Height: 200 });
-		$("#img3").uploadPreview({ Img: "goodimglistPr3", Width: 200, Height: 200 });
-		$("#img4").uploadPreview({ Img: "goodimglistPr4", Width: 200, Height: 200 });
-		$("#img5").uploadPreview({ Img: "goodimglistPr5", Width: 200, Height: 200 });
+		$("#goodimglist0").uploadPreview({ Img: "goodimglistPr0", Width: 200, Height: 200 });
+		$("#goodimglist1").uploadPreview({ Img: "goodimglistPr1", Width: 200, Height: 200 });
+		$("#goodimglist2").uploadPreview({ Img: "goodimglistPr2", Width: 200, Height: 200 });
+		$("#goodimglist3").uploadPreview({ Img: "goodimglistPr3", Width: 200, Height: 200 });
+		$("#goodimglist4").uploadPreview({ Img: "goodimglistPr4", Width: 200, Height: 200 });
+		
+		var id = "${id}";
+		if(id!="") {
+			loadGoods(id);
+		}
 	});
 	
 	var initPage = function() {
@@ -144,6 +154,41 @@
 		goodimglistDivHtml = $("#goodimglistDiv").html();
 	}
 	
+	var loadGoods = function(id) {
+		$.ajax({
+			url: "${basePath }/view/goodsManager/goodsManager!loadGoods.action?goods.id="+id,
+			cache: false,
+			dataType:"json",
+			async: false,
+			success: function(json) {
+				$("#inp_gname").textbox('setValue', json.goods.gname);
+				$("#inp_gfullname").textbox('setValue', json.goods.gfullname);
+				$("#inp_storenumb").textbox('setValue', json.goods.storenumb);
+				$("#inp_price").textbox('setValue', json.goods.price);
+				$("#inp_category").combobox('setValue', json.goods.category);
+				$("#goodimgPr").attr("src", json.goods.goodimg);
+				if(json.goods.goodimglist!=null) {
+					var imgs = json.goods.goodimglist.split(",");
+					for (var i=0; i<imgs.length;i++) {
+						$("#goodimglistPr"+i).attr("src", imgs[i]);
+					}
+				}
+				queryKinds(function(json1) {
+					callbackQueryKinds(json1);
+					$('#inp_kind').combobox('setValue', json.goods.kind);
+				});
+				queryBrands(function(json2) {
+					callbackQueryBrands(json2);
+					$('#inp_brand').combobox('setValue', json.goods.brand);
+				});
+				ue.addListener("ready", function() {
+		        	// editor准备好之后才可以使用
+		        	ue.setContent(json.goods.detail);
+		        });
+			}
+		});
+	}
+		
 	var clearForm = function() {
 		$('#ff').form('clear');
 		resetEditor();
@@ -160,8 +205,8 @@
 				return checkForm();
 			},
       		success:function(data) {
-      			alert("操作成功！");
-          		clearForm();
+      			//修改后直接关闭tab
+      			window.parent.removeCurrSelectTab();
      		}
  		}); 
 		//$('#ff').form('submit');
@@ -177,20 +222,19 @@
 		}
 		
 		//验证封面
-		var goodimg = $("#goodimg").val();
+		/*var goodimg = $("#goodimg").val();
 		if(goodimg.length==0) {
 			alert("请选择封面！");
 			return false;
-		}
+		}*/
 		
 		//验证图片
-		var valueCount = 0;
-		for (var i=1;i<=5;i++) {
-			var imgValue = $("#img"+i).val();
-			if(imgValue.length>0) {
+		/*var valueCount = 0;
+		$("input[name='goodimglist']").each(function(index,data){ 
+			if(data.value.length>0) {
 				valueCount++;
 			}
-		}
+		});
 		
 		if(valueCount==0) {
 			alert("请选择图片！");
@@ -200,7 +244,7 @@
 		if(!hasContent()) {
 			alert("请填写详情！");
 			return false;
-		}
+		}*/
 		return true;
 	}
 	
@@ -210,6 +254,7 @@
 			url: "${basePath }/view/goodsManager/goodsCagegoryManager!queryCategorys.action",
 			cache: false,
 			dataType:"json",
+			async: false,
 			success: function(json){
 			    $("#inp_category").combobox({
 			    	required:true,
@@ -235,11 +280,12 @@
 			url: "${basePath }/view/goodsManager/goodsCagegoryManager!queryKinds.action?categoryVo.id="+$('#inp_category').combobox('getValue'),
 			cache: false,
 			dataType:"json",
+			async: false,
 			success: callbackFun
 		});
 	}
 	
-	var callbackQueryKinds = function (json, defaultValue) {
+	var callbackQueryKinds = function (json) {
 		 $("#inp_kind").combobox({
 		   	required:true,
 		   	editable:false,
@@ -250,7 +296,9 @@
 				$('#inp_brand').combobox("clear");
 				$('#inp_brand').combobox('loadData', []);
 				queryBrands(callbackQueryBrands);
-			}
+			}/*,
+			onLoadSuccess: function(data) {
+	        }*/
 		});
 	}
 	
@@ -260,17 +308,23 @@
 			url: "${basePath }/view/goodsManager/goodsCagegoryManager!queryBrands.action?categoryVo.id="+$('#inp_kind').combobox('getValue'),
 			cache: false,
 			dataType:"json",
+			async: false,
 			success: callbackFun
 		});
 	}
 	
-	var callbackQueryBrands = function (json, defaultValue) {
+	var callbackQueryBrands = function (json) {
 		$("#inp_brand").combobox({
 	    	required:true,
 	    	editable:false,
 			data:json.brands,
 			valueField:'id',
-	    	textField:'cateName'
+	    	textField:'cateName'/*,
+			onLoadSuccess: function(data) {
+				if(loadjosn!=null && loadjosn.goods!=null) {
+	            	$('#inp_brand').combobox('setValue', loadjosn.goods.brand);
+	            }
+	        }*/
 		});
 	}
 </script>

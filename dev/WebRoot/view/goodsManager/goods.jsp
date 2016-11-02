@@ -11,11 +11,10 @@
 	  	<div region="north" class="easyui-panel bgColor" collapsible="false" title="商品列表" style="height:100px; width:100%">
 	  		<table id="from_query"  border=0 dataType="text" class="tablestyle01" style="width:100%">
 	  			<tr>
-	  				<td align="left" style="width: 100">商品名称:<input name="queryParams.gname"/>
-	  				 操作时间:
-	  				<input name="queryParams.beginDate" class="easyui-datebox" value="${currBeginDate }" editable="false"/>~
-					<input name="queryParams.endDate" class="easyui-datebox" value="${currEndDate }" editable="false"/>
-					</td>
+	  				<td align="left">商品名称:<input name="queryParams.gname"/></td>
+	  				<td align="left">类别:<input class="easyui-combobox" name="queryParams.category" id="inp_category" data-options="editable: false"/></td>
+	  				<td align="left">类型:<input class="easyui-combobox" name="queryParams.kind" id="inp_kind" data-options="editable: false"/></td>
+	  				<td align="left">品牌:<input class="easyui-combobox" name="queryParams.brand" id="inp_brand" data-options="editable: false"/></td>
 	  			</tr>
 	  		</table>
 	  		<table border=0 dataType="text" class="tablestyle01" style="width:100%">
@@ -35,11 +34,13 @@
 				<thead>
 					<tr>
 						<!-- <th style="display: block;" checkbox="true" field="id" width="5%">ID</th> -->
+						<th field="id" width="10%">商品编号</th>
 						<th field="gname" width="10%">商品名称</th>
 						<th field="categoryname" width="10%">类别</th>
 						<th field="kindname" width="10%">类型</th>
 						<th field="brandname" width="10%">品牌</th>
 						<th field="price" width="10%">价格</th>
+						<th field="isuser" width="10%" formatter='formatterIsuser'>状态</th>
 						<th field="cl" width="10%" formatter='formatterAction'>操作</th>
 						<!-- <th field="categoryname.cateName" width="15%" formatter='formatterCategory'>操作</th> -->
 						<!-- <th field="kindname.cateName" width="15%" formatter='formatterKind'>操作</th> -->
@@ -60,13 +61,20 @@
   		function formatterBrand(value,rec){
 			return rec.brandname.cateName;
 		} */
+		$(function(){
+			initPage();
+		});
 		
-		//添加tab页
-		function goodsEdit(id,name){
-			addTab(name,'${basePath }/view/goodsManager/goodsAdd.jsp?id='+id);
+		var initPage = function() {
+			queryCategorys();
 		}
 	
-		function addTab(title, url) { 
+		//添加tab页
+		var goodsEdit = function(id,name){
+			openEdit(name,'${basePath }/view/goodsManager/goodsEdit.jsp?id='+id);
+		}
+	
+		var openEdit = function(title, url) { 
             var jq = top.jQuery;
             if (jq("#div_tabs").tabs('exists', title)) {   
 				jq("#div_tabs").tabs('select', title);
@@ -80,20 +88,151 @@
 			}
 		}
         
-		function queryGoods() {
+		var queryGoods = function() {
 			var data = formGet("from_query");
 			$("#tab_list").datagrid({"queryParams":data});
 		}
 		
+		var goodsDel = function(id,gname) {
+			var name = gname;
+			if(id==null){
+				id = ""; var m=""; name="所选商品";
+				var rows= $('#user_list').datagrid("getSelections");
+				if(rows!=null){
+					for(var i=0;i<rows.length;i++){
+						id+= m+rows[i].id;m=",";
+					}
+				}
+			}
+			
+			if(id==""){alert("至少选择一个商品");return false;}
+			window.confirm("提示","删除"+name+"?",function(r){
+				if(r){
+					$.ajax({ type: "POST",  url: "${basePath }/view/goodsManager/goodsManager!deleteGoods.action",  dataType: "json",
+					  	data: "id="+id,
+					  	success: function(json){
+							if(json.message=='success'){
+								alert("删除商品成功！");
+								queryGoods();
+							} else if(json.message!=null && json.message!=''){
+								alter(json.message);
+							}
+					  	}
+					});
+				}
+			});
+		}
+		
+		var goodsRecover = function(id,gname) {
+			window.confirm("提示","设为有效："+gname+"?",function(r){
+				if(r){
+					$.ajax({ type: "POST",  url: "${basePath }/view/goodsManager/goodsManager!recoverGoods.action",  dataType: "json",
+					  	data: "id="+id,
+					  	success: function(json){
+							if(json.message=='success'){
+								alert("操作成功！");
+								queryGoods();
+							} else if(json.message!=null && json.message!=''){
+								alter(json.message);
+							}
+					  	}
+					});
+				}
+			});
+		}
+		
 		var formatterAction = function(value,rec) {
-			var formatterStr = "<a href='#' onclick='goodsEdit(\""+rec.id+"\",\""+rec.gname+"\"); return false;'>编辑</a>&nbsp;"
-			+"<a href='#' onclick='goodsDel(\""+rec.id+"\"); return false;'>删除</a>&nbsp;";
+			var formatterStr = "<a href='#' onclick='goodsEdit(\""+rec.id+"\",\""+rec.gname+"\"); return false;'>编辑</a>&nbsp;";
+			if(rec.isuser=="0") {
+				formatterStr += "<a href='#' onclick='goodsDel(\""+rec.id+"\",\""+rec.gname+"\"); return false;'>删除</a>&nbsp;";
+			} else {
+				formatterStr += "<a href='#' onclick='goodsRecover(\""+rec.id+"\",\""+rec.gname+"\"); return false;'>设为有效</a>&nbsp;";
+			}
+			
 			return formatterStr;
+		}
+		
+		var formatterIsuser = function(value,rec) {
+			if(value=="0") {
+				return "<span style='color: green;'>有效</span>";
+			} else {
+				return "<span style='color: red;'>无效</span>";
+			}
 		}
 		
 		function formatterDate(date) {
 			var d = date.split("T");
 			return d[0]+" "+d[1];
+		}
+		
+		//查询一级类别  
+		var queryCategorys = function() {
+			$.ajax({
+				url: "${basePath }/view/goodsManager/goodsCagegoryManager!queryCategorys.action",
+				cache: false,
+				dataType:"json",
+				success: function(json){
+				    $("#inp_category").combobox({
+				    	required:false,
+				    	editable:false,
+						data:json.categorys,
+						valueField:'id',
+				    	textField:'cateName',
+						onChange: function (n,o) {
+							$('#inp_kind').combobox("clear");
+							$('#inp_brand').combobox("clear");
+							$('#inp_kind').combobox('loadData', []);
+							$('#inp_brand').combobox('loadData', []);
+							queryKinds(callbackQueryKinds);
+						}
+					});
+				}
+			});
+		}
+		
+		//查询二级类别
+		var queryKinds = function(callbackFun) {
+			$.ajax({
+				url: "${basePath }/view/goodsManager/goodsCagegoryManager!queryKinds.action?categoryVo.id="+$('#inp_category').combobox('getValue'),
+				cache: false,
+				dataType:"json",
+				success: callbackFun
+			});
+		}
+		
+		var callbackQueryKinds = function (json, defaultValue) {
+			 $("#inp_kind").combobox({
+			   	required:false,
+			   	editable:false,
+				data:json.kinds,
+				valueField:'id',
+			   	textField:'cateName',
+				onChange: function (n,o) {
+					$('#inp_brand').combobox("clear");
+					$('#inp_brand').combobox('loadData', []);
+					queryBrands(callbackQueryBrands);
+				}
+			});
+		}
+		
+		//查询三级类别
+		var queryBrands = function(callbackFun) {
+			$.ajax({
+				url: "${basePath }/view/goodsManager/goodsCagegoryManager!queryBrands.action?categoryVo.id="+$('#inp_kind').combobox('getValue'),
+				cache: false,
+				dataType:"json",
+				success: callbackFun
+			});
+		}
+		
+		var callbackQueryBrands = function (json, defaultValue) {
+			$("#inp_brand").combobox({
+		    	required:false,
+		    	editable:false,
+				data:json.brands,
+				valueField:'id',
+		    	textField:'cateName'
+			});
 		}
 	</script>
 </html>

@@ -140,24 +140,29 @@ CREATE TABLE ns_eventsinfo (
 -- Table structure for ns_goods
 -- ----------------------------
 DROP TABLE IF EXISTS ns_goods;
-CREATE TABLE ns_goods (
-  id bigint(20) NOT NULL AUTO_INCREMENT,
-  gname varchar(50) DEFAULT NULL,
-  price decimal(12,2) DEFAULT NULL,
-  category bigint(20) DEFAULT NULL,
-  kind bigint(20) DEFAULT NULL,
-  brand bigint(20) DEFAULT NULL,
-  detail text,
-  goodimglist varchar(2000) DEFAULT NULL,
-  isuser int(11) DEFAULT '1',
-  Gfullname varchar(150) DEFAULT NULL,
-  storenumb int(11) DEFAULT '0',
-  goodimg varchar(500) DEFAULT NULL,
-  freazes int(11) DEFAULT '0',
-  costprice decimal(10,0) DEFAULT '0',
-  sellnumb int(11) DEFAULT '0',
-  PRIMARY KEY (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `ns_goods` (
+	`id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+	`gname` VARCHAR(50) NULL DEFAULT NULL,
+	`price` DECIMAL(12,2) NULL DEFAULT NULL,
+	`category` BIGINT(20) NULL DEFAULT NULL,
+	`kind` BIGINT(20) NULL DEFAULT NULL,
+	`brand` BIGINT(20) NULL DEFAULT NULL,
+	`detail` TEXT NULL,
+	`goodimglist` VARCHAR(2000) NULL DEFAULT NULL,
+	`isuser` INT(11) NULL DEFAULT '1',
+	`Gfullname` VARCHAR(150) NULL DEFAULT NULL,
+	`storenumb` INT(11) NULL DEFAULT '0',
+	`goodimg` VARCHAR(500) NULL DEFAULT NULL,
+	`img1` VARCHAR(500) NULL DEFAULT NULL,
+	`img2` VARCHAR(500) NULL DEFAULT NULL,
+	`img3` VARCHAR(500) NULL DEFAULT NULL,
+	`img4` VARCHAR(500) NULL DEFAULT NULL,
+	`img5` VARCHAR(500) NULL DEFAULT NULL,
+	`freazes` INT(11) NULL DEFAULT '0',
+	`costprice` DECIMAL(10,0) NULL DEFAULT '0',
+	`sellnumb` INT(11) NULL DEFAULT '0',
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ns_goods

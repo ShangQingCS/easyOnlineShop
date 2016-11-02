@@ -5,12 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -20,9 +14,7 @@ import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 
 import cn.sqkj.nsyl.goodsManager.pojo.NsGoods;
-import cn.sqkj.nsyl.goodsManager.pojo.NsGoodsCategory;
 import cn.sqkj.nsyl.goodsManager.service.IGoodsManagerService;
-import cn.sqkj.nsyl.goodsManager.util.ComparatorGoodsCategoryVO;
 
 import com.opensymphony.xwork2.Action;
 
@@ -39,31 +31,35 @@ import framework.logger.AuditLogger;
  * 2016年10月18日
  * 商品维护Action类
  */
-@SuppressWarnings("unchecked")
 public class GoodsManagerAction extends PageAction {
 	@Resource(name="goodsManagerService")
 	private IGoodsManagerService goodsManagerService;
 	private AuditLogger logger = AuditLogger.getLogger(); //审计日志对象
 	private Logger log = Logger.getLogger(GoodsManagerAction.class); //系统log日志对象
-	private List<Map<String,Object>> goodsCategoryTree;
-	private NsGoodsCategory goodsCategory;
 	private NsGoods goods;
 	private TXtUser user = (TXtUser) RequestHelper.getSession().getAttribute("user");
-	private List<NsGoodsCategory> categorys;
-	private List<NsGoodsCategory> kinds;
-	private List<NsGoodsCategory> brands;
-	private NsGoodsCategory categoryVo;
+	private String message;
 	//封面
 	private File goodimg;
     private String goodimgFileName;
-    private String goodimgContentType;
-    //图片
-	//这里用List来存放上传过来的文件， 同样指的是临时文件夹中的临时文件，而不是真正上传过来的文件
-    private List<File> goodimglist;
-	//这个List存放的是文件的名字，和List<File>中的文件相对应
-    private List<String> goodimglistFileName;
-    private List<String> goodimglistContentType;
-
+    /*private String goodimgContentType;*/
+    //图片1
+    private File img1;
+    private String img1FileName;
+    //图片2
+    private File img2;
+    private String img2FileName;
+    //图片3
+    private File img3;
+    private String img3FileName;
+    //图片4
+    private File img4;
+    private String img4FileName;
+    //图片5
+    private File img5;
+    private String img5FileName;
+    private String removeImgs;
+    
 	public String queryGoods() {
 		try {
 			//传入分页信息查询数据库
@@ -86,9 +82,8 @@ public class GoodsManagerAction extends PageAction {
 	}
 	
 	public String loadGoods() {
-		System.out.println(this.goods);
 		try {
-			this.goodsManagerService.queryGoodsById(this.goods.getId());
+			this.goods = this.goodsManagerService.queryGoodsById(this.goods.getId());
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error("查询商品失败！"+this.goods.getId(), e);
@@ -104,11 +99,11 @@ public class GoodsManagerAction extends PageAction {
 		try {
 			File dir = new File(imgUploadPath);
 			if(!dir.exists()) dir.mkdir();
-			StringBuffer files = new StringBuffer();
-	        for(int i = 0; i < goodimglist.size(); i++) {
-	        	String newFileName = UUID.randomUUID().toString()+goodimglistFileName.get(i);
-	        	files.append(",").append(imgPathPrefix+newFileName);
-	            InputStream is = new FileInputStream(goodimglist.get(i));
+	        //封面
+			if(this.goodimg != null) {
+		        //上传封面
+		        String newFileName = UUID.randomUUID().toString()+System.currentTimeMillis()+this.goodimgFileName.substring(this.goodimgFileName.lastIndexOf("."));
+		        InputStream is = new FileInputStream(this.goodimg);
 	            OutputStream os = new FileOutputStream(new File(imgUploadPath, newFileName));
 	            byte[] buffer = new byte[500];
 	            int length = 0;
@@ -117,182 +112,169 @@ public class GoodsManagerAction extends PageAction {
 	            }
 	            os.close();
 	            is.close();
-	        }
-	        String imagesPath = files.toString().replaceFirst(",", "");
-	        this.goods.setGoodimglist(imagesPath);
-	        
-	        //上传封面
-	        String newFileName = UUID.randomUUID().toString()+goodimgFileName;
-	        InputStream is = new FileInputStream(goodimg);
-            OutputStream os = new FileOutputStream(new File(imgUploadPath, newFileName));
-            byte[] buffer = new byte[500];
-            int length = 0;
-            while(-1 != (length = is.read(buffer, 0, buffer.length))) {
-                os.write(buffer);
-            }
-            os.close();
-            is.close();
-            this.goods.setGoodimg(imgPathPrefix+newFileName);
+	            this.goods.setGoodimg(imgPathPrefix+newFileName);
+			}
+			//图片1
+			if(this.img1 != null) {
+				//上传封面
+				String newFileName = UUID.randomUUID().toString()+System.currentTimeMillis()+this.img1FileName.substring(this.img1FileName.lastIndexOf("."));
+				InputStream is = new FileInputStream(this.img1);
+				OutputStream os = new FileOutputStream(new File(imgUploadPath, newFileName));
+				byte[] buffer = new byte[500];
+				int length = 0;
+				while(-1 != (length = is.read(buffer, 0, buffer.length))) {
+					os.write(buffer);
+				}
+				os.close();
+				is.close();
+				this.goods.setImg1(imgPathPrefix+newFileName);
+			}
+			//图片2
+			if(this.img2 != null) {
+				//上传封面
+				String newFileName = UUID.randomUUID().toString()+System.currentTimeMillis()+this.img2FileName.substring(this.img2FileName.lastIndexOf("."));
+				InputStream is = new FileInputStream(this.img2);
+				OutputStream os = new FileOutputStream(new File(imgUploadPath, newFileName));
+				byte[] buffer = new byte[500];
+				int length = 0;
+				while(-1 != (length = is.read(buffer, 0, buffer.length))) {
+					os.write(buffer);
+				}
+				os.close();
+				is.close();
+				this.goods.setImg2(imgPathPrefix+newFileName);
+			}
+			//图片3
+			if(this.img3 != null) {
+				//上传封面
+				String newFileName = UUID.randomUUID().toString()+System.currentTimeMillis()+this.img3FileName.substring(this.img3FileName.lastIndexOf("."));
+				InputStream is = new FileInputStream(this.img3);
+				OutputStream os = new FileOutputStream(new File(imgUploadPath, newFileName));
+				byte[] buffer = new byte[500];
+				int length = 0;
+				while(-1 != (length = is.read(buffer, 0, buffer.length))) {
+					os.write(buffer);
+				}
+				os.close();
+				is.close();
+				this.goods.setImg3(imgPathPrefix+newFileName);
+			}
+			//图片4
+			if(this.img4 != null) {
+				//上传封面
+				String newFileName = UUID.randomUUID().toString()+System.currentTimeMillis()+this.img4FileName.substring(this.img4FileName.lastIndexOf("."));
+				InputStream is = new FileInputStream(this.img4);
+				OutputStream os = new FileOutputStream(new File(imgUploadPath, newFileName));
+				byte[] buffer = new byte[500];
+				int length = 0;
+				while(-1 != (length = is.read(buffer, 0, buffer.length))) {
+					os.write(buffer);
+				}
+				os.close();
+				is.close();
+				this.goods.setImg4(imgPathPrefix+newFileName);
+			}
+			//图片5
+			if(this.img5 != null) {
+				//上传封面
+				String newFileName = UUID.randomUUID().toString()+System.currentTimeMillis()+this.img5FileName.substring(this.img5FileName.lastIndexOf("."));
+				InputStream is = new FileInputStream(this.img5);
+				OutputStream os = new FileOutputStream(new File(imgUploadPath, newFileName));
+				byte[] buffer = new byte[500];
+				int length = 0;
+				while(-1 != (length = is.read(buffer, 0, buffer.length))) {
+					os.write(buffer);
+				}
+				os.close();
+				is.close();
+				this.goods.setImg5(imgPathPrefix+newFileName);
+			}
+			
+			DBUtil db = DBUtil.getDBUtilByRequest();
+			if(this.goods.getId()==null) {
+				this.goods.setIsuser(1);
+				Long id = (Long) db.insert(this.goods);
+			} else {
+				NsGoods ns = this.goodsManagerService.queryGoodsById(this.goods.getId());
+				ns.setGname(this.goods.getGname());
+				ns.setGfullname(this.goods.getGfullname());
+				ns.setPrice(this.goods.getPrice());
+				ns.setStorenumb(this.goods.getStorenumb());
+				ns.setCategory(this.goods.getCategory());
+				ns.setKind(this.goods.getKind());
+				ns.setBrand(this.goods.getBrand());
+				if(StringUtils.isNotBlank(this.goods.getGoodimg())) 
+					ns.setGoodimg(this.goods.getGoodimg());
+				if(StringUtils.isNotBlank(this.goods.getGoodimg())) 
+					ns.setGoodimglist(this.goods.getGoodimglist());
+				if(StringUtils.isNotBlank(this.goods.getImg1())) 
+					ns.setImg1(this.goods.getImg1());
+				if(StringUtils.isNotBlank(this.goods.getImg2())) 
+					ns.setImg2(this.goods.getImg2());
+				if(StringUtils.isNotBlank(this.goods.getImg3())) 
+					ns.setImg3(this.goods.getImg3());
+				if(StringUtils.isNotBlank(this.goods.getImg4())) 
+					ns.setImg4(this.goods.getImg4());
+				if(StringUtils.isNotBlank(this.goods.getImg5())) 
+					ns.setImg5(this.goods.getImg5());
+				//清除图片
+				if(StringUtils.isNotBlank(this.removeImgs)) {
+					String[] temps = this.removeImgs.split(",");
+					for(String temp : temps) {
+						if(StringUtils.isBlank(temp))
+							continue;
+						if("img1".equals(temp))
+							ns.setImg1("");
+						if("img2".equals(temp)) 
+							ns.setImg2("");
+						if("img3".equals(temp)) 
+							ns.setImg3("");
+						if("img4".equals(temp))  
+							ns.setImg4("");
+						if("img5".equals(temp))  
+							ns.setImg5("");
+					}
+				}
+				db.update(ns);
+			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		DBUtil db = DBUtil.getDBUtilByRequest();
-		if(goods.getId()==null) {
-			Long id = (Long) db.insert(goods);
-		} else {
-		}
+		
 		return Action.SUCCESS;
 	}
 	
-	/**
-	 * 查询一级分类
-	 */
-	public String queryCategorys() {
-		DBUtil db = DBUtil.getDBUtilByRequest();
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("level", 1);
-		this.categorys = db.queryByPojo(NsGoodsCategory.class, params);
-		return Action.SUCCESS;
-	}
-	/**
-	 * 查询二级分类
-	 */
-	public String queryKinds() {
-		DBUtil db = DBUtil.getDBUtilByRequest();
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("level", 2);
-		params.put("parentId", categoryVo.getId());
-		this.kinds = db.queryByPojo(NsGoodsCategory.class, params);
-		return Action.SUCCESS;
-	}
-	/**
-	 * 查询三级分类
-	 */
-	public String queryBrands() {
-		DBUtil db = DBUtil.getDBUtilByRequest();
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("level", 3);
-		params.put("parentId", categoryVo.getId());
-		this.brands = db.queryByPojo(NsGoodsCategory.class, params);
-		return Action.SUCCESS;
-	}
-	
-	/**
-	 * 商品匪类树形结构
-	 * @return
-	 */
-	public String goodsCategoryTree() {
-		StringBuffer sql = new StringBuffer(" select c.id,c.cate_name,c.desc_,c.cate_order,c.`level`,c.isuser,c.parent_id ");
-		sql.append(" from ns_goods_category c ");
-		sql.append(" where c.flag='0' order by c.cate_order ");
-		DBUtil db = DBUtil.getDBUtilByRequest();
-		List<Map<String,Object>> list = db.queryBySQL(sql.toString());
-		
-		Map<String,Object> root = null;
-		Map<String,Map<String,Object>> temp = new TreeMap<String,Map<String,Object>>();
-		for (Map<String,Object> pojo : list) {
-			Map<String,Object> node = new TreeMap<String,Object>();
-			node.put("id", pojo.get("id"));
-			node.put("text", pojo.get("cateName"));
-			node.put("parentId", pojo.get("parentId"));
-			
-			Map<String,Object> attrs = new HashMap<String,Object>(5);
-			attrs.put("cateOrder", pojo.get("cateOrder"));
-			attrs.put("logo", pojo.get("logo"));
-			attrs.put("level", pojo.get("level"));
-			attrs.put("isuser", pojo.get("isuser"));
-			if(pojo.get("level") != null && !"3".equals(pojo.get("level").toString())) {
-				node.put("state", "closed");
-			}
-			node.put("attributes", attrs);
-			temp.put(pojo.get("id").toString(), node);
-			if("-1".equals(node.get("parentId").toString())) {
-				root = node;
-			}
-		}
-		
-		//组装父子关系
-		for(String key : temp.keySet()) {
-			Map<String,Object> node = temp.get(key);
-			Map<String,Object> parentMap = temp.get(node.get("parentId").toString());
-			if(parentMap != null) {
-				if(parentMap.get("children") == null) {
-					parentMap.put("children", new ArrayList<Map<String,Object>>());
-				}
-				((ArrayList<Map<String,Object>>) parentMap.get("children")).add(node);
-			}
-		}
-		
-		//排序
-		for(String key : temp.keySet()) {
-			Map<String,Object> node = temp.get(key);
-			if(node.get("children") != null) {
-				List<Map<String,Object>> childOrgList = (ArrayList<Map<String,Object>>) node.get("children");
-				if(!childOrgList.isEmpty()) {
-					Collections.sort(childOrgList, new ComparatorGoodsCategoryVO());
-				}
-			} 
-		}
-		
-		goodsCategoryTree = new ArrayList<Map<String,Object>>(1);
-		if(root != null) {
-			goodsCategoryTree.add(root);
-		}
-		//打印审计日志
-		TAuditLog message = new TAuditLog(user.getUId(), "查询商品类别成功！");
-		logger.info(message);
-		return Action.SUCCESS;
-	}
-	
-	public String saveGoodsCategory() {
+	public String deleteGoods() {
 		try {
-			this.goodsManagerService.saveGoodsCategory(this.goodsCategory);
-			
-			//打印审计日志
-			TAuditLog message = new TAuditLog(user.getUId(), "保存商品类别成功："+this.goodsCategory.getId());
-			logger.info(message);
-		} catch (Exception e) {
-			/*e.printStackTrace();*/
-			log.error("保存商品类别异常！", e);
-			TAuditLog message = new TAuditLog(user.getUId(), "保存商品类别失败；"+this.goodsCategory.getId());
-			logger.info(message);
+			DBUtil db = DBUtil.getDBUtilByRequest();
+			String idstr = RequestHelper.getParameter("id");
+			String[] ids = idstr.split(",");
+			for(String id : ids){
+				NsGoods ns = this.goodsManagerService.queryGoodsById(new Long(id));
+				ns.setIsuser(1);
+				db.update(ns);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
+		this.message="success";
 		return Action.SUCCESS;
 	}
 	
-	public String deleteGoodsCategory() {
-		String msg = null;
+	public String recoverGoods() {
 		try {
-			msg = this.goodsManagerService.deleteGoodsCategory(this.goodsCategory);
-			
-			//打印审计日志
-			TAuditLog message = new TAuditLog(user.getUId(), "删除商品类别成功："+this.goodsCategory.getId());
-			logger.info(message);
-		} catch (Exception e) {
-			/*e.printStackTrace();*/
-			log.error("删除商品类别异常！", e);
-			TAuditLog message = new TAuditLog(user.getUId(), "删除商品类别失败；"+this.goodsCategory.getId());
-			logger.info(message);
+			DBUtil db = DBUtil.getDBUtilByRequest();
+			String id = RequestHelper.getParameter("id");
+			NsGoods ns = this.goodsManagerService.queryGoodsById(new Long(id));
+			ns.setIsuser(0); 
+			db.update(ns);
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
-		
-		if(StringUtils.isNotBlank(msg)) {
-			return Action.ERROR;
-		}
+		this.message="success";
 		return Action.SUCCESS;
 	}
 	
-	public List<Map<String,Object>> getGoodsCategoryTree() {
-		return goodsCategoryTree;
-	}
-
-	public NsGoodsCategory getGoodsCategory() {
-		return goodsCategory;
-	}
-
-	public void setGoodsCategory(NsGoodsCategory goodsCategory) {
-		this.goodsCategory = goodsCategory;
-	}
-
 	public NsGoods getGoods() {
 		return goods;
 	}
@@ -300,72 +282,65 @@ public class GoodsManagerAction extends PageAction {
 	public void setGoods(NsGoods goods) {
 		this.goods = goods;
 	}
-
-	public List<NsGoodsCategory> getCategorys() {
-		return categorys;
+	
+	public String getMessage() {
+		return message;
 	}
 
-	public List<NsGoodsCategory> getKinds() {
-		return kinds;
-	}
-
-	public List<NsGoodsCategory> getBrands() {
-		return brands;
-	}
-
-	public NsGoodsCategory getCategoryVo() {
-		return categoryVo;
-	}
-
-	public void setCategoryVo(NsGoodsCategory categoryVo) {
-		this.categoryVo = categoryVo;
-	}
-
-	public List<File> getGoodimglist() {
-		return goodimglist;
-	}
-
-	public void setGoodimglist(List<File> goodimglist) {
-		this.goodimglist = goodimglist;
-	}
-
-	public List<String> getGoodimglistFileName() {
-		return goodimglistFileName;
-	}
-
-	public void setGoodimglistFileName(List<String> goodimglistFileName) {
-		this.goodimglistFileName = goodimglistFileName;
-	}
-
-	public List<String> getGoodimglistContentType() {
-		return goodimglistContentType;
-	}
-
-	public void setGoodimglistContentType(List<String> goodimglistContentType) {
-		this.goodimglistContentType = goodimglistContentType;
-	}
-
-	public File getGoodimg() {
-		return goodimg;
+	public void setRemoveImgs(String removeImgs) {
+		this.removeImgs = removeImgs;
 	}
 
 	public void setGoodimg(File goodimg) {
 		this.goodimg = goodimg;
-	}
-	
-	public String getGoodimgFileName() {
-		return goodimgFileName;
 	}
 
 	public void setGoodimgFileName(String goodimgFileName) {
 		this.goodimgFileName = goodimgFileName;
 	}
 
-	public String getGoodimgContentType() {
-		return goodimgContentType;
+	/*public void setGoodimgContentType(String goodimgContentType) {
+		this.goodimgContentType = goodimgContentType;
+	}*/
+
+	public void setImg1(File img1) {
+		this.img1 = img1;
 	}
 
-	public void setGoodimgContentType(String goodimgContentType) {
-		this.goodimgContentType = goodimgContentType;
+	public void setImg1FileName(String img1FileName) {
+		this.img1FileName = img1FileName;
 	}
+
+	public void setImg2(File img2) {
+		this.img2 = img2;
+	}
+
+	public void setImg2FileName(String img2FileName) {
+		this.img2FileName = img2FileName;
+	}
+
+	public void setImg3(File img3) {
+		this.img3 = img3;
+	}
+
+	public void setImg3FileName(String img3FileName) {
+		this.img3FileName = img3FileName;
+	}
+
+	public void setImg4(File img4) {
+		this.img4 = img4;
+	}
+
+	public void setImg4FileName(String img4FileName) {
+		this.img4FileName = img4FileName;
+	}
+
+	public void setImg5(File img5) {
+		this.img5 = img5;
+	}
+
+	public void setImg5FileName(String img5FileName) {
+		this.img5FileName = img5FileName;
+	}
+	
 }

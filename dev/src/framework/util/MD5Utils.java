@@ -6,7 +6,7 @@ public class MD5Utils {
 	private static final String TOKEN = "@1#2$34%ds^we2&32*";//加密令牌
 	private static final char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd',  'e', 'f'}; 
 	public static void main(String[] args) {
-		System.out.println(getMD5("@1#2$34%ds^we2&32*123"));
+		System.out.println(getMD5("123456"));
 	}
 	
 	public static String getMD5ByToken(String text){

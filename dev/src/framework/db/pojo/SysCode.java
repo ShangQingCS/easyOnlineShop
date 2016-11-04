@@ -1,18 +1,18 @@
 package framework.db.pojo;
 
 public class SysCode implements java.io.Serializable {
-	private String id;
+	private Integer id;
 	private String type;
 	private String code;
 	private String label;
 	private String remark;
 	private String flag;
 
-	public String getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

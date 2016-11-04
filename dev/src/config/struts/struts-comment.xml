@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+
+	<!-- 评论维护struts配置文件 -->	
+	<package name="commentManager" extends="json-default" namespace="/view/commentManager">
+ 		<action name="commentManager" class="cn.sqkj.nsyl.commentManager.action.CommentManagerAction">
+			<result type="json"><param name="ignoreHierarchy">false</param></result><!-- 分配列表  -->
+		</action>
+	</package>
+</struts>    

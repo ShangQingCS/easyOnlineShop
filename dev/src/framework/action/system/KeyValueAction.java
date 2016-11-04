@@ -1,66 +1,105 @@
 package framework.action.system;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import framework.action.FenyeBase;
+import framework.config.SysDict;
 import framework.db.DBUtil;
-import framework.db.pojo.TXtKeyValue;
+import framework.db.pojo.SysCode;
 
-public class KeyValueAction  extends FenyeBase{
+public class KeyValueAction  extends FenyeBase {
 	private final static Logger log = Logger.getLogger(KeyValueAction.class);
-	private final static String SQL_ALL = "select kv_key, kv_value,lr_sj from T_xt_KEY_VALUE ";
-	private final static String SQL = "select kv_key, kv_value,lr_sj from T_xt_KEY_VALUE where kv_key like ? or kv_value like ?  ";
-	private TXtKeyValue kv;
+	private final static String SQL_ALL = " select t.* from sys_code t where t.flag=? ";
+	private SysCode kv;
+	private String ids;
 	
 	public String list(){
-		String sql = SQL_ALL;
-		ArrayList params = new ArrayList(2);
-		if(this.queryParams!=null && !"".equals(this.queryParams.get("key"))){
-			params.add("%"+this.queryParams.get("key")+"%");
-			params.add("%"+this.queryParams.get("key")+"%");
-			sql = SQL;
+		DBUtil db = DBUtil.getDBUtilByRequest();
+		StringBuffer sql = new StringBuffer(SQL_ALL);
+		List params = new ArrayList();
+		params.add(SysDict.FLAG_ACT);
+		
+		if(this.queryParams != null) {
+			DBUtil.sqlAddByLike(sql, params, " t.type ", queryParams.get("key"));
+			DBUtil.sqlAddByLike(sql, params, " t.code ", queryParams.get("code"));
+			DBUtil.sqlAddByLike(sql, params, " t.label ", queryParams.get("label"));
+			DBUtil.sqlAddByLike(sql, params, " t.remark ", queryParams.get("remark"));
 		}
-		this.query(sql+" order by lr_sj", params);
+		sql.append(" ORDER BY t.id ");
+		
+		this.query(sql.toString(), params, db);
+		int count = db.queryCountBySQL(sql.toString(), params);
+		this.setTotal(count);	
 		return "success";
 	}
 	
-	public String query(){
-		if(this.queryParams!=null && !"".equals(this.queryParams.get("kv_key"))){
-			ArrayList params = new ArrayList(1);
-			String sql = SQL_ALL+" where kv_key=? ";
-			params.add(this.queryParams.get("kv_key"));
-			this.query(sql, params);
+	public String query() {
+		if(this.queryParams != null){
+			StringBuffer sql = new StringBuffer(SQL_ALL);
+			List params = new ArrayList();
+			params.add(SysDict.FLAG_ACT);
+			DBUtil.sqlAdd(sql, params, " t.type ", queryParams.get("kv_key"));
+			DBUtil.sqlAdd(sql, params, " t.code ", queryParams.get("kv_value"));
+			this.query(sql.toString(), params);
 		}
 		return "success";
 	}
 	
 	public String save(){
-		DBUtil.getDBUtilByRequest().saveOrUpdate(kv);
+		DBUtil db = DBUtil.getDBUtilByRequest();
+		if (kv.getId()==null) { // 保存
+			String sql = "insert into sys_code(type,code,label,remark,flag) values (?, ?, ?, ?, ?)";
+			db.executeSQL(sql, kv.getType(), kv.getCode(), kv.getLabel(), kv.getRemark(), SysDict.FLAG_ACT);
+		} else { 
+			SysCode pojo = null;
+			Map<String, Object> params = new HashMap<String, Object>(1);
+			params.put("id", kv.getId());
+			List<SysCode> list = db.queryByPojo(SysCode.class, params);
+			if (list != null && !list.isEmpty()) {
+				pojo = list.get(0);
+			}
+			if (pojo != null) {
+				pojo.setType(kv.getType());
+				pojo.setCode(kv.getCode());
+				pojo.setLabel(kv.getLabel());
+				pojo.setRemark(kv.getRemark());
+				db.update(pojo);
+			}
+		}
+		db.commit();
 		return "success";
 	}
 	
 	public String delete(){
-		String[] ids = kv.getKvKey().split(",");
+		String[] ids = this.ids.split(",");
 		for(String id : ids){
-			TXtKeyValue tmp = new TXtKeyValue();
-			tmp.setKvKey(id);
-			DBUtil.getDBUtilByRequest().delete(tmp);
+			String sql = " update sys_code t set t.flag=? where t.id=? ";
+			DBUtil.getDBUtilByRequest().executeSQL(sql, SysDict.FLAG_HIS, id);
 		}
 		
 		return "success";
 	}
 
-	public TXtKeyValue getKv() {
+	public SysCode getKv() {
 		return kv;
 	}
 
-	public void setKv(TXtKeyValue kv) {
+	public void setKv(SysCode kv) {
 		this.kv = kv;
 	}
-	
-	
+
+	public String getIds() {
+		return ids;
+	}
+
+	public void setIds(String ids) {
+		this.ids = ids;
+	}
 	
 }
-

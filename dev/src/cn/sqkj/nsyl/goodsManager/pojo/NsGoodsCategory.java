@@ -16,7 +16,7 @@ public class NsGoodsCategory implements java.io.Serializable {
 	private Integer level;
 	private String logo;
 	private String url;
-	private String isuser;
+	private String isuse;
 	private Long parentId;
 	private Date createTime;
 	private Date updateTime;
@@ -81,12 +81,12 @@ public class NsGoodsCategory implements java.io.Serializable {
 		this.url = url;
 	}
 
-	public String getIsuser() {
-		return isuser;
+	public String getIsuse() {
+		return isuse;
 	}
 
-	public void setIsuser(String isuser) {
-		this.isuser = isuser;
+	public void setIsuse(String isuse) {
+		this.isuse = isuse;
 	}
 
 	public Long getParentId() {

@@ -26,7 +26,7 @@ import framework.util.DateUtils;
 public class GoodsManagerServiceImpl implements IGoodsManagerService {
 	@Resource(name="goodsDAO")
 	private NsGoodsDAO goodsDAO;
-
+	
 	/**
 	 * 查询商品列表
 	 * @param param
@@ -137,7 +137,7 @@ public class GoodsManagerServiceImpl implements IGoodsManagerService {
 			goodsCategoryVO.setCreateTime(DateUtils.getDate());
 			goodsCategoryVO.setUpdateTime(DateUtils.getDate());
 			goodsCategoryVO.setFlag("0");
-			goodsCategoryVO.setIsuser("1");
+			goodsCategoryVO.setIsuse("1");
 			Long id = (Long) db.insert(goodsCategoryVO);
 			goodsCategoryVO.setId(id);
 		} else {
@@ -147,7 +147,7 @@ public class GoodsManagerServiceImpl implements IGoodsManagerService {
 			goodsCategory.setLogo(goodsCategoryVO.getLogo());
 			goodsCategory.setUrl(goodsCategoryVO.getUrl());
 			goodsCategory.setUpdateTime(DateUtils.getDate());
-			goodsCategory.setIsuser(goodsCategoryVO.getIsuser());
+			goodsCategory.setIsuse(goodsCategoryVO.getIsuse());
 			db.update(goodsCategory);
 		}
 		return goodsCategoryVO;

@@ -29,8 +29,8 @@
         <property name="goodimglist" type="java.lang.String">
             <column name="goodimglist" length="100" />
         </property>
-        <property name="isuser" type="java.lang.Integer">
-            <column name="isuser" />
+        <property name="isuse" type="java.lang.String">
+            <column name="isuse" />
         </property>
         <property name="gfullname" type="java.lang.String">
             <column name="Gfullname" length="150" />

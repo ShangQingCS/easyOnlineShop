@@ -90,7 +90,8 @@ CREATE TABLE ns_comment (
   create_time datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   score int(11) DEFAULT '0',
   userid bigint(20) DEFAULT NULL,
-  ishidden int(11) DEFAULT '0',
+  ishidden CHAR(1) DEFAULT '0',
+  isuse CHAR(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (id),
   UNIQUE KEY id_UNIQUE (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -149,7 +150,7 @@ CREATE TABLE `ns_goods` (
 	`brand` BIGINT(20) NULL DEFAULT NULL,
 	`detail` TEXT NULL,
 	`goodimglist` VARCHAR(2000) NULL DEFAULT NULL,
-	`isuser` INT(11) NULL DEFAULT '1',
+	`isuse` char(1) NULL DEFAULT '1',
 	`Gfullname` VARCHAR(150) NULL DEFAULT NULL,
 	`storenumb` INT(11) NULL DEFAULT '0',
 	`goodimg` VARCHAR(500) NULL DEFAULT NULL,
@@ -180,7 +181,7 @@ CREATE TABLE ns_goods_category (
   level int(11) DEFAULT NULL,
   logo varchar(100) DEFAULT NULL,
   url varchar(100) DEFAULT NULL,
-  isuser char(1) DEFAULT '1',
+  isuse char(1) DEFAULT '1',
   parent_id int(11) DEFAULT NULL,
   create_time datetime DEFAULT CURRENT_TIMESTAMP,
   update_time datetime DEFAULT CURRENT_TIMESTAMP,
@@ -193,31 +194,31 @@ CREATE TABLE ns_goods_category (
 -- ----------------------------
 DROP TABLE IF EXISTS ns_order;
 CREATE TABLE ns_order (
-  id bigint(20) NOT NULL,
-  userid bigint(20) NOT NULL,
-  total decimal(10,0) NOT NULL DEFAULT '0',
-  counts int(11) NOT NULL DEFAULT '1',
-  paytype bigint(20) DEFAULT NULL,
-  outway varchar(45) DEFAULT NULL,
-  orderstatus bigint(20) DEFAULT NULL,
-  delivery_numb varchar(150) DEFAULT NULL,
-  create_time datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  delivery_time datetime DEFAULT NULL,
-  paynumb varchar(150) DEFAULT NULL,
-  positionid bigint(20) DEFAULT NULL,
-  address varchar(150) DEFAULT NULL,
-  name varchar(100) DEFAULT NULL,
-  postcode varchar(45) DEFAULT NULL,
-  contactnumb varchar(45) DEFAULT NULL,
-  invoice int(11) DEFAULT NULL,
-  companyname varchar(200) DEFAULT NULL,
-  content varchar(45) DEFAULT NULL,
-  remark varchar(200) DEFAULT NULL,
-  commision_charge decimal(10,2) DEFAULT '0.00',
-  cash decimal(10,2) DEFAULT '0.00',
-  account_amount decimal(10,2) DEFAULT '0.00',
-  PRIMARY KEY (id),
-  UNIQUE KEY id_UNIQUE (id)
+	id BIGINT(20) NOT NULL,
+	userid BIGINT(20) NOT NULL,
+	total DECIMAL(10,0) NOT NULL DEFAULT '0',
+	counts INT(11) NOT NULL DEFAULT '1',
+	paytype CHAR(1) NULL DEFAULT NULL,
+	outway CHAR(1) NULL DEFAULT NULL,
+	orderstatus CHAR(1) NULL DEFAULT NULL,
+	delivery_numb VARCHAR(150) NULL DEFAULT NULL,
+	create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	delivery_time DATETIME NULL DEFAULT NULL,
+	paynumb VARCHAR(150) NULL DEFAULT NULL,
+	positionid BIGINT(20) NULL DEFAULT NULL,
+	address VARCHAR(500) NULL DEFAULT NULL,
+	name VARCHAR(100) NULL DEFAULT NULL,
+	postcode VARCHAR(45) NULL DEFAULT NULL,
+	contactnumb VARCHAR(45) NULL DEFAULT NULL,
+	invoice CHAR(1) NULL DEFAULT NULL,
+	companyname VARCHAR(200) NULL DEFAULT NULL,
+	content VARCHAR(500) NULL DEFAULT NULL,
+	remark VARCHAR(200) NULL DEFAULT NULL,
+	commision_charge DECIMAL(10,2) NULL DEFAULT '0.00',
+	cash DECIMAL(10,2) NULL DEFAULT '0.00',
+	account_amount DECIMAL(10,2) NULL DEFAULT '0.00',
+	PRIMARY KEY (id),
+	UNIQUE INDEX id_UNIQUE (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -604,7 +605,7 @@ INSERT INTO t_xt_menu VALUES ('65c489f1-6f86-4d82-a381-45be4dedf09b', '订单状
 INSERT INTO t_xt_menu VALUES ('6e5174f8-29c5-4cc2-9ec3-4b7f5608bfc3', '查询统计', 'xt', 'root,xt,6e5174f8-29c5-4cc2-9ec3-4b7f5608bfc3', '', '6', null, '1', '2016-10-18 12:24:07', null, null);
 INSERT INTO t_xt_menu VALUES ('727df0ce-48c9-4744-b8ec-4c3115fca915', '活动管理', '115e3d38-c04d-43b7-bbd6-1f970783724c', 'root,xt,115e3d38-c04d-43b7-bbd6-1f970783724c,727df0ce-48c9-4744-b8ec-4c3115fca915', '1', '2', null, '1', '2016-10-18 12:23:28', null, null);
 INSERT INTO t_xt_menu VALUES ('7846b141-65c8-4eb9-9fc5-ae63bb236836', '权限管理', 'xt', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836', '', '9', null, '1', '2016-10-13 14:01:05', '2016-10-13 14:01:05', null);
-INSERT INTO t_xt_menu VALUES ('80cbe605-3dc6-445b-a79d-5d20f404cb2f', '订单查询', '59a326f9-31a5-4bb7-b973-e51fe379b48c', 'root,xt,59a326f9-31a5-4bb7-b973-e51fe379b48c,80cbe605-3dc6-445b-a79d-5d20f404cb2f', '1', '1', null, '1', '2016-10-13 14:13:50', '2016-10-13 15:51:16', null);
+INSERT INTO t_xt_menu VALUES ('80cbe605-3dc6-445b-a79d-5d20f404cb2f', '订单查询', '59a326f9-31a5-4bb7-b973-e51fe379b48c', 'root,xt,59a326f9-31a5-4bb7-b973-e51fe379b48c,80cbe605-3dc6-445b-a79d-5d20f404cb2f', '/view/orderManager/order.jsp', '1', null, '1', '2016-10-13 14:13:50', '2016-10-13 15:51:16', null);
 INSERT INTO t_xt_menu VALUES ('9779cbff-cb36-4598-aaab-f9be42349c74', '商品管理', 'xt', 'root,xt,9779cbff-cb36-4598-aaab-f9be42349c74', '', '1', null, '1', '2016-10-13 14:14:57', '2016-10-13 15:36:13', null);
 INSERT INTO t_xt_menu VALUES ('afa5485d-5d1b-45fb-8d8d-57b7a83fbbe5', '操作日志查询', '7846b141-65c8-4eb9-9fc5-ae63bb236836', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,afa5485d-5d1b-45fb-8d8d-57b7a83fbbe5', '/view/log/log.jsp', '6', null, '1', '2016-10-13 14:15:31', '2016-10-13 15:20:23', null);
 INSERT INTO t_xt_menu VALUES ('c690495e-d8b5-4765-8dc5-6e771b246c24', '评论维护', '41606f0c-e3f4-4363-8dcb-62f1f534d3ea', 'root,xt,41606f0c-e3f4-4363-8dcb-62f1f534d3ea,c690495e-d8b5-4765-8dc5-6e771b246c24', '/view/commentManager/comment.jsp', '1', null, '1', '2016-10-18 12:22:35', null, null);

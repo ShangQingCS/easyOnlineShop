@@ -13,8 +13,10 @@ public class NsComment implements java.io.Serializable {
 	private String comment;
 	private Timestamp createTime;
 	private Integer score;
+	private Long userid;
+	private String ishidden;
 
-	public NsComment() {
+	public NsComment() {	
 	}
 
 	public Long getId() {
@@ -55,6 +57,22 @@ public class NsComment implements java.io.Serializable {
 
 	public void setScore(Integer score) {
 		this.score = score;
+	}
+
+	public Long getUserid() {
+		return userid;
+	}
+
+	public void setUserid(Long userid) {
+		this.userid = userid;
+	}
+
+	public String getIshidden() {
+		return ishidden;
+	}
+
+	public void setIshidden(String ishidden) {
+		this.ishidden = ishidden;
 	}
 
 }

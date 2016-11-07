@@ -1,14 +1,11 @@
-package cn.sqkj.nsyl.db.po;
-// default package
-
-/**
- * NsOrderDetail entity. @author MyEclipse Persistence Tools
- */
+package cn.sqkj.nsyl.orderManager.pojo;
 
 public class NsOrderDetail implements java.io.Serializable {
 
-	// Fields
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Long id;
 	private Long orderid;
 	private Long userid;
@@ -16,24 +13,8 @@ public class NsOrderDetail implements java.io.Serializable {
 	private Integer count;
 	private Long price;
 
-	// Constructors
-
-	/** default constructor */
 	public NsOrderDetail() {
 	}
-
-	/** full constructor */
-	public NsOrderDetail(Long id, Long orderid, Long userid, Long goodsid,
-			Integer count, Long price) {
-		this.id = id;
-		this.orderid = orderid;
-		this.userid = userid;
-		this.goodsid = goodsid;
-		this.count = count;
-		this.price = price;
-	}
-
-	// Property accessors
 
 	public Long getId() {
 		return this.id;

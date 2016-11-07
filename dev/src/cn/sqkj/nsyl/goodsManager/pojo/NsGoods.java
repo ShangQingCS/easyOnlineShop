@@ -16,7 +16,7 @@ public class NsGoods implements java.io.Serializable {
 	private Long brand;
 	private String detail;
 	private String goodimglist;
-	private Integer isuser;
+	private String isuse;
 	private String gfullname;
 	private Integer storenumb;
 	private String goodimg;
@@ -39,7 +39,7 @@ public class NsGoods implements java.io.Serializable {
 
 	public NsGoods(Long id, String gname, Double price, Long category,
 			Long kind, Long brand, String detail, String goodimglist,
-			Integer isuser, String gfullname) {
+			String isuse, String gfullname) {
 		this.id = id;
 		this.gname = gname;
 		this.price = price;
@@ -48,7 +48,7 @@ public class NsGoods implements java.io.Serializable {
 		this.brand = brand;
 		this.detail = detail;
 		this.goodimglist = goodimglist;
-		this.isuser = isuser;
+		this.isuse = isuse;
 		this.gfullname = gfullname;
 	}
 
@@ -116,12 +116,12 @@ public class NsGoods implements java.io.Serializable {
 		this.goodimglist = goodimglist;
 	}
 
-	public Integer getIsuser() {
-		return this.isuser;
+	public String getIsuse() {
+		return this.isuse;
 	}
 
-	public void setIsuser(Integer isuser) {
-		this.isuser = isuser;
+	public void setIsuse(String isuse) {
+		this.isuse = isuse;
 	}
 
 	public String getGfullname() {

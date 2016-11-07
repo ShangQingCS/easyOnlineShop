@@ -128,7 +128,7 @@ public class GoodsManagerAction_bak extends PageAction {
 			
 			DBUtil db = DBUtil.getDBUtilByRequest();
 			if(this.goods.getId()==null) {
-				this.goods.setIsuser(1);
+				this.goods.setIsuse("1");
 				Long id = (Long) db.insert(this.goods);
 			} else {
 				NsGoods ns = this.goodsManagerService.queryGoodsById(this.goods.getId());
@@ -161,7 +161,7 @@ public class GoodsManagerAction_bak extends PageAction {
 			String[] ids = idstr.split(",");
 			for(String id : ids){
 				NsGoods ns = this.goodsManagerService.queryGoodsById(new Long(id));
-				ns.setIsuser(1);
+				ns.setIsuse("1");
 				db.update(ns);
 			}
 		} catch(Exception e) {
@@ -176,7 +176,7 @@ public class GoodsManagerAction_bak extends PageAction {
 			DBUtil db = DBUtil.getDBUtilByRequest();
 			String id = RequestHelper.getParameter("id");
 			NsGoods ns = this.goodsManagerService.queryGoodsById(new Long(id));
-			ns.setIsuser(0); 
+			ns.setIsuse("0"); 
 			db.update(ns);
 		} catch(Exception e) {
 			e.printStackTrace();

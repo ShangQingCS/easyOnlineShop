@@ -26,8 +26,8 @@
         <property name="url" type="java.lang.String">
             <column name="url" length="100" />
         </property>
-        <property name="isuser" type="java.lang.String">
-            <column name="isuser" length="1" />
+        <property name="isuse" type="java.lang.String">
+            <column name="isuse" length="1" />
         </property>
         <property name="parentId" type="java.lang.Long">
             <column name="parent_id" length="11" />

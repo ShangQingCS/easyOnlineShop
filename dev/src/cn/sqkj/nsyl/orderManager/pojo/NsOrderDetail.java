@@ -1,5 +1,7 @@
 package cn.sqkj.nsyl.orderManager.pojo;
 
+import java.math.BigDecimal;
+
 public class NsOrderDetail implements java.io.Serializable {
 
 	/**
@@ -8,10 +10,9 @@ public class NsOrderDetail implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private Long orderid;
-	private Long userid;
 	private Long goodsid;
 	private Integer count;
-	private Long price;
+	private BigDecimal price;
 
 	public NsOrderDetail() {
 	}
@@ -32,14 +33,6 @@ public class NsOrderDetail implements java.io.Serializable {
 		this.orderid = orderid;
 	}
 
-	public Long getUserid() {
-		return this.userid;
-	}
-
-	public void setUserid(Long userid) {
-		this.userid = userid;
-	}
-
 	public Long getGoodsid() {
 		return this.goodsid;
 	}
@@ -56,11 +49,11 @@ public class NsOrderDetail implements java.io.Serializable {
 		this.count = count;
 	}
 
-	public Long getPrice() {
+	public BigDecimal getPrice() {
 		return this.price;
 	}
 
-	public void setPrice(Long price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 

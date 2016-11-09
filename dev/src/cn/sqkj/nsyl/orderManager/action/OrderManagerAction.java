@@ -13,6 +13,7 @@ import com.opensymphony.xwork2.Action;
 
 import framework.action.PageAction;
 import framework.bean.PageBean;
+import framework.db.DBUtil;
 import framework.db.pojo.TAuditLog;
 import framework.db.pojo.TXtUser;
 import framework.helper.RequestHelper;
@@ -58,9 +59,77 @@ public class OrderManagerAction extends PageAction {
 		try {
 			this.order = this.orderManagerService.queryOrderById(this.order.getId());
 			this.orderDetail = this.orderManagerService.queryOrderDetailByOrderId(this.order.getId());
+			
+			//打印审计日志
+			TAuditLog message = new TAuditLog(user.getUId(), "查询订单详细成功："+this.order.getId());
+			logger.info(message);
 		} catch (Exception e) {
-			e.printStackTrace();
+			/*e.printStackTrace();*/
 			log.error("查询订单详细失败！"+this.order.getId(), e);
+			//打印审计日志
+			TAuditLog message = new TAuditLog(user.getUId(), "查询订单详细失败："+this.order.getId());
+			logger.info(message);
+		}
+		return Action.SUCCESS;
+	}
+	
+	public String editOrderNum() {
+		try {
+			DBUtil db = DBUtil.getDBUtilByRequest();
+			NsOrder o = this.orderManagerService.queryOrderById(this.order.getId());
+			o.setDeliveryNumb(this.order.getDeliveryNumb());
+			db.update(o);
+			
+			//打印审计日志
+			TAuditLog message = new TAuditLog(user.getUId(), "编辑订单快递单号成功："+this.order.getId());
+			logger.info(message);
+		} catch (Exception e) {
+			/*e.printStackTrace();*/
+			//打印审计日志
+			TAuditLog message = new TAuditLog(user.getUId(), "编辑订单快递单号失败："+this.order.getId());
+			logger.info(message);
+		}
+		return Action.SUCCESS;
+	}
+	
+	public String changeStatus() {
+		try {
+			DBUtil db = DBUtil.getDBUtilByRequest();
+			NsOrder o = this.orderManagerService.queryOrderById(this.order.getId());
+			o.setOrderstatus(new Long("3")); //已发货
+			db.update(o);
+			this.message="success";
+			
+			//打印审计日志
+			TAuditLog message = new TAuditLog(user.getUId(), "修改订单已发货成功:"+this.order.getId());
+			logger.info(message);
+		} catch (Exception e) {
+			/*e.printStackTrace();*/
+			this.message="操作失败";
+			//打印审计日志
+			TAuditLog message = new TAuditLog(user.getUId(), "修改订单已发货失败:"+this.order.getId());
+			logger.info(message);
+		}
+		return Action.SUCCESS;
+	}
+	
+	public String cancelStatus() {
+		try {
+			DBUtil db = DBUtil.getDBUtilByRequest();
+			NsOrder o = this.orderManagerService.queryOrderById(this.order.getId());
+			o.setOrderstatus(new Long("2")); //已付款
+			db.update(o);
+			this.message="success";
+			
+			//打印审计日志
+			TAuditLog message = new TAuditLog(user.getUId(), "取消订单已发货成功:"+this.order.getId());
+			logger.info(message);
+		} catch (Exception e) {
+			/*e.printStackTrace();*/
+			this.message="操作失败";
+			//打印审计日志
+			TAuditLog message = new TAuditLog(user.getUId(), "取消订单已发货失败:"+this.order.getId());
+			logger.info(message);
 		}
 		return Action.SUCCESS;
 	}

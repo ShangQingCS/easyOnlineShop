@@ -22,7 +22,7 @@
 	  			</tr>
 	  			<tr>
 	  				<td align="left">商品编号:</td>
-	  				<td align="left"><input name="queryParams.goodid"/></td>
+	  				<td align="left"><input name="queryParams.goodsid"/></td>
 	  				<td align="left">用户id:</td>
 	  				<td align="left"><input name="queryParams.userid" /></td>
 	  				<td align="left">评论关键字:</td>
@@ -48,15 +48,15 @@
 						<!-- <th style="display: block;" checkbox="true" field="id" width="5%">ID</th> -->
 						<th field="userid" width="5%">用户名</th>
 						<th field="goodid" width="5%">商品编号</th>
-						<th field="gname" width="14%">商品名称</th>
+						<th field="gname" width="29%">商品名称</th>
 						<th field="categoryName" width="5%">类别</th>
 						<th field="kindName" width="5%">类型</th>
 						<th field="brandName" width="5%">品牌</th>
 						<th field="createTime" width="10%" formatter='formatterDatetime'>评论时间</th>
 						<th field="comment" width="20%">评论内容</th>
-						<th field="ishidden" width="10%" formatter='formatterIsHidden'>是否匿名</th>
+						<th field="ishidden" width="5%" formatter='formatterIsHidden'>是否匿名</th>
 						<th field="score" width="5%">评分</th>
-						<th field="cz" width="15%" formatter='formatterAction'>操作(双击行查看详细)</th>
+						<th field="cz" width="5%" formatter='formatterAction'>操作</th>
 					</tr>
 				</thead>
 			</table>

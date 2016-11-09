@@ -34,12 +34,12 @@
 				<thead>
 					<tr>
 						<!-- <th style="display: block;" checkbox="true" field="id" width="5%">ID</th> -->
-						<th field="id" width="10%">商品编号</th>
-						<th field="gname" width="10%">商品名称</th>
+						<th field="id" width="5%">商品编号</th>
+						<th field="gname" width="39%">商品名称</th>
 						<th field="categoryname" width="10%">类别</th>
 						<th field="kindname" width="10%">类型</th>
 						<th field="brandname" width="10%">品牌</th>
-						<th field="price" width="10%">价格</th>
+						<th field="price" width="5%">价格</th>
 						<th field="isuser" width="10%" formatter='formatterIsuser'>状态</th>
 						<th field="cl" width="10%" formatter='formatterAction'>操作</th>
 						<!-- <th field="categoryname.cateName" width="15%" formatter='formatterCategory'>操作</th> -->

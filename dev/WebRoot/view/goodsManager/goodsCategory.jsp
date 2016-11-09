@@ -50,7 +50,7 @@
 			<tr>
 				<td>是否有效：</td>
 				<td>
-					<select name="goodsCategory.isuser" id="inp_isuser">
+					<select name="goodsCategory.isuse" id="inp_isuse">
 						<option value="1">无效</option>
 						<option value="0">有效</option>
 					</select>
@@ -95,7 +95,7 @@
 		if(node.attributes!=null){
 			obj.cateOrder = node.attributes.cateOrder;
 			obj.level = node.attributes.level;
-			obj.isuser = node.attributes.isuser;
+			obj.isuse = node.attributes.isuse;
 		}
 		var pnode = $('#ul_tree').tree('getParent',node.target); 
 		if(pnode!=null){
@@ -119,7 +119,7 @@
 			return;
 		}
 		//清空和重置
-		$("#inp_isuser").val("1");
+		$("#inp_isuse").val("1");
 		$("#div_config input").each(function(i,n){n.value = "";});
 		//赋值
 		$("#inp_level").val(parseInt(nodeInfo.level)+1);

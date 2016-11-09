@@ -49,8 +49,20 @@ public class OrderManagerServiceImpl implements IOrderManagerService {
 				params.add(pageBean.getQueryParams().get("maxTotal"));
 			}
 			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("orderstatus"))) {
-				sql.append(" and t.orderstatus = ? ");
-				params.add(pageBean.getQueryParams().get("orderstatus"));
+				if(pageBean.getQueryParams().get("orderstatus").indexOf(",")>0) {
+					String[] temp = pageBean.getQueryParams().get("orderstatus").split(",");
+					sql.append(" and ( ");
+					String or = "";
+					for (String t : temp) {
+						sql.append(or+" t.orderstatus = ? ");
+						or = " or ";
+						params.add(t);
+					}
+					sql.append(" ) ");
+				} else {
+					sql.append(" and t.orderstatus = ? ");
+					params.add(pageBean.getQueryParams().get("orderstatus"));
+				}
 			}
 			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("paytype"))) {
 				sql.append(" and t.paytype = ? ");
@@ -64,26 +76,26 @@ public class OrderManagerServiceImpl implements IOrderManagerService {
 				sql.append(" and t.deliveryNumb like ? ");
 				params.add("%"+pageBean.getQueryParams().get("deliveryNumb")+"%");
 			}
-			/*if(StringUtils.isNotBlank(pageBean.getQueryParams().get("startCreateTime"))) {
-				sql.append(" and t.startCreateTime >= ? ");
-				params.add("%"+pageBean.getQueryParams().get("startCreateTime")+"%");
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("startCreateTime"))) {
+				sql.append(" and t.create_time >= str_to_date(?,'%Y-%m-%d %H:%i:%s')   ");
+				params.add(pageBean.getQueryParams().get("startCreateTime"));
 			}
 			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("endCreateTime"))) {
-				sql.append(" and t.comment like ? ");
-				params.add("%"+pageBean.getQueryParams().get("endCreateTime")+"%");
+				sql.append(" and t.create_time <= str_to_date(?,'%Y-%m-%d %H:%i:%s')   ");
+				params.add(pageBean.getQueryParams().get("endCreateTime"));
 			}
 			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("startDeliveryTime"))) {
-				sql.append(" and t.comment like ? ");
-				params.add("%"+pageBean.getQueryParams().get("startDeliveryTime")+"%");
+				sql.append(" and t.delivery_time >= str_to_date(?,'%Y-%m-%d %H:%i:%s')   ");
+				params.add(pageBean.getQueryParams().get("startDeliveryTime"));
 			}
 			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("endDeliveryTime"))) {
-				sql.append(" and t.comment like ? ");
-				params.add("%"+pageBean.getQueryParams().get("endDeliveryTime")+"%");
+				sql.append(" and t.delivery_time <= str_to_date(?,'%Y-%m-%d %H:%i:%s')   ");
+				params.add(pageBean.getQueryParams().get("endDeliveryTime"));
 			}
 			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("paynumb"))) {
 				sql.append(" and t.paynumb like ? ");
 				params.add("%"+pageBean.getQueryParams().get("paynumb")+"%");
-			}*/
+			}
 			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("name"))) {
 				sql.append(" and t.name like ? ");
 				params.add("%"+pageBean.getQueryParams().get("name")+"%");

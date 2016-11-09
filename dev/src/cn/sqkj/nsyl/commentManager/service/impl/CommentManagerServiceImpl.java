@@ -33,16 +33,16 @@ public class CommentManagerServiceImpl implements ICommentManagerService {
 	 */
 	public PageBean queryCommentList(PageBean pageBean) throws Exception {
 		StringBuffer sql = new StringBuffer(" select t.*,t1.gname,t2.cate_name as category_name,t3.cate_name as kind_name,t4.cate_name as brand_name from ns_comment t  ");
-		sql.append(" left join ns_goods t1 on t.goodid=t1.id ");
+		sql.append(" left join ns_goods t1 on t.goodsid=t1.id ");
 		sql.append(" left join ns_goods_category t2 on t1.category=t2.id ");
 		sql.append(" left join ns_goods_category t3 on t1.kind=t3.id ");
 		sql.append(" left join ns_goods_category t4 on t1.brand=t4.id ");
 		sql.append(" where 1=1 ");
 		List params = new ArrayList();
 		if(pageBean.getQueryParams() != null && !pageBean.getQueryParams().isEmpty()) {
-			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("goodid"))) {
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("goodsid"))) {
 				sql.append(" and t.id = ? ");
-				params.add(pageBean.getQueryParams().get("goodid"));
+				params.add(pageBean.getQueryParams().get("goodsid"));
 			}
 			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("gname"))) {
 				sql.append(" and t1.gname like ? ");

@@ -9,7 +9,7 @@ public class NsComment implements java.io.Serializable {
 	 */
 	private static final long serialVersionUID = -8720848335697833020L;
 	private Long id;
-	private Long goodid;
+	private Long goodsid;
 	private String comment;
 	private Timestamp createTime;
 	private Integer score;
@@ -25,14 +25,6 @@ public class NsComment implements java.io.Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Long getGoodid() {
-		return this.goodid;
-	}
-
-	public void setGoodid(Long goodid) {
-		this.goodid = goodid;
 	}
 
 	public String getComment() {
@@ -73,6 +65,14 @@ public class NsComment implements java.io.Serializable {
 
 	public void setIshidden(String ishidden) {
 		this.ishidden = ishidden;
+	}
+
+	public Long getGoodsid() {
+		return goodsid;
+	}
+
+	public void setGoodsid(Long goodsid) {
+		this.goodsid = goodsid;
 	}
 
 }

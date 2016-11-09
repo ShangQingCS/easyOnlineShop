@@ -8,8 +8,8 @@
             <column name="id" />
             <generator class="assigned" />
         </id>
-        <property name="goodid" type="java.lang.Long">
-            <column name="goodid" not-null="true" />
+        <property name="goodsid" type="java.lang.Long">
+            <column name="goodsid" not-null="true" />
         </property>
         <property name="comment" type="java.lang.String">
             <column name="comment" length="500" />

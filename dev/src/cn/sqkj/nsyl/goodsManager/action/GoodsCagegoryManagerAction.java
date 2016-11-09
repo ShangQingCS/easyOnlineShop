@@ -82,7 +82,7 @@ public class GoodsCagegoryManagerAction extends PageAction {
 	 * @return
 	 */
 	public String goodsCategoryTree() {
-		StringBuffer sql = new StringBuffer(" select c.id,c.cate_name,c.desc_,c.cate_order,c.`level`,c.isuser,c.parent_id ");
+		StringBuffer sql = new StringBuffer(" select c.id,c.cate_name,c.desc_,c.cate_order,c.`level`,c.isuse,c.parent_id ");
 		sql.append(" from ns_goods_category c ");
 		sql.append(" where c.flag='0' order by c.cate_order ");
 		DBUtil db = DBUtil.getDBUtilByRequest();
@@ -100,7 +100,7 @@ public class GoodsCagegoryManagerAction extends PageAction {
 			attrs.put("cateOrder", pojo.get("cateOrder"));
 			attrs.put("logo", pojo.get("logo"));
 			attrs.put("level", pojo.get("level"));
-			attrs.put("isuser", pojo.get("isuser"));
+			attrs.put("isuse", pojo.get("isuse"));
 			if(pojo.get("level") != null && !"3".equals(pojo.get("level").toString())) {
 				node.put("state", "closed");
 			}

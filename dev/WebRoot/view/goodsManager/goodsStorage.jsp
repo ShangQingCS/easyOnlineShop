@@ -42,14 +42,14 @@
 				<thead>
 					<tr>
 						<!-- <th style="display: block;" checkbox="true" field="id" width="5%">ID</th> -->
-						<th field="id" width="10%">商品编号</th>
-						<th field="gname" width="10%">商品名称</th>
+						<th field="id" width="5%">商品编号</th>
+						<th field="gname" width="39%">商品名称</th>
 						<th field="categoryname" width="10%">类别</th>
 						<th field="kindname" width="10%">类型</th>
 						<th field="brandname" width="10%">品牌</th>
-						<th field="price" width="10%">价格</th>
-						<th field="storenumb" width="10%">可用库存</th>
-						<th field="freazes" width="10%">冻结库存</th>
+						<th field="price" width="5%">价格</th>
+						<th field="storenumb" width="5%">可用库存</th>
+						<th field="freazes" width="5%">冻结库存</th>
 						<th field="cl" width="10%" formatter='formatterAction'>操作</th>
 					</tr>
 				</thead>

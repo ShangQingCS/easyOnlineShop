@@ -4,7 +4,11 @@
   <head>
     <jsp:include page="/include/include.jsp"></jsp:include>
     <title>${_title}-首页</title>
-    
+    <style type="text/css">
+    	.panel-title {
+    		height: 19px;
+    	}
+    </style>
     <script type="text/javascript">
     $(function(){
     	initMenuTree();//初始化菜单
@@ -64,7 +68,7 @@
 				$("#menu_tree").css("remove", root.target);    
 	   		},
 	   		error:function(XMLHttpRequest, textStatus, errorThrown) {
-	   			alert('e:'+XMLHttpRequest.responseText);
+	   			//alert('e:'+XMLHttpRequest.responseText);
 	   		}
 		});
 	}
@@ -102,16 +106,11 @@
   </head>
   
   <body class="easyui-layout">
-	<div region="north" title="${_title }" split="true" noheader="true" style="height:50px;padding:5px;background:#eee;">
+	<div region="north" title="${_title }" split="false" noheader="true" style="height:50px;padding:5px;background:#eee;">
 		<div style="float: left; font-size: 18px; font-weight: bold; font-family:黑体; margin-left: 10px; padding-top: 8px;">${_title }</div>
 		<div style="float: right; margin-top: 8px;">
-			<!-- <a href="index.jsp">切换到普通版</a>&nbsp;&nbsp;&nbsp; -->
 			<span>当前用户: ${user.UName}</span>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0);" onclick="confirm('提示', '确认退出', userOut);return false;">安全退出</a>
 		</div>
-	</div>
-
-	<div region="south" title="版权声明"  noheader="true" style="height:50px;padding:15px;background:#eee;">
-		<div align="center" style="font-weight: bold;"><%=application.getInitParameter("copyright") %></div>	
 	</div>
 
 	<div region="west" split="false" style="width:220px;">
@@ -121,7 +120,11 @@
 	</div>
 
 	<div id="div_tabs" region="center" class="easyui-tabs" style="padding:0px;background:#eee;" noheader="true">
-		<div title="欢迎页面" closable="false"><iframe id="iframe1" src="welcome.jsp" scrolling="no" frameBorder="0" style="width: 100%; height: 100%;"></iframe></div>
+		<!-- <div title="欢迎页面" closable="false"><iframe id="iframe1" src="welcome.jsp" scrolling="no" frameBorder="0" style="width: 100%; height: 100%;"></iframe></div> -->
+	</div>
+	
+	<div region="south" title="版权声明"  noheader="true" style="height:50px;padding:15px;background:#eee;">
+		<div align="center" style="font-weight: bold;"><%=application.getInitParameter("copyright") %></div>	
 	</div>
 </body>
 </html>

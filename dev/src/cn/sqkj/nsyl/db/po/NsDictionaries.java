@@ -1,40 +1,23 @@
 package cn.sqkj.nsyl.db.po;
-// default package
-
-/**
- * NsDictionaries entity. @author MyEclipse Persistence Tools
- */
 
 public class NsDictionaries implements java.io.Serializable {
 
-	// Fields
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Long id;
+	private String type;
+	private String code;
 	private String name;
-	private Long parentid;
-	private String memo;
+	private String parentcode;
+	private String remark;
+	private String isedit;
+	private Integer order;
 
-	// Constructors
-
-	/** default constructor */
 	public NsDictionaries() {
 	}
-
-	/** minimal constructor */
-	public NsDictionaries(Long id) {
-		this.id = id;
-	}
-
-	/** full constructor */
-	public NsDictionaries(Long id, String name, Long parentid, String memo) {
-		this.id = id;
-		this.name = name;
-		this.parentid = parentid;
-		this.memo = memo;
-	}
-
-	// Property accessors
-
+	
 	public Long getId() {
 		return this.id;
 	}
@@ -51,20 +34,52 @@ public class NsDictionaries implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public Long getParentid() {
-		return this.parentid;
+	public String getType() {
+		return type;
 	}
 
-	public void setParentid(Long parentid) {
-		this.parentid = parentid;
+	public void setType(String type) {
+		this.type = type;
 	}
 
-	public String getMemo() {
-		return this.memo;
+	public String getCode() {
+		return code;
 	}
 
-	public void setMemo(String memo) {
-		this.memo = memo;
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getParentcode() {
+		return parentcode;
+	}
+
+	public void setParentcode(String parentcode) {
+		this.parentcode = parentcode;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public String getIsedit() {
+		return isedit;
+	}
+
+	public void setIsedit(String isedit) {
+		this.isedit = isedit;
+	}
+
+	public Integer getOrder() {
+		return order;
+	}
+
+	public void setOrder(Integer order) {
+		this.order = order;
 	}
 
 }

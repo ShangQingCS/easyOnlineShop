@@ -55,8 +55,8 @@
 	<mapping resource="cn/sqkj/nsyl/orderManager/pojo/NsOrderDetail.hbm.xml" />
 	<mapping resource="cn/sqkj/nsyl/advertiseManager/pojo/NsAdvertise.hbm.xml" />
 	<mapping resource="cn/sqkj/nsyl/eventsManager/pojo/NsEventsinfo.hbm.xml" />
-	<!-- <mapping resource="cn/sqkj/nsyl/db/po/NsDictionaries.hbm.xml" />
-	<mapping resource="cn/sqkj/nsyl/db/po/NsCart.hbm.xml" />
+	<mapping resource="cn/sqkj/nsyl/db/po/NsDictionaries.hbm.xml" />
+	<!-- <mapping resource="cn/sqkj/nsyl/db/po/NsCart.hbm.xml" />
 	<mapping resource="cn/sqkj/nsyl/db/po/NsAddress.hbm.xml" /> -->
 	<mapping resource="framework/db/pojo/TAuditLog.hbm.xml" />
 </session-factory>

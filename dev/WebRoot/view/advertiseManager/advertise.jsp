@@ -33,6 +33,7 @@
 	  			<tr>
 	  				<td align="left">
 	  					<a href="#" class="easyui-linkbutton" onclick="queryComment(); return false;">查询</a>
+	  					<a href="#" class="easyui-linkbutton" onclick="addAdv(); return false;">新增</a>
 				 		<a href="#" class="easyui-linkbutton" onclick="winReload();">刷新</a>
 			 		</td>
 			 	</tr>
@@ -61,54 +62,51 @@
 				</thead>
 			</table>
 			
-			<div title="用户信息" id="user_detail_window" modal="true" draggable="false" class="easyui-window" style="width: 800px; height: 600px; background-color:#EFEFEF;" 
+			<div title="新增广告" id="adv_add_window" modal="true" draggable="false" class="easyui-window" style="width: 90%; height: 90%; background-color:#EFEFEF;" 
 				resizable="false" collapsible="false" maximizable="false" minimizable="false" closed="true">
-				<table id="user_datail_table" border="0" dataType="text" class="tablestyle01" style="width:100%">
+				<table id="adv_add_table" border="0" dataType="text" class="tablestyle01" style="width:100%">
 		  			<tr>
-		  				<td align="right">用户名:</td>
+		  				<td align="right">广告标题:</td>
 		  				<td><input name="userid" readonly="readonly" style="width: 100%;"/> </td>
 		  			</tr>
-		  			<tr>
-		  				<td align="right">商品编号:</td>
+		  			<!-- <tr>
+		  				<td align="right">广告介绍:</td>
 		  				<td><input name="goodid" readonly="readonly" style="width: 100%;"/> </td>
-		  			</tr>
+		  			</tr> -->
 		  			<tr>
-		  				<td align="right">商品名称:</td>
+		  				<td align="right">广告图片:</td>
 		  				<td><input name="gname" readonly="readonly" style="width: 100%;"/> </td>
 		  			</tr>
 		  			<tr>
-		  				<td align="right">类别:</td>
+		  				<td align="right">广告分类:</td>
 		  				<td><input name="categoryName" readonly="readonly" style="width: 100%;"/> </td>
 		  			</tr>
 		  			<tr>
-		  				<td align="right">类型:</td>
-		  				<td><input name="kindName" readonly="readonly" style="width: 100%;"/> </td>
+		  				<td align="right">活动对象:</td>
+		  				<td>
+		  					<input name="kindName" readonly="readonly" style="width: 100%;"/> 
+		  				</td>
 		  			</tr>
 		  			<tr>
-		  				<td align="right">品牌:</td>
+		  				<td align="right">显示顺序:</td>
 		  				<td><input name="brandName" readonly="readonly" style="width: 100%;"/> </td>
 		  			</tr>
 		  			<tr>
-		  				<td align="right">评论时间:</td>
-		  				<td><input name="createTime" id="createTime" readonly="readonly" style="width: 100%;"/> </td>
-		  			</tr>
-		  			<tr>
-		  				<td align="right">是否匿名:</td>
-		  				<td><input name="ishidden" id="ishidden" readonly="readonly" style="width: 100%;"/> </td>
-		  			</tr>
-		  			<tr>
-		  				<td align="right">评分:</td>
-		  				<td><input name="score" readonly="readonly" style="width: 100%;"/> </td>
-		  			</tr>
-		  			<tr>
-		  				<td align="right" style="width: 80px">描述:</td>
-		  				<td colspan="3">
-		  					<textarea name="comment" readonly="readonly" style="width: 100%;" rows="15"></textarea>
+		  				<td align="right">广告类型:</td>
+		  				<td>
+		  					<select>
+		  						<option value="1">首页头部</option>
+		  						<option value="2">其它位置</option>
+		  					</select> 
 		  				</td>
+		  			</tr>
+		  			<tr>
+		  				<td align="right">所属分组:</td>
+		  				<td><input name="ishidden" id="ishidden" readonly="readonly" style="width: 100%;"/> </td>
 		  			</tr>
 	  			</table>
 				<div align="center" class="tablestyle01">
-	 				<a href="#" class="easyui-linkbutton" onclick="$('#user_detail_window').window('close'); return false;">关闭</a>
+	 				<a href="#" class="easyui-linkbutton" onclick="$('#adv_add_window').window('close'); return false;">关闭</a>
 				</div>
 			</div>
 		</div>
@@ -120,13 +118,6 @@
 		});
 		
 		var initPage = function() {
-			//queryCategorys();
-		}
-		
-		var formatterIsHidden = function(value,rec) {
-			if(value=="1")
-				return "不匿名"; 
-			return "匿名";
 		}
 		
 		var formatterAction = function(value,rec) {
@@ -134,108 +125,18 @@
 			formatterStr="<a href='#' onclick='delComment(\""+rec.id+"\"); return false;'>删除</a>&nbsp;";
 			return formatterStr;
 		}
-				
+		
+		var showComment = function() {
+		}
+		
 		var queryComment = function() {
 			var data = formGet("from_query");
 			$("#tab_list").datagrid({"queryParams":data});
 		}
 		
-		var showComment = function() {
-			var row = $('#tab_list').datagrid('getSelected');
-			if (row) {
-				formSet("user_datail_table", row);
-				$("#createTime").val(row.createTime.replace("T"," "));
-				$("#ishidden").val(row.ishidden=="1"?"不匿名":"匿名");
-				$("#user_detail_window").window("open");
-			}
-		}
-		
-		var delComment = function(id) {
-			window.confirm("提示","确认删除该评论?",function(r){
-				if(r){
-					$.ajax({ type: "POST",  url: "${basePath }/view/commentManager/commentManager!deleteComment.action",  dataType: "json",
-					  	data: "id="+id,
-					  	success: function(json){
-							if(json.message=='success'){
-								alert("删除评论成功！");
-								queryComment();
-							}else if(json.message!=null && json.message!=''){
-								alter(json.message);
-							}
-					  	}
-					});
-				}
-			});
-		}
-		
-		//查询一级类别  
-		var queryCategorys = function() {
-			$.ajax({
-				url: "${basePath }/view/goodsManager/goodsCagegoryManager!queryCategorys.action",
-				cache: false,
-				dataType:"json",
-				success: function(json){
-				    $("#inp_category").combobox({
-				    	required:false,
-				    	editable:false,
-						data:json.categorys,
-						valueField:'id',
-				    	textField:'cateName',
-						onChange: function (n,o) {
-							$('#inp_kind').combobox("clear");
-							$('#inp_brand').combobox("clear");
-							$('#inp_kind').combobox('loadData', []);
-							$('#inp_brand').combobox('loadData', []);
-							queryKinds(callbackQueryKinds);
-						}
-					});
-				}
-			});
-		}
-		
-		//查询二级类别
-		var queryKinds = function(callbackFun) {
-			$.ajax({
-				url: "${basePath }/view/goodsManager/goodsCagegoryManager!queryKinds.action?categoryVo.id="+$('#inp_category').combobox('getValue'),
-				cache: false,
-				dataType:"json",
-				success: callbackFun
-			});
-		}
-		
-		var callbackQueryKinds = function (json, defaultValue) {
-			 $("#inp_kind").combobox({
-			   	required:false,
-			   	editable:false,
-				data:json.kinds,
-				valueField:'id',
-			   	textField:'cateName',
-				onChange: function (n,o) {
-					$('#inp_brand').combobox("clear");
-					$('#inp_brand').combobox('loadData', []);
-					queryBrands(callbackQueryBrands);
-				}
-			});
-		}
-		
-		//查询三级类别
-		var queryBrands = function(callbackFun) {
-			$.ajax({
-				url: "${basePath }/view/goodsManager/goodsCagegoryManager!queryBrands.action?categoryVo.id="+$('#inp_kind').combobox('getValue'),
-				cache: false,
-				dataType:"json",
-				success: callbackFun
-			});
-		}
-		
-		var callbackQueryBrands = function (json, defaultValue) {
-			$("#inp_brand").combobox({
-		    	required:false,
-		    	editable:false,
-				data:json.brands,
-				valueField:'id',
-		    	textField:'cateName'
-			});
+		var addAdv = function() {
+			formReset("adv_add_table");
+			$("#adv_add_window").window("open");
 		}
 	</script>
 </html>

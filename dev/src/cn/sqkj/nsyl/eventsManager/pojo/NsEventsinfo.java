@@ -1,14 +1,11 @@
-package cn.sqkj.nsyl.db.po;
-// default package
-
-/**
- * NsEventsinfo entity. @author MyEclipse Persistence Tools
- */
+package cn.sqkj.nsyl.eventsManager.pojo;
 
 public class NsEventsinfo implements java.io.Serializable {
 
-	// Fields
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String name;
 	private Integer isuse;
@@ -17,30 +14,8 @@ public class NsEventsinfo implements java.io.Serializable {
 	private String picture;
 	private String goods;
 
-	// Constructors
-
-	/** default constructor */
 	public NsEventsinfo() {
 	}
-
-	/** minimal constructor */
-	public NsEventsinfo(Long id) {
-		this.id = id;
-	}
-
-	/** full constructor */
-	public NsEventsinfo(Long id, String name, Integer isuse, String memo,
-			String minpicture, String picture, String goods) {
-		this.id = id;
-		this.name = name;
-		this.isuse = isuse;
-		this.memo = memo;
-		this.minpicture = minpicture;
-		this.picture = picture;
-		this.goods = goods;
-	}
-
-	// Property accessors
 
 	public Long getId() {
 		return this.id;

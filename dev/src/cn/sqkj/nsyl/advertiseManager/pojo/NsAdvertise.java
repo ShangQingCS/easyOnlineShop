@@ -1,14 +1,11 @@
-package cn.sqkj.nsyl.db.po;
-// default package
-
-/**
- * NsAdvertise entity. @author MyEclipse Persistence Tools
- */
+package cn.sqkj.nsyl.advertiseManager.pojo;
 
 public class NsAdvertise implements java.io.Serializable {
 
-	// Fields
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String name;
 	private String memo;
@@ -16,29 +13,8 @@ public class NsAdvertise implements java.io.Serializable {
 	private Long linkkind;
 	private String imglink;
 
-	// Constructors
-
-	/** default constructor */
 	public NsAdvertise() {
 	}
-
-	/** minimal constructor */
-	public NsAdvertise(Long id) {
-		this.id = id;
-	}
-
-	/** full constructor */
-	public NsAdvertise(Long id, String name, String memo, String imgurl,
-			Long linkkind, String imglink) {
-		this.id = id;
-		this.name = name;
-		this.memo = memo;
-		this.imgurl = imgurl;
-		this.linkkind = linkkind;
-		this.imglink = imglink;
-	}
-
-	// Property accessors
 
 	public Long getId() {
 		return this.id;

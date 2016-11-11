@@ -105,12 +105,16 @@ CREATE TABLE ns_comment (
 -- ----------------------------
 DROP TABLE IF EXISTS ns_dictionaries;
 CREATE TABLE ns_dictionaries (
-  id bigint(20) NOT NULL,
-  name varchar(150) DEFAULT NULL,
-  parentid bigint(20) DEFAULT NULL,
-  memo varchar(200) DEFAULT NULL,
-  PRIMARY KEY (id),
-  UNIQUE KEY id_UNIQUE (id)
+	id INT(11) NOT NULL AUTO_INCREMENT,
+	type VARCHAR(50) NULL DEFAULT NULL,
+	code VARCHAR(50) NULL DEFAULT NULL
+	name VARCHAR(100) NULL DEFAULT NULL,
+	parentcode VARCHAR(50) NULL DEFAULT NULL,
+	remark VARCHAR(100) NULL DEFAULT NULL,
+	isuse CHAR(1) NULL DEFAULT '0',
+	isedit CHAR(1) NULL DEFAULT '0',
+	order INT(11) NULL DEFAULT NULL,
+	PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -603,7 +607,7 @@ INSERT INTO t_xt_menu VALUES ('59a326f9-31a5-4bb7-b973-e51fe379b48c', '订单管
 INSERT INTO t_xt_menu VALUES ('5a7bfa0e-05cc-4204-b3c9-1e9a7c796398', '商品入库', '9779cbff-cb36-4598-aaab-f9be42349c74', 'root,xt,9779cbff-cb36-4598-aaab-f9be42349c74,5a7bfa0e-05cc-4204-b3c9-1e9a7c796398', '/view/goodsManager/goodsStorage.jsp', '3', null, '1', '2016-10-18 12:21:36', '2016-11-01 12:13:25', null);
 INSERT INTO t_xt_menu VALUES ('65c489f1-6f86-4d82-a381-45be4dedf09b', '订单状态变更', '59a326f9-31a5-4bb7-b973-e51fe379b48c', 'root,xt,59a326f9-31a5-4bb7-b973-e51fe379b48c,65c489f1-6f86-4d82-a381-45be4dedf09b', '1', '3', null, '1', '2016-10-13 15:51:54', null, null);
 INSERT INTO t_xt_menu VALUES ('6e5174f8-29c5-4cc2-9ec3-4b7f5608bfc3', '查询统计', 'xt', 'root,xt,6e5174f8-29c5-4cc2-9ec3-4b7f5608bfc3', '', '6', null, '1', '2016-10-18 12:24:07', null, null);
-INSERT INTO t_xt_menu VALUES ('727df0ce-48c9-4744-b8ec-4c3115fca915', '活动管理', '115e3d38-c04d-43b7-bbd6-1f970783724c', 'root,xt,115e3d38-c04d-43b7-bbd6-1f970783724c,727df0ce-48c9-4744-b8ec-4c3115fca915', '1', '2', null, '1', '2016-10-18 12:23:28', null, null);
+INSERT INTO t_xt_menu VALUES ('727df0ce-48c9-4744-b8ec-4c3115fca915', '活动管理', '115e3d38-c04d-43b7-bbd6-1f970783724c', 'root,xt,115e3d38-c04d-43b7-bbd6-1f970783724c,727df0ce-48c9-4744-b8ec-4c3115fca915', '/view/eventsManager/events.jsp', '2', null, '1', '2016-10-18 12:23:28', null, null);
 INSERT INTO t_xt_menu VALUES ('7846b141-65c8-4eb9-9fc5-ae63bb236836', '权限管理', 'xt', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836', '', '9', null, '1', '2016-10-13 14:01:05', '2016-10-13 14:01:05', null);
 INSERT INTO t_xt_menu VALUES ('80cbe605-3dc6-445b-a79d-5d20f404cb2f', '订单查询', '59a326f9-31a5-4bb7-b973-e51fe379b48c', 'root,xt,59a326f9-31a5-4bb7-b973-e51fe379b48c,80cbe605-3dc6-445b-a79d-5d20f404cb2f', '/view/orderManager/order.jsp', '1', null, '1', '2016-10-13 14:13:50', '2016-10-13 15:51:16', null);
 INSERT INTO t_xt_menu VALUES ('9779cbff-cb36-4598-aaab-f9be42349c74', '商品管理', 'xt', 'root,xt,9779cbff-cb36-4598-aaab-f9be42349c74', '', '1', null, '1', '2016-10-13 14:14:57', '2016-10-13 15:36:13', null);
@@ -612,7 +616,7 @@ INSERT INTO t_xt_menu VALUES ('c690495e-d8b5-4765-8dc5-6e771b246c24', '评论维
 INSERT INTO t_xt_menu VALUES ('de21e498-6d9e-47d1-b724-0205263609fd', '操作角色人员管理', '7846b141-65c8-4eb9-9fc5-ae63bb236836', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,de21e498-6d9e-47d1-b724-0205263609fd', '/view/system/role_user_config.jsp', '5', null, '1', '2016-10-13 15:33:59', '2016-10-13 15:34:07', null);
 INSERT INTO t_xt_menu VALUES ('e40ec219-da7b-441f-9f41-cd95aa79e874', '物流信息录入', '59a326f9-31a5-4bb7-b973-e51fe379b48c', 'root,xt,59a326f9-31a5-4bb7-b973-e51fe379b48c,e40ec219-da7b-441f-9f41-cd95aa79e874', '/view/orderManager/orderLogistics.jsp', '2', null, '1', '2016-10-13 15:51:26', '2016-10-13 15:51:29', null);
 INSERT INTO t_xt_menu VALUES ('f4e5a984-a02e-4c12-b903-3801d6d8e3c8', '操作人员管理', '7846b141-65c8-4eb9-9fc5-ae63bb236836', 'root,xt,7846b141-65c8-4eb9-9fc5-ae63bb236836,f4e5a984-a02e-4c12-b903-3801d6d8e3c8', '/view/system/user.jsp', '2', null, '1', '2016-10-13 15:19:23', '2016-10-13 15:32:58', null);
-INSERT INTO t_xt_menu VALUES ('f72fb176-0bba-452f-95a1-dd82c91dd374', '广告录入', '115e3d38-c04d-43b7-bbd6-1f970783724c', 'root,xt,115e3d38-c04d-43b7-bbd6-1f970783724c,f72fb176-0bba-452f-95a1-dd82c91dd374', '1', '1', null, '1', '2016-10-18 12:23:07', null, null);
+INSERT INTO t_xt_menu VALUES ('f72fb176-0bba-452f-95a1-dd82c91dd374', '广告管理', '115e3d38-c04d-43b7-bbd6-1f970783724c', 'root,xt,115e3d38-c04d-43b7-bbd6-1f970783724c,f72fb176-0bba-452f-95a1-dd82c91dd374', '/view/advertiseManager/advertise.jsp', '1', null, '1', '2016-10-18 12:23:07', null, null);
 INSERT INTO t_xt_menu VALUES ('fa8b8df9-2559-4f48-b1c3-5ee8b21a58f1', '商品录入', '9779cbff-cb36-4598-aaab-f9be42349c74', 'root,xt,9779cbff-cb36-4598-aaab-f9be42349c74,fa8b8df9-2559-4f48-b1c3-5ee8b21a58f1', '/view/goodsManager/goodsAdd.jsp', '1', null, '1', '2016-10-13 14:15:07', '2016-10-13 15:36:36', null);
 INSERT INTO t_xt_menu VALUES ('xt', '系统', 'root', 'root,xt', null, '1', null, '1', '2016-10-13 14:01:05', null, null);
 /*INSERT INTO t_xt_menu VALUES ('ab88f2b9-d108-4f8b-9d8a-c43181c62ae9', '字典管理', '6c0167ad-89da-4857-865e-54c7fe8dde4c', 'root,xt,6c0167ad-89da-4857-865e-54c7fe8dde4c,ab88f2b9-d108-4f8b-9d8a-c43181c62ae9', '1', '1', null, '1', '2016-10-13 15:52:44', null, null);*/

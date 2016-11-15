@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
 
+import cn.sqkj.nsyl.commentManager.pojo.NsComment;
 import cn.sqkj.nsyl.commentManager.service.ICommentManagerService;
 
 import com.opensymphony.xwork2.Action;
@@ -56,9 +57,9 @@ public class CommentManagerAction extends PageAction {
 			String idstr = RequestHelper.getParameter("id");
 			String[] ids = idstr.split(",");
 			for(String id : ids){
-				/*NsComment ns = this.commentManagerService.queryCommentById(new Long(id));
-				//ns.setIsuser(1);
-				db.update(ns);*/
+				NsComment nc = this.commentManagerService.queryCommentById(new Long(id));
+				nc.setFlag("1");
+				db.update(nc);
 			}
 		} catch(Exception e) {
 			e.printStackTrace();

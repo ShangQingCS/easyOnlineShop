@@ -40,7 +40,7 @@
 						<th field="kindname" width="10%">类型</th>
 						<th field="brandname" width="10%">品牌</th>
 						<th field="price" width="5%">价格</th>
-						<th field="isuser" width="10%" formatter='formatterIsuser'>状态</th>
+						<th field="isuse" width="10%" formatter='formatterIsuse'>状态</th>
 						<th field="cl" width="10%" formatter='formatterAction'>操作</th>
 						<!-- <th field="categoryname.cateName" width="15%" formatter='formatterCategory'>操作</th> -->
 						<!-- <th field="kindname.cateName" width="15%" formatter='formatterKind'>操作</th> -->
@@ -141,18 +141,36 @@
 			});
 		}
 		
+		var invalidGoods = function(id,gname) {
+			window.confirm("提示","设为无效："+gname+"?",function(r){
+				if(r){
+					$.ajax({ type: "POST",  url: "${basePath }/view/goodsManager/goodsManager!invalidGoods.action",  dataType: "json",
+					  	data: "id="+id,
+					  	success: function(json){
+							if(json.message=='success'){
+								alert("操作成功！");
+								queryGoods();
+							} else if(json.message!=null && json.message!=''){
+								alter(json.message);
+							}
+					  	}
+					});
+				}
+			});
+		}
+		
 		var formatterAction = function(value,rec) {
 			var formatterStr = "<a href='#' onclick='goodsEdit(\""+rec.id+"\",\""+rec.gname+"\"); return false;'>编辑</a>&nbsp;";
-			if(rec.isuser=="0") {
-				formatterStr += "<a href='#' onclick='goodsDel(\""+rec.id+"\",\""+rec.gname+"\"); return false;'>删除</a>&nbsp;";
+			if(rec.isuse=="0") {
+				formatterStr += "<a href='#' onclick='invalidGoods(\""+rec.id+"\",\""+rec.gname+"\"); return false;'>设为无效</a>&nbsp;";
 			} else {
 				formatterStr += "<a href='#' onclick='goodsRecover(\""+rec.id+"\",\""+rec.gname+"\"); return false;'>设为有效</a>&nbsp;";
 			}
-			
+			//formatterStr += "<a href='#' onclick='goodsDel(\""+rec.id+"\",\""+rec.gname+"\"); return false;'>删除</a>&nbsp;";
 			return formatterStr;
 		}
 		
-		var formatterIsuser = function(value,rec) {
+		var formatterIsuse = function(value,rec) {
 			if(value=="0") {
 				return "<span style='color: green;'>有效</span>";
 			} else {

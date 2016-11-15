@@ -41,14 +41,17 @@ DROP TABLE IF EXISTS ns_advertise;
 CREATE TABLE ns_advertise (
   id bigint(20) NOT NULL,
   name varchar(100) DEFAULT NULL,
-  memo text,
-  imgurl varchar(45) DEFAULT NULL,
+  memo VARCHAR(2000) DEFAULT NULL,
+  imgurl varchar(1000) DEFAULT NULL,
   linkkind bigint(20) DEFAULT NULL,
   imglink varchar(45) DEFAULT NULL,
   ordernumb int(11) DEFAULT '0',
-  type int(11) DEFAULT NULL,
-  isuse int(11) DEFAULT NULL,
+  type varchar(50) DEFAULT NULL,
+  isuse char(1) DEFAULT NULL,
   kind bigint(20) DEFAULT NULL,
+  create_time datetime DEFAULT CURRENT_TIMESTAMP,
+  update_time datetime DEFAULT NULL,
+  flag char(1) DEFAULT '0',
   PRIMARY KEY (id),
   UNIQUE KEY id_UNIQUE (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

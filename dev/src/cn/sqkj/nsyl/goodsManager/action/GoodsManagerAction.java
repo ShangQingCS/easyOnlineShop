@@ -244,7 +244,24 @@ public class GoodsManagerAction extends PageAction {
 		return Action.SUCCESS;
 	}
 	
-	public String deleteGoods() {
+	/*public String deleteGoods() {
+		try {
+			DBUtil db = DBUtil.getDBUtilByRequest();
+			String idstr = RequestHelper.getParameter("id");
+			String[] ids = idstr.split(",");
+			for(String id : ids){
+				NsGoods ns = this.goodsManagerService.queryGoodsById(new Long(id));
+				ns.setIsuse("1");
+				db.update(ns);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		this.message="success";
+		return Action.SUCCESS;
+	}*/
+	
+	public String invalidGoods() {
 		try {
 			DBUtil db = DBUtil.getDBUtilByRequest();
 			String idstr = RequestHelper.getParameter("id");
@@ -260,6 +277,7 @@ public class GoodsManagerAction extends PageAction {
 		this.message="success";
 		return Action.SUCCESS;
 	}
+	
 	
 	public String recoverGoods() {
 		try {

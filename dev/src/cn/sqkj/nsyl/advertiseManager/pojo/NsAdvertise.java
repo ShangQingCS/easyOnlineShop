@@ -1,5 +1,7 @@
 package cn.sqkj.nsyl.advertiseManager.pojo;
 
+import java.sql.Timestamp;
+
 public class NsAdvertise implements java.io.Serializable {
 
 	/**
@@ -12,6 +14,13 @@ public class NsAdvertise implements java.io.Serializable {
 	private String imgurl;
 	private Long linkkind;
 	private String imglink;
+	private Integer ordernumb;
+	private String type;
+	private String isuse;
+	private Long kind;
+	private Timestamp createTime;
+	private Timestamp updateTime;
+	private String flag;
 
 	public NsAdvertise() {
 	}
@@ -62,6 +71,62 @@ public class NsAdvertise implements java.io.Serializable {
 
 	public void setImglink(String imglink) {
 		this.imglink = imglink;
+	}
+
+	public Integer getOrdernumb() {
+		return ordernumb;
+	}
+
+	public void setOrdernumb(Integer ordernumb) {
+		this.ordernumb = ordernumb;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getIsuse() {
+		return isuse;
+	}
+
+	public void setIsuse(String isuse) {
+		this.isuse = isuse;
+	}
+
+	public Long getKind() {
+		return kind;
+	}
+
+	public void setKind(Long kind) {
+		this.kind = kind;
+	}
+
+	public Timestamp getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
+	}
+
+	public Timestamp getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	public String getFlag() {
+		return flag;
+	}
+
+	public void setFlag(String flag) {
+		this.flag = flag;
 	}
 
 }

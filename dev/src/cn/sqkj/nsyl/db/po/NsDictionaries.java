@@ -12,26 +12,19 @@ public class NsDictionaries implements java.io.Serializable {
 	private String name;
 	private String parentcode;
 	private String remark;
+	private String isuse;
 	private String isedit;
 	private Integer order;
 
 	public NsDictionaries() {
 	}
-	
+
 	public Long getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getType() {
@@ -48,6 +41,14 @@ public class NsDictionaries implements java.io.Serializable {
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getParentcode() {
@@ -80,6 +81,14 @@ public class NsDictionaries implements java.io.Serializable {
 
 	public void setOrder(Integer order) {
 		this.order = order;
+	}
+
+	public String getIsuse() {
+		return isuse;
+	}
+
+	public void setIsuse(String isuse) {
+		this.isuse = isuse;
 	}
 
 }

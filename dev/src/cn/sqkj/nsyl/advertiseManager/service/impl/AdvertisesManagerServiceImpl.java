@@ -5,18 +5,21 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import cn.sqkj.nsyl.advertiseManager.dao.NsAdvertiseDAO;
 import cn.sqkj.nsyl.advertiseManager.pojo.NsAdvertise;
 import cn.sqkj.nsyl.advertiseManager.service.IAdvertiseManagerService;
 import framework.bean.PageBean;
+import framework.db.DBUtil;
 
 /**
  * @author yangchaowen
  * 2016年11月10日
  * 广告管理service实现类
  */
+@SuppressWarnings({"rawtypes","unchecked"})
 @Service("advertiseManagerService")
 public class AdvertisesManagerServiceImpl implements IAdvertiseManagerService {
 	@Resource(name="advertiseDAO")
@@ -25,34 +28,27 @@ public class AdvertisesManagerServiceImpl implements IAdvertiseManagerService {
 	public PageBean queryAdvList(PageBean pageBean) throws Exception {
 
 		//SQL方式
-		StringBuffer sql = new StringBuffer(" select * from ns_advertise ");
-		sql.append(" where 1=1 ");
+		StringBuffer sql = new StringBuffer(" select t.*,t1.name as typename from ns_advertise t  ");
+		sql.append(" left join ns_dictionaries t1 on t.kind=t1.code and t1.`type`='ADV_BANNER' ");
+		sql.append(" where t.flag='0' ");
 		List params = new ArrayList();
 		if(pageBean.getQueryParams() != null && !pageBean.getQueryParams().isEmpty()) {
-			/*if(StringUtils.isNotBlank(pageBean.getQueryParams().get("gname"))) {
-				sql.append(" and t1.gname like ? ");
-				params.add("%"+pageBean.getQueryParams().get("gname")+"%");
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("name"))) {
+				sql.append(" and t.name like ? ");
+				params.add("%"+pageBean.getQueryParams().get("name")+"%");
 			}
-			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("category"))) {
-				sql.append(" and t1.category = ? ");
-				params.add(pageBean.getQueryParams().get("category"));
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("linkkind"))) {
+				sql.append(" and t.linkkind = ? ");
+				params.add(pageBean.getQueryParams().get("linkkind"));
 			}
-			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("kind"))) {
-				sql.append(" and t1.kind = ? ");
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("type"))) {
+				sql.append(" and t.type = ? ");
+				params.add(pageBean.getQueryParams().get("type"));
+			}
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("kind")) && !"-1".equals(pageBean.getQueryParams().get("kind"))) {
+				sql.append(" and t.kind = ? ");
 				params.add(pageBean.getQueryParams().get("kind"));
 			}
-			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("brand"))) {
-				sql.append(" and t1.brand = ? ");
-				params.add(pageBean.getQueryParams().get("brand"));
-			}
-			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("storenumbone"))) {
-				sql.append(" and t1.storenumb >= ? ");
-				params.add(pageBean.getQueryParams().get("storenumbone"));
-			}
-			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("storenumbtwo"))) {
-				sql.append(" and t1.storenumb <= ? ");
-				params.add(pageBean.getQueryParams().get("storenumbtwo"));
-			}*/
 		}
 		
 		//查询总计路数
@@ -63,5 +59,14 @@ public class AdvertisesManagerServiceImpl implements IAdvertiseManagerService {
 		pageBean.setTotal(total);
 		pageBean.setPageData(list);
 		return pageBean;
+	}
+	
+	public NsAdvertise queryAdvById(Long id) throws Exception {
+		if(id!=null) {
+			DBUtil db = DBUtil.getDBUtilByRequest();
+			NsAdvertise na = (NsAdvertise) db.getSession().get(NsAdvertise.class, id);
+			return na;
+		}
+		return null;
 	}
 }

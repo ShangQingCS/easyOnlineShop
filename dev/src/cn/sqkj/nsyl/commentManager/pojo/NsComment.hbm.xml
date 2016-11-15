@@ -26,5 +26,8 @@
         <property name="ishidden" type="java.lang.String">
             <column name="ishidden" length="1" />
         </property>
+        <property name="flag" type="java.lang.String">
+            <column name="flag" length="1" />
+        </property>
     </class>
 </hibernate-mapping>

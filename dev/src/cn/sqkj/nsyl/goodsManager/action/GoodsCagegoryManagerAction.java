@@ -54,6 +54,7 @@ public class GoodsCagegoryManagerAction extends PageAction {
 		this.categorys = db.queryByPojo(NsGoodsCategory.class, params);
 		return Action.SUCCESS;
 	}
+	
 	/**
 	 * 查询二级分类
 	 */
@@ -65,6 +66,7 @@ public class GoodsCagegoryManagerAction extends PageAction {
 		this.kinds = db.queryByPojo(NsGoodsCategory.class, params);
 		return Action.SUCCESS;
 	}
+	
 	/**
 	 * 查询三级分类
 	 */

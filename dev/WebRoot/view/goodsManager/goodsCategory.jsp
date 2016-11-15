@@ -65,7 +65,7 @@
 		queryGoodsCategoryTree();
 	});
 	
-	//初始化功能菜单
+	//初始化商品类别树
 	function queryGoodsCategoryTree() {
 		$.ajax( {
 			type : "POST",

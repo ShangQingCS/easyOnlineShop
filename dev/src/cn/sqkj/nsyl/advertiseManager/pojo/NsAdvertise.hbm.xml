@@ -23,5 +23,26 @@
         <property name="imglink" type="java.lang.String">
             <column name="imglink" length="45" />
         </property>
+        <property name="ordernumb" type="java.lang.Integer">
+            <column name="ordernumb" length="11" />
+        </property>
+        <property name="type" type="java.lang.String">
+            <column name="type" length="45" />
+        </property>
+        <property name="isuse" type="java.lang.String">
+            <column name="isuse" length="1" />
+        </property>
+        <property name="kind" type="java.lang.Long">
+            <column name="kind" length="20" />
+        </property>
+        <property name="createTime" type="java.sql.Timestamp">
+            <column name="create_time" />
+        </property>
+        <property name="updateTime" type="java.sql.Timestamp">
+            <column name="update_time" />
+        </property>
+        <property name="flag" type="java.lang.String">
+            <column name="flag" length="1" />
+        </property>
     </class>
 </hibernate-mapping>

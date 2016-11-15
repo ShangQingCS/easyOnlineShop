@@ -10,8 +10,8 @@ import cn.sqkj.nsyl.db.po.NsDictionaries;
 import framework.db.DBUtil;
 
 @SuppressWarnings("unchecked")
-@Repository("dictionariesDAO")
-public class NsDictionariesDAO {
+@Repository("dictDAO")
+public class DictDAO {
 	public List<NsDictionaries> queryByType(String type) throws Exception {
 		DBUtil db = DBUtil.getDBUtilByRequest();
 		Map<String, Object> params = new HashMap<String, Object>(2);

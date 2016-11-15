@@ -15,6 +15,7 @@ public class NsComment implements java.io.Serializable {
 	private Integer score;
 	private Long userid;
 	private String ishidden;
+	private String flag;
 
 	public NsComment() {	
 	}
@@ -74,5 +75,12 @@ public class NsComment implements java.io.Serializable {
 	public void setGoodsid(Long goodsid) {
 		this.goodsid = goodsid;
 	}
+	
+	public String getFlag() {
+		return flag;
+	}
 
+	public void setFlag(String flag) {
+		this.flag = flag;
+	}
 }

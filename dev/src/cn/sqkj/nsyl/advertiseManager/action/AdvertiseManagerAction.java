@@ -26,6 +26,7 @@ import com.opensymphony.xwork2.Action;
 
 import framework.action.PageAction;
 import framework.bean.PageBean;
+import framework.config.SysDict;
 import framework.db.DBUtil;
 import framework.db.pojo.TAuditLog;
 import framework.db.pojo.TXtUser;
@@ -142,7 +143,7 @@ public class AdvertiseManagerAction extends PageAction {
 			this.adv = this.advertiseManagerService.queryAdvById(this.adv.getId());
 		} catch (Exception e) {
 			e.printStackTrace();
-			log.error("查询广告品失败！"+this.adv.getId(), e);
+			log.error("查询广告失败！"+this.adv.getId(), e);
 		}
 		return Action.SUCCESS;
 	}
@@ -211,7 +212,7 @@ public class AdvertiseManagerAction extends PageAction {
 			String[] ids = idstr.split(",");
 			for(String id : ids){
 				NsAdvertise na = this.advertiseManagerService.queryAdvById(new Long(id));
-				na.setFlag("1");
+				na.setFlag(SysDict.FLAG_HIS);
 				db.update(na);
 			}
 		} catch(Exception e) {

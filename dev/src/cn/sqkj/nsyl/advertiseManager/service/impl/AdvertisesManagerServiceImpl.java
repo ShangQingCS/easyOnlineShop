@@ -12,6 +12,7 @@ import cn.sqkj.nsyl.advertiseManager.dao.NsAdvertiseDAO;
 import cn.sqkj.nsyl.advertiseManager.pojo.NsAdvertise;
 import cn.sqkj.nsyl.advertiseManager.service.IAdvertiseManagerService;
 import framework.bean.PageBean;
+import framework.config.SysDict;
 import framework.db.DBUtil;
 
 /**
@@ -30,8 +31,9 @@ public class AdvertisesManagerServiceImpl implements IAdvertiseManagerService {
 		//SQL方式
 		StringBuffer sql = new StringBuffer(" select t.*,t1.name as typename from ns_advertise t  ");
 		sql.append(" left join ns_dictionaries t1 on t.kind=t1.code and t1.`type`='ADV_BANNER' ");
-		sql.append(" where t.flag='0' ");
+		sql.append(" where t.flag=? ");
 		List params = new ArrayList();
+		params.add(SysDict.FLAG_ACT);
 		if(pageBean.getQueryParams() != null && !pageBean.getQueryParams().isEmpty()) {
 			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("name"))) {
 				sql.append(" and t.name like ? ");

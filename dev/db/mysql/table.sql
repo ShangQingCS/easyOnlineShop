@@ -49,9 +49,11 @@ CREATE TABLE ns_advertise (
   type varchar(50) DEFAULT NULL,
   isuse char(1) DEFAULT NULL,
   kind bigint(20) DEFAULT NULL,
+  start_time DATETIME NULL DEFAULT NULL,
+  end_time DATETIME NULL DEFAULT NULL,
   create_time datetime DEFAULT CURRENT_TIMESTAMP,
   update_time datetime DEFAULT NULL,
-  flag char(1) DEFAULT '0',
+  flag char(1) DEFAULT '1',
   PRIMARY KEY (id),
   UNIQUE KEY id_UNIQUE (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -129,47 +131,60 @@ CREATE TABLE ns_dictionaries (
 -- ----------------------------
 DROP TABLE IF EXISTS ns_eventsinfo;
 CREATE TABLE ns_eventsinfo (
-  id bigint(20) NOT NULL,
-  name varchar(50) DEFAULT NULL,
-  isuse int(11) DEFAULT '1',
-  memo text,
-  minpicture varchar(100) DEFAULT NULL,
-  picture varchar(100) DEFAULT NULL,
-  goods text,
-  PRIMARY KEY (id),
-  UNIQUE KEY id_UNIQUE (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	id BIGINT(20) NOT NULL AUTO_INCREMENT,
+	name VARCHAR(50) NULL DEFAULT NULL,
+	isuse CHAR(1) NULL DEFAULT '1',
+	memo TEXT NULL,
+	minpicture VARCHAR(100) NULL DEFAULT NULL,
+	picture VARCHAR(100) NULL DEFAULT NULL,
+	start_time DATETIME NULL DEFAULT NULL,
+	end_time DATETIME NULL DEFAULT NULL,
+	create_time DATETIME NULL DEFAULT NULL,
+	update_time DATETIME NULL DEFAULT NULL,
+	flag CHAR(1) NULL DEFAULT '1',
+	PRIMARY KEY (id),
+	UNIQUE INDEX id_UNIQUE (id)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of ns_eventsinfo
+-- Table structure for ns_eventsinfo
 -- ----------------------------
+DROP TABLE IF EXISTS ns_events_goods;
+CREATE TABLE ns_events_goods (
+	events_id BIGINT(20) NOT NULL,
+	goods_id BIGINT(20) NOT NULL,
+	PRIMARY KEY (events_id, goods_id)
+)
+COMMENT='活动商品关系表'
+ENGINE=InnoDB
+;
 
 -- ----------------------------
 -- Table structure for ns_goods
 -- ----------------------------
 DROP TABLE IF EXISTS ns_goods;
-CREATE TABLE `ns_goods` (
-	`id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-	`gname` VARCHAR(50) NULL DEFAULT NULL,
-	`price` DECIMAL(12,2) NULL DEFAULT NULL,
-	`category` BIGINT(20) NULL DEFAULT NULL,
-	`kind` BIGINT(20) NULL DEFAULT NULL,
-	`brand` BIGINT(20) NULL DEFAULT NULL,
-	`detail` TEXT NULL,
-	`goodimglist` VARCHAR(2000) NULL DEFAULT NULL,
-	`isuse` char(1) NULL DEFAULT '1',
-	`Gfullname` VARCHAR(150) NULL DEFAULT NULL,
-	`storenumb` INT(11) NULL DEFAULT '0',
-	`goodimg` VARCHAR(500) NULL DEFAULT NULL,
-	`img1` VARCHAR(500) NULL DEFAULT NULL,
-	`img2` VARCHAR(500) NULL DEFAULT NULL,
-	`img3` VARCHAR(500) NULL DEFAULT NULL,
-	`img4` VARCHAR(500) NULL DEFAULT NULL,
-	`img5` VARCHAR(500) NULL DEFAULT NULL,
-	`freazes` INT(11) NULL DEFAULT '0',
-	`costprice` DECIMAL(10,0) NULL DEFAULT '0',
-	`sellnumb` INT(11) NULL DEFAULT '0',
-	PRIMARY KEY (`id`)
+CREATE TABLE ns_goods (
+	id BIGINT(20) NOT NULL AUTO_INCREMENT,
+	gname VARCHAR(50) NULL DEFAULT NULL,
+	price DECIMAL(12,2) NULL DEFAULT NULL,
+	category BIGINT(20) NULL DEFAULT NULL,
+	kind BIGINT(20) NULL DEFAULT NULL,
+	brand BIGINT(20) NULL DEFAULT NULL,
+	detail TEXT NULL,
+	goodimglist VARCHAR(2000) NULL DEFAULT NULL,
+	isuse char(1) NULL DEFAULT '1',
+	Gfullname VARCHAR(150) NULL DEFAULT NULL,
+	storenumb INT(11) NULL DEFAULT '0',
+	goodimg VARCHAR(500) NULL DEFAULT NULL,
+	img1 VARCHAR(500) NULL DEFAULT NULL,
+	img2 VARCHAR(500) NULL DEFAULT NULL,
+	img3 VARCHAR(500) NULL DEFAULT NULL,
+	img4 VARCHAR(500) NULL DEFAULT NULL,
+	img5 VARCHAR(500) NULL DEFAULT NULL,
+	freazes INT(11) NULL DEFAULT '0',
+	costprice DECIMAL(10,0) NULL DEFAULT '0',
+	sellnumb INT(11) NULL DEFAULT '0',
+	PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -192,7 +207,7 @@ CREATE TABLE ns_goods_category (
   parent_id int(11) DEFAULT NULL,
   create_time datetime DEFAULT CURRENT_TIMESTAMP,
   update_time datetime DEFAULT CURRENT_TIMESTAMP,
-  flag char(1) DEFAULT '0',
+  flag char(1) DEFAULT '1',
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
@@ -260,7 +275,7 @@ CREATE TABLE sys_code (
   CODE varchar(100) DEFAULT NULL,
   LABEL varchar(200) DEFAULT NULL,
   REMARK varchar(200) DEFAULT NULL,
-  FLAG char(1) DEFAULT NULL,
+  FLAG char(1) DEFAULT '1',
   PRIMARY KEY (ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -340,7 +355,7 @@ CREATE TABLE t_xt_cache_table (
   QUERY_SQL varchar(4000) DEFAULT NULL,
   CREATE_USER_ID varchar(36) DEFAULT NULL,
   CREATE_ORG_ID varchar(36) DEFAULT NULL,
-  FLAG char(1) DEFAULT NULL,
+  FLAG char(1) DEFAULT '1',
   CREATE_TIME datetime DEFAULT NULL,
   UPDATE_TIME datetime DEFAULT NULL,
   PRIMARY KEY (ID)
@@ -371,7 +386,7 @@ CREATE TABLE t_xt_emp (
   VALIDATE_DOMAIN varchar(72) DEFAULT NULL,
   VALIDATE_IP varchar(15) DEFAULT NULL,
   PCUSERNAME varchar(100) DEFAULT NULL,
-  FLAG char(1) DEFAULT NULL,
+  FLAG char(1) DEFAULT '1',
   PRIMARY KEY (ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

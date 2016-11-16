@@ -282,6 +282,7 @@
 						});
 					}
 					showKind();
+					$("#adv_add_window").window({title: "查看和编辑广告"});
 					$("#adv_add_window").window("open");
 				},	
 				error: function(e) {alert("查询异常");}
@@ -295,6 +296,7 @@
 		
 		var addAdv = function() {
 			formReset("adv_add_table");
+			$("#adv_add_window").window({title: "新增广告"});
 			$("#adv_add_window").window("open");
 		}
 		
@@ -461,7 +463,7 @@
 		}
 		
 		var setIsuse = function(id, name) {
-			window.confirm("提示","设为有效："+name+"?",function(r){
+			window.confirm("提示","启用："+name+"?",function(r){
 				if(r){
 					$.ajax({ type: "POST",  url: "${basePath }/view/advertiseManager/advertiseManager!isuse.action",  dataType: "json",
 					  	data: "id="+id,
@@ -479,7 +481,7 @@
 		}
 		
 		var setNotIsuse = function(id, name) {
-			window.confirm("提示","设为有效："+name+"?",function(r){
+			window.confirm("提示","不启用："+name+"?",function(r){
 				if(r){
 					$.ajax({ type: "POST",  url: "${basePath }/view/advertiseManager/advertiseManager!notIsuse.action",  dataType: "json",
 					  	data: "id="+id,
@@ -497,7 +499,7 @@
 		}
 		
 		var deleteAdv = function(id, name) {
-			window.confirm("提示","设为有效："+name+"?",function(r){
+			window.confirm("提示","确定删除："+name+"?",function(r){
 				if(r){
 					$.ajax({ type: "POST",  url: "${basePath }/view/advertiseManager/advertiseManager!delete.action",  dataType: "json",
 					  	data: "id="+id,

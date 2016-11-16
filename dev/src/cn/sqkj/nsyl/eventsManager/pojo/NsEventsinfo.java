@@ -1,5 +1,7 @@
 package cn.sqkj.nsyl.eventsManager.pojo;
 
+import java.sql.Timestamp;
+
 public class NsEventsinfo implements java.io.Serializable {
 
 	/**
@@ -8,11 +10,13 @@ public class NsEventsinfo implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String name;
-	private Integer isuse;
+	private String isuse;
 	private String memo;
 	private String minpicture;
 	private String picture;
-	private String goods;
+	private Timestamp startTime;
+	private Timestamp endTime;
+	private String flag;
 
 	public NsEventsinfo() {
 	}
@@ -33,11 +37,11 @@ public class NsEventsinfo implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public Integer getIsuse() {
+	public String getIsuse() {
 		return this.isuse;
 	}
 
-	public void setIsuse(Integer isuse) {
+	public void setIsuse(String isuse) {
 		this.isuse = isuse;
 	}
 
@@ -65,12 +69,28 @@ public class NsEventsinfo implements java.io.Serializable {
 		this.picture = picture;
 	}
 
-	public String getGoods() {
-		return this.goods;
+	public Timestamp getStartTime() {
+		return startTime;
 	}
 
-	public void setGoods(String goods) {
-		this.goods = goods;
+	public void setStartTime(Timestamp startTime) {
+		this.startTime = startTime;
+	}
+
+	public Timestamp getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Timestamp endTime) {
+		this.endTime = endTime;
+	}
+
+	public String getFlag() {
+		return flag;
+	}
+
+	public void setFlag(String flag) {
+		this.flag = flag;
 	}
 
 }

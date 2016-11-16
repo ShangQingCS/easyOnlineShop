@@ -11,7 +11,7 @@
         <property name="name" type="java.lang.String">
             <column name="name" length="50" />
         </property>
-        <property name="isuse" type="java.lang.Integer">
+        <property name="isuse" type="java.lang.String">
             <column name="isuse" />
         </property>
         <property name="memo" type="java.lang.String">
@@ -23,8 +23,14 @@
         <property name="picture" type="java.lang.String">
             <column name="picture" length="100" />
         </property>
-        <property name="goods" type="java.lang.String">
-            <column name="goods" length="65535" />
+        <property name="startTime" type="java.sql.Timestamp">
+            <column name="start_time" />
+        </property>
+         <property name="endTime" type="java.sql.Timestamp">
+            <column name="end_time"  />
+        </property>
+        <property name="flag" type="java.lang.String">
+            <column name="flag" length="100" />
         </property>
     </class>
 </hibernate-mapping>

@@ -11,6 +11,8 @@ import cn.sqkj.nsyl.eventsManager.dao.NsEventsinfoDAO;
 import cn.sqkj.nsyl.eventsManager.pojo.NsEventsinfo;
 import cn.sqkj.nsyl.eventsManager.service.IEventsManagerService;
 import framework.bean.PageBean;
+import framework.config.SysDict;
+import framework.db.DBUtil;
 
 /**
  * @author yangchaowen
@@ -25,8 +27,9 @@ public class EventsManagerServiceImpl implements IEventsManagerService {
 	public PageBean queryEventsList(PageBean pageBean) throws Exception {
 		//SQL方式
 		StringBuffer sql = new StringBuffer(" select * from ns_eventsinfo ");
-		sql.append(" where 1=1 ");
+		sql.append(" where flag=? ");
 		List params = new ArrayList();
+		params.add(SysDict.FLAG_ACT);
 		if(pageBean.getQueryParams() != null && !pageBean.getQueryParams().isEmpty()) {
 			/*if(StringUtils.isNotBlank(pageBean.getQueryParams().get("gname"))) {
 				sql.append(" and t1.gname like ? ");
@@ -62,5 +65,14 @@ public class EventsManagerServiceImpl implements IEventsManagerService {
 		pageBean.setTotal(total);
 		pageBean.setPageData(list);
 		return pageBean;
+	}
+	
+	public NsEventsinfo queryEventsById(Long id) throws Exception {
+		if(id!=null) {
+			DBUtil db = DBUtil.getDBUtilByRequest();
+			NsEventsinfo ne = (NsEventsinfo) db.getSession().get(NsEventsinfo.class, id);
+			return ne;
+		}
+		return null;
 	}
 }

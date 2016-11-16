@@ -19,7 +19,7 @@ public class RubbishClearTask {
 	Timer timer = new Timer();
 	
 	public void start(){
-		//每天凌晨一点运行
+		/*//每天凌晨一点运行
 		log.info("启动垃圾文件清理任务....");
 		Date exeTime = new Date();
 		if(exeTime.getHours()>1){
@@ -29,7 +29,7 @@ public class RubbishClearTask {
 			exeTime.setSeconds(0);
 		}
 		timer.schedule(new RubbishClearTimerTask(), exeTime, 24*60*60*1000);
-		log.info("启动垃圾文件清理任务成功,首次执行任务时间:"+ DateUtils.toDatetime(exeTime) +"   执行频率：1天");
+		log.info("启动垃圾文件清理任务成功,首次执行任务时间:"+ DateUtils.toDatetime(exeTime) +"   执行频率：1天");*/
 	}
 	
 }

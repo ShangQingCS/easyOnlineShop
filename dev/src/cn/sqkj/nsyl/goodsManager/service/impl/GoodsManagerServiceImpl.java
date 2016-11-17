@@ -13,6 +13,7 @@ import cn.sqkj.nsyl.goodsManager.pojo.NsGoods;
 import cn.sqkj.nsyl.goodsManager.pojo.NsGoodsCategory;
 import cn.sqkj.nsyl.goodsManager.service.IGoodsManagerService;
 import framework.bean.PageBean;
+import framework.config.SysDict;
 import framework.db.DBUtil;
 import framework.util.DateUtils;
 
@@ -136,8 +137,8 @@ public class GoodsManagerServiceImpl implements IGoodsManagerService {
 		if(goodsCategoryVO.getId()==null) {
 			goodsCategoryVO.setCreateTime(DateUtils.getDate());
 			goodsCategoryVO.setUpdateTime(DateUtils.getDate());
-			goodsCategoryVO.setFlag("0");
-			goodsCategoryVO.setIsuse("1");
+			goodsCategoryVO.setFlag(SysDict.FLAG_ACT);
+			goodsCategoryVO.setIsuse(SysDict.ISUSE_NO);
 			Long id = (Long) db.insert(goodsCategoryVO);
 			goodsCategoryVO.setId(id);
 		} else {

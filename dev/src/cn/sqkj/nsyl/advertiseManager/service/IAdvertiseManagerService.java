@@ -1,5 +1,8 @@
 package cn.sqkj.nsyl.advertiseManager.service;
 
+import java.util.List;
+import java.util.Map;
+
 import cn.sqkj.nsyl.advertiseManager.pojo.NsAdvertise;
 import framework.bean.PageBean;
 
@@ -18,4 +21,6 @@ public interface IAdvertiseManagerService {
 	public PageBean queryAdvList(PageBean pageBean) throws Exception;
 	
 	public NsAdvertise queryAdvById(Long id) throws Exception;
+	
+	public List<NsAdvertise> queryAdvByParams(Map params) throws Exception;
 }

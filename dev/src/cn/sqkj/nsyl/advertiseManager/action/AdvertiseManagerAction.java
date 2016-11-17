@@ -178,7 +178,7 @@ public class AdvertiseManagerAction extends PageAction {
 			String[] ids = idstr.split(",");
 			for(String id : ids){
 				NsAdvertise na = this.advertiseManagerService.queryAdvById(new Long(id));
-				na.setIsuse("0");
+				na.setIsuse(SysDict.ISUSE_YES);
 				db.update(na);
 			}
 		} catch(Exception e) {
@@ -195,7 +195,7 @@ public class AdvertiseManagerAction extends PageAction {
 			String[] ids = idstr.split(",");
 			for(String id : ids){
 				NsAdvertise na = this.advertiseManagerService.queryAdvById(new Long(id));
-				na.setIsuse("1");
+				na.setIsuse(SysDict.ISUSE_NO);
 				db.update(na);
 			}
 		} catch(Exception e) {

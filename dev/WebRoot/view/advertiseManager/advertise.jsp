@@ -52,7 +52,7 @@
 	  	<div region="center" style="width: 100%">
 		     <table id="tab_list" rownumbers="true" region="center" fitColumns="true" class="easyui-datagrid" 
 		    	url="advertiseManager!queryAdv.action" style="width:auto;height:auto" title="" 
-		    	pagination="true" singleSelect="true">
+		    	pagination="true" singleSelect="true" data-options="onDblClickRow:showAdvDetailRow">
 				<thead>
 					<tr>
 						<!-- <th style="display: block;" checkbox="true" field="id" width="5%">ID</th> -->
@@ -93,7 +93,7 @@
 			  			<tr>
 			  				<td align="right">广告分类:</td>
 			  				<td>
-			  					<select name="adv.linkkind" id="linkkind" onchange="showBtn();">
+			  					<select name="adv.linkkind" id="linkkind" onchange="changeLinkkind();">
 			  						<option value="0">商品</option>
 			  						<option value="1">活动</option>
 			  						<option value="2">其它链接</option>
@@ -251,6 +251,13 @@
 			return "";
 		}
 		
+		var showAdvDetailRow = function() {
+			var row = $('#tab_list').datagrid('getSelected');
+			if (row) {
+				showEditAdv(row.id);
+			}
+		}
+		
 		var showEditAdv = function(id) {
 			$.ajax( {
 				type: "POST",	
@@ -281,6 +288,7 @@
 						  	}
 						});
 					}
+					showBtn();
 					showKind();
 					$("#adv_add_window").window({title: "查看和编辑广告"});
 					$("#adv_add_window").window("open");
@@ -303,22 +311,32 @@
 		var showBtn = function() {
 			var linkkind = $("#linkkind").val();
 			if(linkkind=="0") {
+				$("#imglinkLabel").attr("readonly",true);
 				$("#cateBtn").css("display","none");
 				$("#goodsBtn").css("display","");
 				$("#eventBtn").css("display","none");
 			} else if(linkkind=="1") {
+				$("#imglinkLabel").attr("readonly",true);
 				$("#cateBtn").css("display","none");
 				$("#goodsBtn").css("display","none");
 				$("#eventBtn").css("display","");
 			} else if(linkkind=="2") {
+				$("#imglinkLabel").attr("readonly",false);
 				$("#cateBtn").css("display","none");
 				$("#goodsBtn").css("display","none");
 				$("#eventBtn").css("display","none");
 			} else if(linkkind=="3") {
+				$("#imglinkLabel").attr("readonly",true);
 				$("#cateBtn").css("display","");
 				$("#goodsBtn").css("display","none");
 				$("#eventBtn").css("display","none");
 			}
+		}
+		
+		var changeLinkkind = function() {
+			showBtn();
+			$("#imglink").val("");
+			$("#imglinkLabel").val("");
 		}
 		
 		var showKind = function() {

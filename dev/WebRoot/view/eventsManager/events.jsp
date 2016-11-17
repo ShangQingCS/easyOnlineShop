@@ -44,7 +44,7 @@
 	  	<div region="center" style="width: 100%">
 		     <table id="tab_list" rownumbers="true" region="center" fitColumns="true" class="easyui-datagrid" 
 		    	url="eventsManager!queryEvents.action" style="width:auto;height:auto" title="" 
-		    	pagination="true" singleSelect="true">
+		    	pagination="true" singleSelect="true" data-options="onDblClickRow:showEventsDetailRow">
 				<thead>
 					<tr>
 						<!-- <th style="display: block;" checkbox="true" field="id" width="5%">ID</th> -->
@@ -197,6 +197,13 @@
 		
 		var clearForm = function() {
 			$('#ff').form('clear');
+		}
+		
+		var showEventsDetailRow = function() {
+			var row = $('#tab_list').datagrid('getSelected');
+			if (row) {
+				showEditEventsWin(row.id);
+			}
 		}
 		
 		var showEditEventsWin = function(id) {

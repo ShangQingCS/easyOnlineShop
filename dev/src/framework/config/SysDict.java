@@ -13,4 +13,8 @@ public class SysDict {
 	
 	public static final String SEX_MALE = "0";
 	public static final String SEX_FEMALE = "1";
+	
+	//有效，0，无效，1
+	public static final String ISUSE_YES = "0";
+	public static final String ISUSE_NO = "1";
 }

@@ -42,13 +42,13 @@
 	  	<div region="center" style="width: 100%">
 		     <table id="tab_list" rownumbers="true" region="center" fitColumns="true" class="easyui-datagrid" 
 		    	url="commentManager!findComment.action" style="width:auto;height:auto" title="" 
-		    	pagination="true" singleSelect="true" data-options="onDblClickRow:showComment">
+		    	pagination="true" singleSelect="true" data-options="onDblClickRow:showRowComment">
 				<thead>
 					<tr>
 						<!-- <th style="display: block;" checkbox="true" field="id" width="5%">ID</th> -->
 						<th field="userid" width="5%">用户名</th>
-						<th field="goodid" width="5%">商品编号</th>
-						<th field="gname" width="29%">商品名称</th>
+						<th field="goodsid" width="5%">商品编号</th>
+						<th field="gname" width="24%">商品名称</th>
 						<th field="categoryName" width="5%">类别</th>
 						<th field="kindName" width="5%">类型</th>
 						<th field="brandName" width="5%">品牌</th>
@@ -56,7 +56,7 @@
 						<th field="comment" width="20%">评论内容</th>
 						<th field="ishidden" width="5%" formatter='formatterIsHidden'>是否匿名</th>
 						<th field="score" width="5%">评分</th>
-						<th field="cz" width="5%" formatter='formatterAction'>操作</th>
+						<th field="cz" width="10%" formatter='formatterAction'>操作</th>
 					</tr>
 				</thead>
 			</table>
@@ -66,44 +66,44 @@
 				<table id="user_datail_table" border="0" dataType="text" class="tablestyle01" style="width:100%">
 		  			<tr>
 		  				<td align="right">用户名:</td>
-		  				<td><input name="userid" readonly="readonly" style="width: 100%;"/> </td>
+		  				<td><input name="comment.userid" id="userid" readonly="readonly" style="width: 100%;"/> </td>
 		  			</tr>
 		  			<tr>
 		  				<td align="right">商品编号:</td>
-		  				<td><input name="goodid" readonly="readonly" style="width: 100%;"/> </td>
+		  				<td><input name="comment.goodsid" id="goodsid" readonly="readonly" style="width: 100%;"/> </td>
 		  			</tr>
 		  			<tr>
 		  				<td align="right">商品名称:</td>
-		  				<td><input name="gname" readonly="readonly" style="width: 100%;"/> </td>
+		  				<td><input name="comment.gname" id="gname" readonly="readonly" style="width: 100%;"/> </td>
 		  			</tr>
 		  			<tr>
 		  				<td align="right">类别:</td>
-		  				<td><input name="categoryName" readonly="readonly" style="width: 100%;"/> </td>
+		  				<td><input name="comment.categoryName" id="categoryName" readonly="readonly" style="width: 100%;"/> </td>
 		  			</tr>
 		  			<tr>
 		  				<td align="right">类型:</td>
-		  				<td><input name="kindName" readonly="readonly" style="width: 100%;"/> </td>
+		  				<td><input name="comment.kindName" id="kindName" readonly="readonly" style="width: 100%;"/> </td>
 		  			</tr>
 		  			<tr>
 		  				<td align="right">品牌:</td>
-		  				<td><input name="brandName" readonly="readonly" style="width: 100%;"/> </td>
+		  				<td><input name="comment.brandName" id="brandName" readonly="readonly" style="width: 100%;"/> </td>
 		  			</tr>
 		  			<tr>
 		  				<td align="right">评论时间:</td>
-		  				<td><input name="createTime" id="createTime" readonly="readonly" style="width: 100%;"/> </td>
+		  				<td><input name="comment.createTime" id="createTime" readonly="readonly" style="width: 100%;"/> </td>
 		  			</tr>
 		  			<tr>
 		  				<td align="right">是否匿名:</td>
-		  				<td><input name="ishidden" id="ishidden" readonly="readonly" style="width: 100%;"/> </td>
+		  				<td><input name="comment.ishidden" id="ishidden" readonly="readonly" style="width: 100%;"/> </td>
 		  			</tr>
 		  			<tr>
 		  				<td align="right">评分:</td>
-		  				<td><input name="score" readonly="readonly" style="width: 100%;"/> </td>
+		  				<td><input name="comment.score" id="score" readonly="readonly" style="width: 100%;"/> </td>
 		  			</tr>
 		  			<tr>
 		  				<td align="right" style="width: 80px">描述:</td>
 		  				<td colspan="3">
-		  					<textarea name="comment" readonly="readonly" style="width: 100%;" rows="15"></textarea>
+		  					<textarea name="comment.comment" id="comment" readonly="readonly" style="width: 100%;" rows="15"></textarea>
 		  				</td>
 		  			</tr>
 	  			</table>
@@ -130,8 +130,8 @@
 		}
 		
 		var formatterAction = function(value,rec) {
-			var formatterStr = "<a href='#' onclick='showComment(); return false;'>查看详细</a>&nbsp;"
-			formatterStr="<a href='#' onclick='delComment(\""+rec.id+"\"); return false;'>删除</a>&nbsp;";
+			var formatterStr = "<a href='#' onclick='showComment(\""+rec.userid+"\",\""+rec.goodsid+"\",\""+rec.gname+"\",\""+rec.categoryName+"\",\""+rec.kindName+"\",\""+rec.brandName+"\",\""+rec.createTime+"\",\""+rec.ishidden+"\",\""+rec.score+"\",\""+rec.comment+"\"); return false;'>查看详细</a>&nbsp;"
+			formatterStr += "<a href='#' onclick='delComment(\""+rec.id+"\"); return false;'>删除</a>&nbsp;";
 			return formatterStr;
 		}
 				
@@ -140,7 +140,7 @@
 			$("#tab_list").datagrid({"queryParams":data});
 		}
 		
-		var showComment = function() {
+		var showRowComment = function() {
 			var row = $('#tab_list').datagrid('getSelected');
 			if (row) {
 				formSet("user_datail_table", row);
@@ -148,6 +148,32 @@
 				$("#ishidden").val(row.ishidden=="1"?"不匿名":"匿名");
 				$("#user_detail_window").window("open");
 			}
+		}
+		
+		var showComment = function(userid,goodsid,gname,categoryName,kindName,brandName,createTime,ishidden,score,comment) {
+			/* $.ajax( {
+				type: "POST",	
+				url: "${basePath }/view/commentManager/commentManager!loadComment.action",	
+				data: {"comment.id": id}, dataType: "json",
+				success: function(json){
+				    formSet("user_datail_table", json.comment);
+					$("#createTime").val(json.comment.createTime.replace("T"," "));
+					$("#ishidden").val(json.comment.ishidden=="1"?"不匿名":"匿名");
+					$("#user_detail_window").window("open");
+				},
+				error: function(e) {alert("查询异常");}
+			}); */
+			$("#userid").val(userid);
+			$("#goodsid").val(goodsid);
+			$("#gname").val(gname);
+			$("#categoryName").val(categoryName);
+			$("#kindName").val(kindName);
+			$("#brandName").val(brandName);
+			$("#score").val(score);
+			$("#comment").val(comment);
+			$("#createTime").val(createTime.replace("T"," "));
+			$("#ishidden").val(ishidden=="1"?"不匿名":"匿名");
+			$("#user_detail_window").window("open");
 		}
 		
 		var delComment = function(id) {

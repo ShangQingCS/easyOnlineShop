@@ -27,6 +27,7 @@
 	  						<option value="1">待付款</option>
 	  						<option value="2">已付款</option>
 	  						<option value="3">已发货</option>
+	  						<option value="0">已取消</option>
 	  					</select>
 	  				</td>
 	  				<td align="left">支付方式:</td>
@@ -224,7 +225,9 @@
 			else if(value=="2")  
 				return "已付款";
 			else if(value=="3")
-				return "已发货";  
+				return "已发货"; 
+			else if(value=="0")
+				return "已取消";  
 			return "";
 		}
 		var formatterInvoice = function(value,rec) {

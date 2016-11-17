@@ -2,6 +2,7 @@ package cn.sqkj.nsyl.advertiseManager.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -70,5 +71,11 @@ public class AdvertisesManagerServiceImpl implements IAdvertiseManagerService {
 			return na;
 		}
 		return null;
+	}
+
+	public List<NsAdvertise> queryAdvByParams(Map params) throws Exception {
+		DBUtil db = DBUtil.getDBUtilByRequest();
+		List<NsAdvertise> advlist = db.queryByPojo(NsAdvertise.class, params);
+		return advlist;
 	}
 }

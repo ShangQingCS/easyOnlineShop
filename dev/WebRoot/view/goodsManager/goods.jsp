@@ -30,7 +30,7 @@
 	  	<div region="center" style="width: 100%">
 		     <table id="tab_list" rownumbers="true" region="center" fitColumns="true" class="easyui-datagrid" 
 		    	url="goodsManager!queryGoods.action" style="width:auto;height:auto" title="" 
-		    	pagination="true" singleSelect="true">
+		    	pagination="true" singleSelect="true" data-options="onDblClickRow:showGoodsDetailRow">
 				<thead>
 					<tr>
 						<!-- <th style="display: block;" checkbox="true" field="id" width="5%">ID</th> -->
@@ -69,6 +69,13 @@
 			queryCategorys();
 		}
 	
+		var showGoodsDetailRow = function() {
+			var row = $('#tab_list').datagrid('getSelected');
+			if (row) {
+				goodsEdit(row.id,row.gname);
+			}
+		}
+		
 		//添加tab页
 		var goodsEdit = function(id,name){
 			openEdit(name,'${basePath }/view/goodsManager/goodsEdit.jsp?id='+id);
@@ -160,7 +167,7 @@
 		}
 		
 		var formatterAction = function(value,rec) {
-			var formatterStr = "<a href='#' onclick='goodsEdit(\""+rec.id+"\",\""+rec.gname+"\"); return false;'>编辑</a>&nbsp;";
+			var formatterStr = "<a href='#' onclick='goodsEdit(\""+rec.id+"\",\""+rec.gname+"\"); return false;'>查看和编辑</a>&nbsp;";
 			if(rec.isuse=="0") {
 				formatterStr += "<a href='#' onclick='invalidGoods(\""+rec.id+"\",\""+rec.gname+"\"); return false;'>设为无效</a>&nbsp;";
 			} else {

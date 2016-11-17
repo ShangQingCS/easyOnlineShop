@@ -2,6 +2,7 @@ package cn.sqkj.nsyl.eventsManager.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -75,4 +76,11 @@ public class EventsManagerServiceImpl implements IEventsManagerService {
 		}
 		return null;
 	}
+
+	public List queryEventsGoodsByGoodsId(Long goodsId) throws Exception {
+		DBUtil db = DBUtil.getDBUtilByRequest();
+		List eventsgoodslist = db.queryBySQL("select * from ns_events_goods t where t.goods_id=?", goodsId);
+		return eventsgoodslist;
+	}
+
 }

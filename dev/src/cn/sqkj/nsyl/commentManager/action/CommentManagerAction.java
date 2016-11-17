@@ -11,6 +11,7 @@ import com.opensymphony.xwork2.Action;
 
 import framework.action.PageAction;
 import framework.bean.PageBean;
+import framework.config.SysDict;
 import framework.db.DBUtil;
 import framework.db.pojo.TAuditLog;
 import framework.db.pojo.TXtUser;
@@ -29,6 +30,7 @@ public class CommentManagerAction extends PageAction {
 	private Logger log = Logger.getLogger(CommentManagerAction.class); //系统log日志对象
 	private TXtUser user = (TXtUser) RequestHelper.getSession().getAttribute("user");
 	private String message;
+	private NsComment comment;
 	
 	public String findComment() {
 		try {
@@ -58,7 +60,7 @@ public class CommentManagerAction extends PageAction {
 			String[] ids = idstr.split(",");
 			for(String id : ids){
 				NsComment nc = this.commentManagerService.queryCommentById(new Long(id));
-				nc.setFlag("1");
+				nc.setFlag(SysDict.FLAG_HIS);
 				db.update(nc);
 			}
 		} catch(Exception e) {
@@ -68,6 +70,24 @@ public class CommentManagerAction extends PageAction {
 		return Action.SUCCESS;
 	}
 	
+	public String loadComment() {
+		try {
+			this.comment = this.commentManagerService.queryCommentById(this.comment.getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("查询评论失败！"+this.comment.getId(), e);
+		}
+		return Action.SUCCESS;
+	}
+	
+	public NsComment getComment() {
+		return comment;
+	}
+
+	public void setComment(NsComment comment) {
+		this.comment = comment;
+	}
+
 	public String getMessage() {
 		return message;
 	}

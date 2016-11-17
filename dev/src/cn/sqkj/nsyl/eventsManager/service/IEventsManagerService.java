@@ -1,5 +1,7 @@
 package cn.sqkj.nsyl.eventsManager.service;
 
+import java.util.List;
+
 import cn.sqkj.nsyl.eventsManager.pojo.NsEventsinfo;
 import framework.bean.PageBean;
 
@@ -18,4 +20,6 @@ public interface IEventsManagerService {
 	public PageBean queryEventsList(PageBean pageBean) throws Exception;
 	
 	public NsEventsinfo queryEventsById(Long id) throws Exception;
+	
+	public List queryEventsGoodsByGoodsId(Long goodsId) throws Exception;
 }

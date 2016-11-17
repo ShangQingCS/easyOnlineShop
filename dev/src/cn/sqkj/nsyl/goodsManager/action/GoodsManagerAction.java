@@ -5,6 +5,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -13,6 +16,10 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 
+import cn.sqkj.nsyl.advertiseManager.pojo.NsAdvertise;
+import cn.sqkj.nsyl.advertiseManager.service.IAdvertiseManagerService;
+import cn.sqkj.nsyl.eventsManager.pojo.NsEventsinfo;
+import cn.sqkj.nsyl.eventsManager.service.IEventsManagerService;
 import cn.sqkj.nsyl.goodsManager.pojo.NsGoods;
 import cn.sqkj.nsyl.goodsManager.service.IGoodsManagerService;
 
@@ -20,6 +27,7 @@ import com.opensymphony.xwork2.Action;
 
 import framework.action.PageAction;
 import framework.bean.PageBean;
+import framework.config.SysDict;
 import framework.db.DBUtil;
 import framework.db.pojo.TAuditLog;
 import framework.db.pojo.TXtUser;
@@ -34,6 +42,10 @@ import framework.logger.AuditLogger;
 public class GoodsManagerAction extends PageAction {
 	@Resource(name="goodsManagerService")
 	private IGoodsManagerService goodsManagerService;
+	@Resource(name="advertiseManagerService")
+	private IAdvertiseManagerService advertiseManagerService;
+	@Resource(name="eventsManagerService")
+	private IEventsManagerService eventsManagerService;
 	private AuditLogger logger = AuditLogger.getLogger(); //审计日志对象
 	private Logger log = Logger.getLogger(GoodsManagerAction.class); //系统log日志对象
 	private NsGoods goods;
@@ -192,7 +204,7 @@ public class GoodsManagerAction extends PageAction {
 			
 			DBUtil db = DBUtil.getDBUtilByRequest();
 			if(this.goods.getId()==null) {
-				this.goods.setIsuse("1");
+				this.goods.setIsuse(SysDict.ISUSE_NO);
 				Long id = (Long) db.insert(this.goods);
 			} else {
 				NsGoods ns = this.goodsManagerService.queryGoodsById(this.goods.getId());
@@ -251,7 +263,7 @@ public class GoodsManagerAction extends PageAction {
 			String[] ids = idstr.split(",");
 			for(String id : ids){
 				NsGoods ns = this.goodsManagerService.queryGoodsById(new Long(id));
-				ns.setIsuse("1");
+				ns.setIsuse(SysDict.ISUSE_NO);
 				db.update(ns);
 			}
 		} catch(Exception e) {
@@ -264,13 +276,24 @@ public class GoodsManagerAction extends PageAction {
 	public String invalidGoods() {
 		try {
 			DBUtil db = DBUtil.getDBUtilByRequest();
-			String idstr = RequestHelper.getParameter("id");
-			String[] ids = idstr.split(",");
-			for(String id : ids){
-				NsGoods ns = this.goodsManagerService.queryGoodsById(new Long(id));
-				ns.setIsuse("1");
-				db.update(ns);
+			String id = RequestHelper.getParameter("id");
+			
+			Map<String, Object> params = new HashMap<String, Object>(2);
+			params.put("linkkind", "0");
+			params.put("imglink", id);
+			List<NsAdvertise> list = this.advertiseManagerService.queryAdvByParams(params);
+			if(list!=null && !list.isEmpty()) {
+				this.message = "该商品有广告未过期，不能设为无效";
 			}
+			
+			List<NsEventsinfo> list2 = this.eventsManagerService.queryEventsGoodsByGoodsId(new Long(id));
+			if(list!=null && !list.isEmpty()) {
+				this.message = "该商品有活动发布，不能设为无效";
+			}
+			
+			NsGoods ns = this.goodsManagerService.queryGoodsById(new Long(id));
+			ns.setIsuse(SysDict.ISUSE_NO);
+			db.update(ns);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -284,7 +307,7 @@ public class GoodsManagerAction extends PageAction {
 			DBUtil db = DBUtil.getDBUtilByRequest();
 			String id = RequestHelper.getParameter("id");
 			NsGoods ns = this.goodsManagerService.queryGoodsById(new Long(id));
-			ns.setIsuse("0"); 
+			ns.setIsuse(SysDict.ISUSE_YES); 
 			db.update(ns);
 		} catch(Exception e) {
 			e.printStackTrace();

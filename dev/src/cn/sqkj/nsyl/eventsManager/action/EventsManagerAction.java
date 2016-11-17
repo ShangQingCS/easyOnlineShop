@@ -151,7 +151,7 @@ public class EventsManagerAction extends PageAction {
 			String[] ids = idstr.split(",");
 			for(String id : ids){
 				NsEventsinfo ne = this.eventsManagerService.queryEventsById(new Long(id));
-				ne.setIsuse("0");
+				ne.setIsuse(SysDict.ISUSE_YES);
 				db.update(ne);
 			}
 		} catch(Exception e) {
@@ -168,7 +168,7 @@ public class EventsManagerAction extends PageAction {
 			String[] ids = idstr.split(",");
 			for(String id : ids){
 				NsEventsinfo ne = this.eventsManagerService.queryEventsById(new Long(id));
-				ne.setIsuse("1");
+				ne.setIsuse(SysDict.ISUSE_NO);
 				db.update(ne);
 			}
 		} catch(Exception e) {

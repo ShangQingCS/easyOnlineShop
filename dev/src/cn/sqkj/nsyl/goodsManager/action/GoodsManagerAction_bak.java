@@ -21,6 +21,7 @@ import com.opensymphony.xwork2.Action;
 
 import framework.action.PageAction;
 import framework.bean.PageBean;
+import framework.config.SysDict;
 import framework.db.DBUtil;
 import framework.db.pojo.TAuditLog;
 import framework.db.pojo.TXtUser;
@@ -128,7 +129,7 @@ public class GoodsManagerAction_bak extends PageAction {
 			
 			DBUtil db = DBUtil.getDBUtilByRequest();
 			if(this.goods.getId()==null) {
-				this.goods.setIsuse("1");
+				this.goods.setIsuse(SysDict.ISUSE_NO);
 				Long id = (Long) db.insert(this.goods);
 			} else {
 				NsGoods ns = this.goodsManagerService.queryGoodsById(this.goods.getId());
@@ -161,7 +162,7 @@ public class GoodsManagerAction_bak extends PageAction {
 			String[] ids = idstr.split(",");
 			for(String id : ids){
 				NsGoods ns = this.goodsManagerService.queryGoodsById(new Long(id));
-				ns.setIsuse("1");
+				ns.setIsuse(SysDict.ISUSE_NO);
 				db.update(ns);
 			}
 		} catch(Exception e) {
@@ -176,7 +177,7 @@ public class GoodsManagerAction_bak extends PageAction {
 			DBUtil db = DBUtil.getDBUtilByRequest();
 			String id = RequestHelper.getParameter("id");
 			NsGoods ns = this.goodsManagerService.queryGoodsById(new Long(id));
-			ns.setIsuse("0"); 
+			ns.setIsuse(SysDict.ISUSE_YES); 
 			db.update(ns);
 		} catch(Exception e) {
 			e.printStackTrace();

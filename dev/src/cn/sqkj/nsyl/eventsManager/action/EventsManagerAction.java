@@ -20,12 +20,14 @@ import com.opensymphony.xwork2.Action;
 
 import framework.action.PageAction;
 import framework.bean.PageBean;
+import framework.config.Config;
 import framework.config.SysDict;
 import framework.db.DBUtil;
 import framework.db.pojo.TAuditLog;
 import framework.db.pojo.TXtUser;
 import framework.helper.RequestHelper;
 import framework.logger.AuditLogger;
+import framework.util.DateUtils;
 
 /**
  * @author yangchaowen
@@ -69,11 +71,21 @@ public class EventsManagerAction extends PageAction {
 	public String save() {
 		try {
 			//从配置文件读取
-			String imgPathPrefix = "http://127.0.0.1:8080/dev/upload/"; //访问路径
-			String imgUploadPath = ServletActionContext.getServletContext().getRealPath("/upload"); //实际存储路径
+			/*String imgPathPrefix = "http://127.0.0.1:8080/dev/upload/"; //访问路径
+			String imgUploadPath = ServletActionContext.getServletContext().getRealPath("/upload"); //实际存储路径*/
+			
+			String imgUploadPath = Config.get("img.upload.basepath");
+			String currDate = DateUtils.toDate("yyyyMMdd",DateUtils.getDate());
 			
 			File dir = new File(imgUploadPath);
-			if(!dir.exists()) dir.mkdir();
+			System.out.println(dir.exists());
+			if(!dir.exists()) {
+				dir.mkdir();
+			}
+			dir = new File(dir.getAbsolutePath()+"/"+currDate);
+			if(!dir.exists()) {
+				dir.mkdir();
+			} 
 			
 			DBUtil db = DBUtil.getDBUtilByRequest();
 			db.beginTransaction();
@@ -83,7 +95,7 @@ public class EventsManagerAction extends PageAction {
 				//上传封面
 				String newFileName = UUID.randomUUID().toString()+System.currentTimeMillis()+this.pictureFileName.substring(this.pictureFileName.lastIndexOf("."));
 				InputStream is = new FileInputStream(this.picture);
-				OutputStream os = new FileOutputStream(new File(imgUploadPath, newFileName));
+				OutputStream os = new FileOutputStream(new File(dir.getAbsolutePath(), newFileName));
 				byte[] buffer = new byte[500];
 				int length = 0;
 				while(-1 != (length = is.read(buffer, 0, buffer.length))) {
@@ -91,7 +103,7 @@ public class EventsManagerAction extends PageAction {
 				}
 				os.close();
 				is.close();
-				this.eve.setPicture(imgPathPrefix+newFileName);
+				this.eve.setPicture(currDate+"/"+newFileName);
 			}
 			
 			//上传
@@ -99,7 +111,7 @@ public class EventsManagerAction extends PageAction {
 				//上传封面
 				String newFileName = UUID.randomUUID().toString()+System.currentTimeMillis()+this.minpictureFileName.substring(this.minpictureFileName.lastIndexOf("."));
 				InputStream is = new FileInputStream(this.minpicture);
-				OutputStream os = new FileOutputStream(new File(imgUploadPath, newFileName));
+				OutputStream os = new FileOutputStream(new File(dir.getAbsolutePath(), newFileName));
 				byte[] buffer = new byte[500];
 				int length = 0;
 				while(-1 != (length = is.read(buffer, 0, buffer.length))) {
@@ -107,7 +119,7 @@ public class EventsManagerAction extends PageAction {
 				}
 				os.close();
 				is.close();
-				this.eve.setMinpicture(imgPathPrefix+newFileName);
+				this.eve.setMinpicture(currDate+"/"+newFileName);
 			}
 			
 			if(this.eve.getId() == null) {

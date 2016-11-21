@@ -27,12 +27,14 @@ import com.opensymphony.xwork2.Action;
 
 import framework.action.PageAction;
 import framework.bean.PageBean;
+import framework.config.Config;
 import framework.config.SysDict;
 import framework.db.DBUtil;
 import framework.db.pojo.TAuditLog;
 import framework.db.pojo.TXtUser;
 import framework.helper.RequestHelper;
 import framework.logger.AuditLogger;
+import framework.util.DateUtils;
 
 /**
  * @author yangchaowen
@@ -105,18 +107,29 @@ public class GoodsManagerAction extends PageAction {
 	
 	public String saveGoods() {
 		//从配置文件读取
-		String imgPathPrefix = "http://127.0.0.1:8080/dev/upload/"; 
-		String imgUploadPath = ServletActionContext.getServletContext().getRealPath("/upload");
+		/*String imgPathPrefix = "http://127.0.0.1:8080/dev/upload/"; 
+		String imgUploadPath = ServletActionContext.getServletContext().getRealPath("/upload");*/
+		/*String imgPathPrefix = Config.get("img.server.basepath");*/
+		String imgUploadPath = Config.get("img.upload.basepath");
+		String currDate = DateUtils.toDate("yyyyMMdd",DateUtils.getDate());
 		
 		try {
 			File dir = new File(imgUploadPath);
-			if(!dir.exists()) dir.mkdir();
+			System.out.println(dir.exists());
+			if(!dir.exists()) {
+				dir.mkdir();
+			}
+			dir = new File(dir.getAbsolutePath()+"/"+currDate);
+			if(!dir.exists()) {
+				dir.mkdir();
+			} 
+			
 	        //封面
 			if(this.goodimg != null) {
 		        //上传封面
 		        String newFileName = UUID.randomUUID().toString()+System.currentTimeMillis()+this.goodimgFileName.substring(this.goodimgFileName.lastIndexOf("."));
 		        InputStream is = new FileInputStream(this.goodimg);
-	            OutputStream os = new FileOutputStream(new File(imgUploadPath, newFileName));
+	            OutputStream os = new FileOutputStream(new File(dir.getAbsolutePath(), newFileName));
 	            byte[] buffer = new byte[500];
 	            int length = 0;
 	            while(-1 != (length = is.read(buffer, 0, buffer.length))) {
@@ -124,14 +137,14 @@ public class GoodsManagerAction extends PageAction {
 	            }
 	            os.close();
 	            is.close();
-	            this.goods.setGoodimg(imgPathPrefix+newFileName);
+	            this.goods.setGoodimg(currDate+"/"+newFileName);
 			}
 			//图片1
 			if(this.img1 != null) {
 				//上传封面
 				String newFileName = UUID.randomUUID().toString()+System.currentTimeMillis()+this.img1FileName.substring(this.img1FileName.lastIndexOf("."));
 				InputStream is = new FileInputStream(this.img1);
-				OutputStream os = new FileOutputStream(new File(imgUploadPath, newFileName));
+				OutputStream os = new FileOutputStream(new File(dir.getAbsolutePath(), newFileName));
 				byte[] buffer = new byte[500];
 				int length = 0;
 				while(-1 != (length = is.read(buffer, 0, buffer.length))) {
@@ -139,14 +152,14 @@ public class GoodsManagerAction extends PageAction {
 				}
 				os.close();
 				is.close();
-				this.goods.setImg1(imgPathPrefix+newFileName);
+				this.goods.setImg1(currDate+"/"+newFileName);
 			}
 			//图片2
 			if(this.img2 != null) {
 				//上传封面
 				String newFileName = UUID.randomUUID().toString()+System.currentTimeMillis()+this.img2FileName.substring(this.img2FileName.lastIndexOf("."));
 				InputStream is = new FileInputStream(this.img2);
-				OutputStream os = new FileOutputStream(new File(imgUploadPath, newFileName));
+				OutputStream os = new FileOutputStream(new File(dir.getAbsolutePath(), newFileName));
 				byte[] buffer = new byte[500];
 				int length = 0;
 				while(-1 != (length = is.read(buffer, 0, buffer.length))) {
@@ -154,14 +167,14 @@ public class GoodsManagerAction extends PageAction {
 				}
 				os.close();
 				is.close();
-				this.goods.setImg2(imgPathPrefix+newFileName);
+				this.goods.setImg2(currDate+"/"+newFileName);
 			}
 			//图片3
 			if(this.img3 != null) {
 				//上传封面
 				String newFileName = UUID.randomUUID().toString()+System.currentTimeMillis()+this.img3FileName.substring(this.img3FileName.lastIndexOf("."));
 				InputStream is = new FileInputStream(this.img3);
-				OutputStream os = new FileOutputStream(new File(imgUploadPath, newFileName));
+				OutputStream os = new FileOutputStream(new File(dir.getAbsolutePath(), newFileName));
 				byte[] buffer = new byte[500];
 				int length = 0;
 				while(-1 != (length = is.read(buffer, 0, buffer.length))) {
@@ -169,14 +182,14 @@ public class GoodsManagerAction extends PageAction {
 				}
 				os.close();
 				is.close();
-				this.goods.setImg3(imgPathPrefix+newFileName);
+				this.goods.setImg3(currDate+"/"+newFileName);
 			}
 			//图片4
 			if(this.img4 != null) {
 				//上传封面
 				String newFileName = UUID.randomUUID().toString()+System.currentTimeMillis()+this.img4FileName.substring(this.img4FileName.lastIndexOf("."));
 				InputStream is = new FileInputStream(this.img4);
-				OutputStream os = new FileOutputStream(new File(imgUploadPath, newFileName));
+				OutputStream os = new FileOutputStream(new File(dir.getAbsolutePath(), newFileName));
 				byte[] buffer = new byte[500];
 				int length = 0;
 				while(-1 != (length = is.read(buffer, 0, buffer.length))) {
@@ -184,14 +197,14 @@ public class GoodsManagerAction extends PageAction {
 				}
 				os.close();
 				is.close();
-				this.goods.setImg4(imgPathPrefix+newFileName);
+				this.goods.setImg4(currDate+"/"+newFileName);
 			}
 			//图片5
 			if(this.img5 != null) {
 				//上传封面
 				String newFileName = UUID.randomUUID().toString()+System.currentTimeMillis()+this.img5FileName.substring(this.img5FileName.lastIndexOf("."));
 				InputStream is = new FileInputStream(this.img5);
-				OutputStream os = new FileOutputStream(new File(imgUploadPath, newFileName));
+				OutputStream os = new FileOutputStream(new File(dir.getAbsolutePath(), newFileName));
 				byte[] buffer = new byte[500];
 				int length = 0;
 				while(-1 != (length = is.read(buffer, 0, buffer.length))) {
@@ -199,7 +212,7 @@ public class GoodsManagerAction extends PageAction {
 				}
 				os.close();
 				is.close();
-				this.goods.setImg5(imgPathPrefix+newFileName);
+				this.goods.setImg5(currDate+"/"+newFileName);
 			}
 			
 			DBUtil db = DBUtil.getDBUtilByRequest();
@@ -279,16 +292,18 @@ public class GoodsManagerAction extends PageAction {
 			String id = RequestHelper.getParameter("id");
 			
 			Map<String, Object> params = new HashMap<String, Object>(2);
-			params.put("linkkind", "0");
+			params.put("linkkind", new Long(0));
 			params.put("imglink", id);
 			List<NsAdvertise> list = this.advertiseManagerService.queryAdvByParams(params);
 			if(list!=null && !list.isEmpty()) {
 				this.message = "该商品有广告未过期，不能设为无效";
+				return Action.SUCCESS;
 			}
 			
 			List<NsEventsinfo> list2 = this.eventsManagerService.queryEventsGoodsByGoodsId(new Long(id));
 			if(list!=null && !list.isEmpty()) {
 				this.message = "该商品有活动发布，不能设为无效";
+				return Action.SUCCESS;
 			}
 			
 			NsGoods ns = this.goodsManagerService.queryGoodsById(new Long(id));

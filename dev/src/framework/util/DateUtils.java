@@ -122,6 +122,11 @@ public class DateUtils {
 		return simpleDateFormat.format(time);
 	}
 	
+	public static String toDate(String pattern,java.util.Date date){
+		simpleDateFormat.applyPattern(pattern);
+		return simpleDateFormat.format(date);
+	}
+	
 	/**
      * 获取当前日期是星期几<br>
      * 

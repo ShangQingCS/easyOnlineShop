@@ -1,5 +1,9 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-
+<%@ page import="framework.config.Config"%>
+<%
+String imgPathPrefix = Config.get("img.server.basepath");
+request.setAttribute("imgPathPrefix",imgPathPrefix);
+%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 	<head>
@@ -57,7 +61,7 @@
 						<th field="ishidden" width="5%" formatter='formatterIsHidden'>是否匿名</th>
 						<th field="score" width="5%">评分</th>-->
 						<th field="isuse" width="10%" formatter='formatterIsuse'>是否启用</th>
-						<th field="cz" width="10%" formatter='formatterEventsAction'>操作</th> 
+						<th field="cz" width="15%" formatter='formatterEventsAction'>操作</th> 
 					</tr>
 				</thead>
 			</table>
@@ -207,6 +211,8 @@
 		}
 		
 		var showEditEventsWin = function(id) {
+			$("#minpicture").uploadPreview({ Img: "minpicturePr", Width: 500, Height: 100 });
+			$("#picture").uploadPreview({ Img: "picturePr", Width: 500, Height: 100 });
 			$.ajax( {
 				type: "POST",	
 				url: "${basePath }/view/eventsManager/eventsManager!loadEvents.action",	
@@ -216,8 +222,8 @@
 					$("#name").val(json.eve.name);
 					$("#memo").val(json.eve.memo);
 					$("#isuse").val(json.eve.isuse);
-					$("#minpicturePr").attr("src", json.eve.minpicture);
-					$("#picturePr").attr("src", json.eve.picture);
+					$("#minpicturePr").attr("src", "${imgPathPrefix}/"+json.eve.minpicture);
+					$("#picturePr").attr("src", "${imgPathPrefix}/"+json.eve.picture);
 					$("#startTime").datebox("setValue", formatterDate(json.eve.startTime,null,null));
 					$("#endTime").datebox("setValue", formatterDate(json.eve.endTime,null,null));
 					$("#minpicture").validatebox({required:false});

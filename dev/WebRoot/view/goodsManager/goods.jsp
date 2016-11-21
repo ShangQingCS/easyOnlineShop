@@ -122,7 +122,7 @@
 								alert("删除商品成功！");
 								queryGoods();
 							} else if(json.message!=null && json.message!=''){
-								alter(json.message);
+								alert(json.message);
 							}
 					  	}
 					});
@@ -140,7 +140,7 @@
 								alert("操作成功！");
 								queryGoods();
 							} else if(json.message!=null && json.message!=''){
-								alter(json.message);
+								alert(json.message);
 							}
 					  	}
 					});
@@ -158,7 +158,7 @@
 								alert("操作成功！");
 								queryGoods();
 							} else if(json.message!=null && json.message!=''){
-								alter(json.message);
+								alert(json.message);
 							}
 					  	}
 					});

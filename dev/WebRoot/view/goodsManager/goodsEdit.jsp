@@ -1,7 +1,10 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page import="framework.config.Config"%>
 <%
 String id = request.getParameter("id");
 request.setAttribute("id",id);
+String imgPathPrefix = Config.get("img.server.basepath");
+request.setAttribute("imgPathPrefix",imgPathPrefix);
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -109,7 +112,7 @@ request.setAttribute("id",id);
 	</div>
 	<div region="south" class="easyui-panel bgColor" align="center" style="height:50px; padding-top: 3px; ">
     	<a href="javascript:void(0);" class="easyui-linkbutton" style="width: 80px; height: 40px;" onclick="submitForm();return false;">确定</a>
-	 	<a href="javascript:void(0);" class="easyui-linkbutton" style="width: 80px; height: 40px;" onclick="clearForm();return false;">清空</a>
+	 	<!-- <a href="javascript:void(0);" class="easyui-linkbutton" style="width: 80px; height: 40px;" onclick="clearForm();return false;">清空</a> -->
     </div>
 </body>
 <script type="text/javascript">
@@ -167,12 +170,12 @@ request.setAttribute("id",id);
 				$("#inp_storenumb").textbox('setValue', json.goods.storenumb);
 				$("#inp_price").textbox('setValue', json.goods.price);
 				$("#inp_category").combobox('setValue', json.goods.category);
-				$("#goodimgPr").attr("src", json.goods.goodimg);
-				$("#goodimglistPr1").attr("src",  json.goods.img1);
-				$("#goodimglistPr2").attr("src",  json.goods.img2);
-				$("#goodimglistPr3").attr("src",  json.goods.img3);
-				$("#goodimglistPr4").attr("src",  json.goods.img4);
-				$("#goodimglistPr5").attr("src",  json.goods.img5);
+				$("#goodimgPr").attr("src", "${imgPathPrefix}/"+json.goods.goodimg);
+				$("#goodimglistPr1").attr("src",  "${imgPathPrefix}/"+json.goods.img1);
+				$("#goodimglistPr2").attr("src",  "${imgPathPrefix}/"+json.goods.img2);
+				$("#goodimglistPr3").attr("src",  "${imgPathPrefix}/"+json.goods.img3);
+				$("#goodimglistPr4").attr("src",  "${imgPathPrefix}/"+json.goods.img4);
+				$("#goodimglistPr5").attr("src",  "${imgPathPrefix}/"+json.goods.img5);
 				queryKinds(function(json1) {
 					callbackQueryKinds(json1);
 					$('#inp_kind').combobox('setValue', json.goods.kind);

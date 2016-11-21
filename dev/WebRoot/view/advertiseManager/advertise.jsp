@@ -1,5 +1,9 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-
+<%@ page import="framework.config.Config"%>
+<%
+String imgPathPrefix = Config.get("img.server.basepath");
+request.setAttribute("imgPathPrefix",imgPathPrefix);
+%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 	<head>
@@ -259,6 +263,7 @@
 		}
 		
 		var showEditAdv = function(id) {
+			$("#imgurl").uploadPreview({ Img: "imgurlPr", Width: 500, Height: 100 });
 			$.ajax( {
 				type: "POST",	
 				url: "${basePath }/view/advertiseManager/advertiseManager!loadAdv.action",	
@@ -267,10 +272,11 @@
 					//formSet("adv_add_table", json.adv);
 					$("#id").val(json.adv.id);
 					$("#name").val(json.adv.name);
-					$("#imgurlPr").attr("src", json.adv.imgurl);
+					//alert("${imgPathPrefix}/"+json.adv.imgurl)
+					$("#imgurlPr").attr("src", "${imgPathPrefix}/"+json.adv.imgurl);
 					$("#linkkind").val(json.adv.linkkind);
 					$("#imglink").val(json.adv.imglink);
-					$("#imglinkLabel").val(json.adv.imglink);
+					//$("#imglinkLabel").val(json.adv.imglink);
 					$("#ordernumb").numberspinner("setValue",json.adv.ordernumb);
 					$("#type").val(json.adv.type);
 					$("#kind").combobox("setValue",json.adv.kind);
@@ -278,11 +284,11 @@
 					$("#isuse").val(json.adv.isuse);
 					$("#imgurl").validatebox({required:false});
 					var objId = json.adv.imglink;
-					if(json.adv.imglink=="2") {
+					if(json.adv.linkkind=="2") {
 						$("#imglinkLabel").val(json.adv.imglink);
 					} else {
 						$.ajax({ type: "POST",  url: "${basePath }/view/advertiseManager/advertiseManager!loadObj.action",  dataType: "json",
-						  	data: "objType="+json.adv.imglink+"&objId="+objId,
+						  	data: "objType="+json.adv.linkkind+"&objId="+objId,
 						  	success: function(json){
 								$("#imglinkLabel").val(json.objectName);
 						  	}

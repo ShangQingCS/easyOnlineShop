@@ -29,6 +29,7 @@ public class NsGoods implements java.io.Serializable {
 	private String img3;
 	private String img4;
 	private String img5;
+	private String goodsCode;
 	
 	public NsGoods() {
 	}
@@ -194,6 +195,14 @@ public class NsGoods implements java.io.Serializable {
 
 	public void setImg5(String img5) {
 		this.img5 = img5;
+	}
+
+	public String getGoodsCode() {
+		return goodsCode;
+	}
+
+	public void setGoodsCode(String goodsCode) {
+		this.goodsCode = goodsCode;
 	}
 	
 	/*public NsGoodsCategory getCategoryName() {

@@ -59,6 +59,9 @@
         <property name="img5" type="java.lang.String">
             <column name="img5" length="60" />
         </property>
+        <property name="goodsCode" type="java.lang.String">
+            <column name="goods_code" length="50" />
+        </property>
         <!-- <many-to-one name="kindName" foreign-key="id" update="false" insert="false" fetch="join"
         	class="cn.sqkj.nsyl.goodsManager.pojo.NsGoodsCategory">
         	<column name="kind" />

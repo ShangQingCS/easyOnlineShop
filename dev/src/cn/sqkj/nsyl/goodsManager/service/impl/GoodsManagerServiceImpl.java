@@ -149,6 +149,8 @@ public class GoodsManagerServiceImpl implements IGoodsManagerService {
 			goodsCategory.setUrl(goodsCategoryVO.getUrl());
 			goodsCategory.setUpdateTime(DateUtils.getDate());
 			goodsCategory.setIsuse(goodsCategoryVO.getIsuse());
+			if(StringUtils.isNotBlank(goodsCategoryVO.getLogo())) 
+				goodsCategory.setLogo(goodsCategoryVO.getLogo());
 			db.update(goodsCategory);
 		}
 		return goodsCategoryVO;

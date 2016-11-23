@@ -1,11 +1,17 @@
 package cn.sqkj.nsyl.goodsManager.action;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
@@ -19,11 +25,13 @@ import cn.sqkj.nsyl.goodsManager.util.ComparatorGoodsCategoryVO;
 import com.opensymphony.xwork2.Action;
 
 import framework.action.PageAction;
+import framework.config.Config;
 import framework.db.DBUtil;
 import framework.db.pojo.TAuditLog;
 import framework.db.pojo.TXtUser;
 import framework.helper.RequestHelper;
 import framework.logger.AuditLogger;
+import framework.util.DateUtils;
 
 /**
  * @author yangchaowen
@@ -43,7 +51,9 @@ public class GoodsCagegoryManagerAction extends PageAction {
 	private NsGoodsCategory categoryVo;
 	private List<NsGoodsCategory> kinds;
 	private List<NsGoodsCategory> brands;
-	
+	private File logo;
+    private String logoFileName;
+    
 	/**
 	 * 查询一级分类
 	 */
@@ -84,7 +94,7 @@ public class GoodsCagegoryManagerAction extends PageAction {
 	 * @return
 	 */
 	public String goodsCategoryTree() {
-		StringBuffer sql = new StringBuffer(" select c.id,c.cate_name,c.desc_,c.cate_order,c.`level`,c.isuse,c.parent_id ");
+		StringBuffer sql = new StringBuffer(" select c.id,c.cate_name,c.desc_,c.cate_order,c.`level`,c.isuse,c.parent_id,c.logo ");
 		sql.append(" from ns_goods_category c ");
 		sql.append(" where c.flag='0' order by c.cate_order ");
 		DBUtil db = DBUtil.getDBUtilByRequest();
@@ -147,7 +157,34 @@ public class GoodsCagegoryManagerAction extends PageAction {
 	}
 	
 	public String saveGoodsCategory() {
+		String imgUploadPath = Config.get("img.upload.basepath");
+		String currDate = DateUtils.toDate("yyyyMMdd",DateUtils.getDate());
 		try {
+			File dir = new File(imgUploadPath);
+			if(!dir.exists()) {
+				dir.mkdir();
+			}
+			dir = new File(dir.getAbsolutePath()+"/"+currDate);
+			if(!dir.exists()) {
+				dir.mkdir();
+			} 
+			
+	        //封面
+			if(this.logo != null) {
+		        //上传封面
+		        String newFileName = UUID.randomUUID().toString()+System.currentTimeMillis()+this.logoFileName.substring(this.logoFileName.lastIndexOf("."));
+		        InputStream is = new FileInputStream(this.logo);
+	            OutputStream os = new FileOutputStream(new File(dir.getAbsolutePath(), newFileName));
+	            byte[] buffer = new byte[500];
+	            int length = 0;
+	            while(-1 != (length = is.read(buffer, 0, buffer.length))) {
+	                os.write(buffer);
+	            }
+	            os.close();
+	            is.close();
+	            this.goodsCategory.setLogo(currDate+"/"+newFileName);
+			}
+			
 			this.goodsManagerService.saveGoodsCategory(this.goodsCategory);
 			
 			//打印审计日志
@@ -214,4 +251,21 @@ public class GoodsCagegoryManagerAction extends PageAction {
 	public void setCategoryVo(NsGoodsCategory categoryVo) {
 		this.categoryVo = categoryVo;
 	}
+
+	public File getLogo() {
+		return logo;
+	}
+
+	public void setLogo(File logo) {
+		this.logo = logo;
+	}
+
+	public String getLogoFileName() {
+		return logoFileName;
+	}
+
+	public void setLogoFileName(String logoFileName) {
+		this.logoFileName = logoFileName;
+	}
+	
 }

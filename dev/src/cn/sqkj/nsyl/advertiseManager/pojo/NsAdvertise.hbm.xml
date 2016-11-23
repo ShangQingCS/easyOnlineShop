@@ -20,8 +20,8 @@
         <property name="linkkind" type="java.lang.Long">
             <column name="linkkind" />
         </property>
-        <property name="imglink" type="java.lang.String">
-            <column name="imglink" length="45" />
+        <property name="imglink" type="java.lang.Long">
+            <column name="imglink" />
         </property>
         <property name="ordernumb" type="java.lang.Integer">
             <column name="ordernumb" length="11" />

@@ -41,5 +41,8 @@
         <property name="flag" type="java.lang.String">
             <column name="flag" length="1" />
         </property>
+        <property name="cateCode" type="java.lang.String">
+            <column name="cate_code"/>
+        </property>
     </class>
 </hibernate-mapping>

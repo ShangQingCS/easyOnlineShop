@@ -12,7 +12,6 @@ import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.apache.struts2.ServletActionContext;
 
 import cn.sqkj.nsyl.advertiseManager.pojo.NsAdvertise;
 import cn.sqkj.nsyl.advertiseManager.service.IAdvertiseManagerService;
@@ -97,7 +96,6 @@ public class AdvertiseManagerAction extends PageAction {
 			String currDate = DateUtils.toDate("yyyyMMdd",DateUtils.getDate());
 			
 			File dir = new File(imgUploadPath);
-			System.out.println(dir.exists());
 			if(!dir.exists()) {
 				dir.mkdir();
 			}

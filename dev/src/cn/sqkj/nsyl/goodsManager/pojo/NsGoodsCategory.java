@@ -18,6 +18,7 @@ public class NsGoodsCategory implements java.io.Serializable {
 	private String url;
 	private String isuse;
 	private Long parentId;
+	private String cateCode;
 	private Date createTime;
 	private Date updateTime;
 	private String flag;
@@ -119,6 +120,14 @@ public class NsGoodsCategory implements java.io.Serializable {
 
 	public void setFlag(String flag) {
 		this.flag = flag;
+	}
+
+	public String getCateCode() {
+		return cateCode;
+	}
+
+	public void setCateCode(String cateCode) {
+		this.cateCode = cateCode;
 	}
 
 }

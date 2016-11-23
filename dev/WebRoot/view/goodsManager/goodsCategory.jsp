@@ -1,8 +1,14 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ page import="framework.config.Config"%>
+<%
+String imgPathPrefix = Config.get("img.server.basepath");
+request.setAttribute("imgPathPrefix",imgPathPrefix);
+%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
 <jsp:include page="/include/default.jsp"></jsp:include>
+<script type="text/javascript" charset="utf-8" src="${basePath }/js/test.js"></script>
 <title>商品类别维护</title>
 </head>
   
@@ -23,45 +29,61 @@
   		<ul id="ul_tree" class="easyui-tree" data-options="onClick:treeClick"></ul>
   	</div>
   	<div id="div_config" region="center" title="类别信息" class="easyui-panel bgColor" style="overflow: auto;">
-		<table class="tablestyle01" style="margin-top:5px;" width="100%">
-			<tr>
-				<td width="110">类别ID：</td>
-				<td>
-					<input name="goodsCategory.level" id="inp_level" type="hidden" />
-					<input name="goodsCategory.id" id="inp_id" readonly="readonly" style="width: 460px;" />
-				</td>
-			</tr>
-			<tr>
-				<td>上级类别ID：</td>
-				<td><input name="goodsCategory.parentId" id="inp_parentId" readonly="readonly" style="width: 460px;" /></td>
-			</tr>
-			<tr>
-				<td>上级类别名称：</td>
-				<td><input name="parentCateName" id="inp_parentCateName" readonly="readonly" style="width: 460px;" /></td>
-			</tr>
-			<tr>
-				<td>显示顺序：</td>
-				<td><input name="goodsCategory.cateOrder" id="inp_cateOrder" class="easyui-validatebox" required="true" validType="number" maxlength="3" style="width: 50px;" /></td>
-			</tr>
-			<tr>
-				<td>类别名称：</td>
-				<td><input name="goodsCategory.cateName" id="inp_cateName" class="easyui-validatebox" required="true" maxlength="100" style="width: 320px;" /></td>
-			</tr>
-			<tr>
-				<td>是否有效：</td>
-				<td>
-					<select name="goodsCategory.isuse" id="inp_isuse">
-						<option value="1">无效</option>
-						<option value="0">有效</option>
-					</select>
-				</td>
-			</tr>
-		</table>
+  		 <form id="ff" method="post" enctype="multipart/form-data">
+			<table class="tablestyle01" style="margin-top:5px;" width="100%">
+				<tr>
+					<td width="110">类别ID：</td>
+					<td>
+						<input name="goodsCategory.level" id="inp_level" type="hidden" />
+						<input name="goodsCategory.id" id="inp_id" readonly="readonly" style="width: 460px;" />
+					</td>
+				</tr>
+				<tr>
+					<td>上级类别ID：</td>
+					<td><input name="goodsCategory.parentId" id="inp_parentId" readonly="readonly" style="width: 460px;" /></td>
+				</tr>
+				<tr>
+					<td>上级类别名称：</td>
+					<td><input name="parentCateName" id="inp_parentCateName" readonly="readonly" style="width: 460px;" /></td>
+				</tr>
+				<tr>
+					<td>显示顺序：</td>
+					<td><input name="goodsCategory.cateOrder" id="inp_cateOrder" class="easyui-validatebox" required="true" validType="number" maxlength="3" style="width: 50px;" /></td>
+				</tr>
+				<tr>
+					<td>类别名称：</td>
+					<td><input name="goodsCategory.cateName" id="inp_cateName" class="easyui-validatebox" required="true" maxlength="100" style="width: 320px;" /></td>
+				</tr>
+				<tr id="codeTr" style="display:none;">
+					<td>类别编码：</td>
+					<td>
+		    			<input name="goodsCategory.cateCode" id="inp_cateCode" style="width: 50px;" class="easyui-validatebox" required="true"/>				
+					</td>
+				</tr> 
+				<tr id="logoTr" style="display:none;">
+					<td>图片：</td>
+					<td>
+						<img id="logoPr" width="100" height="100" /><br>
+		    			<input type="file" style='width: 200px;' name="logo" id="logo"/>					
+					</td>
+				</tr> 
+				<tr>
+					<td>是否有效：</td>
+					<td>
+						<select name="goodsCategory.isuse" id="inp_isuse">
+							<option value="1">无效</option>
+							<option value="0">有效</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</form>
   	</div>
 </body>
-  
+
 <script type="text/javascript">
 	$(function(){
+		$("#logo").uploadPreview({ Img: "logoPr", Width: 100, Height: 100 });
 		queryGoodsCategoryTree();
 	});
 	
@@ -80,12 +102,41 @@
 		});
 	}
 	
+	var currNodeId = null;
 	var treeClick = function(node) {
 		var nodeInfo = getNodeInfo(node);
+		if(currNodeId!=null && currNodeId==nodeInfo.id)	{
+			return;
+		}
+		
 		$("#div_config :input[name]").each(function(i,n){
 			var ns = n.name.split(".");
-			$(n).val(nodeInfo[ns.length>1?ns[1]:ns[0]]);
+			var fname = ns.length>1?ns[1]:ns[0];
+			if(fname=="logo") {
+				if(nodeInfo[fname]!=null)
+					$("#logoPr").attr("src",  "${imgPathPrefix}/"+nodeInfo[fname]);
+			} else {
+				$(n).val(nodeInfo[fname]);
+			}
 		});
+		
+		/*if(nodeInfo.logo!=null) {
+			//$("#logoPr").attr("src",  "${imgPathPrefix}/"+nodeInfo.logo);
+		}*/
+		
+		//只有三级裁显示logo和编码
+		if(nodeInfo != null && nodeInfo.level != null && nodeInfo.level=="3") {
+			$("#codeTr").css("display","");
+			$("#logoTr").css("display","");
+		} else {
+			$("#codeTr").css("display","none");
+			$("#logoTr").css("display","none");
+		}
+		
+		/* if(currNodeId != nodeInfo.id) {
+			$("#logoPr").attr("src", "");
+		} */
+		currNodeId = nodeInfo.id;
     }
     
     var getNodeInfo = function(node) {
@@ -96,6 +147,7 @@
 			obj.cateOrder = node.attributes.cateOrder;
 			obj.level = node.attributes.level;
 			obj.isuse = node.attributes.isuse;
+			obj.logo = node.attributes.logo;
 		}
 		var pnode = $('#ul_tree').tree('getParent',node.target); 
 		if(pnode!=null){
@@ -135,7 +187,7 @@
 		}
 	}
 	
-	var saveGoodsCategory = function(json) {
+	/* var saveGoodsCategory = function(json) {
 		if(json == null) {
 			$("#div_config").attr("action","${basePath }/view/goodsManager/goodsCagegoryManager!saveGoodsCategory.action");
 			formSubmit('div_config',saveGoodsCategory);
@@ -144,6 +196,27 @@
 			$("#inp_id").val(json.goodsCategory.id);
 			queryGoodsCategoryTree();//初始化菜单
 		}
+	} */
+	
+	var saveGoodsCategory = function(json) {
+		$('#ff').form('submit', {
+			url: "${basePath }/view/goodsManager/goodsCagegoryManager!saveGoodsCategory.action",
+			onSubmit: function() {
+				return checkForm();
+			},
+      		success:function(data) {
+				queryGoodsCategoryTree();//初始化菜单
+     		}
+ 		});  
+	}
+	
+	//表单验证
+	var checkForm = function() {
+		var check = $('#ff').form('validate');
+		if(!check) {
+			return false;
+		}
+		return true;
 	}
 	
 	var delGoodsCategory = function(json) {

@@ -90,6 +90,7 @@ public class GoodsManagerServiceImpl implements IGoodsManagerService {
 				params.add(pageBean.getQueryParams().get("storenumbtwo"));
 			}
 		}
+		sql.append(" order by t1.create_time desc,t1.id desc ");
 		
 		//查询总计路数
 		int total = goodsDAO.findGoodsCount(sql.toString(), params);
@@ -119,7 +120,7 @@ public class GoodsManagerServiceImpl implements IGoodsManagerService {
 			return "该分类下存在子分类，不能被删除";
 		}
 		
-		hql = " update NsGoodsCategory set flag='1', isuser='1' where id=? ";
+		hql = " update NsGoodsCategory set flag='0', isuse='1' where id=? ";
 		int count = db.executeHql(hql, goodsCategoryVO.getId());
 		db.commit();
 		if(count==0) {
@@ -149,6 +150,7 @@ public class GoodsManagerServiceImpl implements IGoodsManagerService {
 			goodsCategory.setUrl(goodsCategoryVO.getUrl());
 			goodsCategory.setUpdateTime(DateUtils.getDate());
 			goodsCategory.setIsuse(goodsCategoryVO.getIsuse());
+			goodsCategory.setCateCode(goodsCategoryVO.getCateCode());
 			if(StringUtils.isNotBlank(goodsCategoryVO.getLogo())) 
 				goodsCategory.setLogo(goodsCategoryVO.getLogo());
 			db.update(goodsCategory);

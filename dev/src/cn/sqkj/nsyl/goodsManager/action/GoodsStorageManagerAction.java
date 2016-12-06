@@ -42,6 +42,9 @@ public class GoodsStorageManagerAction extends PageAction {
 			DBUtil db = DBUtil.getDBUtilByRequest();
 			NsGoods ns = this.goodsManagerService.queryGoodsById(this.goods.getId());
 			ns.setStorenumb(this.goods.getStorenumb());
+			ns.setPrice(this.goods.getPrice());
+			ns.setSellnumb(this.goods.getSellnumb());
+			ns.setCostprice(this.goods.getCostprice());
 			db.update(ns);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -78,6 +81,7 @@ public class GoodsStorageManagerAction extends PageAction {
 						continue;
 					}
 					Integer storenumb = null;
+					//TODO:页面手动操作已经修改了成了 对外销售库存 实际库存跟成本价..但是此处仅有 对外销售库存 请后续完善
 					try {
 						storenumb = new Integer(row[2]);
 					} catch (Exception e){

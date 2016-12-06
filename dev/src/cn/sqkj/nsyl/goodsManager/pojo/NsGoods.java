@@ -19,6 +19,8 @@ public class NsGoods implements java.io.Serializable {
 	private String isuse;
 	private String gfullname;
 	private Integer storenumb;
+	private Integer sellnumb;
+	private Double costprice;
 	private String goodimg;
 	private Integer freazes;
 	/*private NsGoodsCategory categoryName;
@@ -203,6 +205,22 @@ public class NsGoods implements java.io.Serializable {
 
 	public void setGoodsCode(String goodsCode) {
 		this.goodsCode = goodsCode;
+	}
+
+	public Integer getSellnumb() {
+		return sellnumb;
+	}
+
+	public void setSellnumb(Integer sellnumb) {
+		this.sellnumb = sellnumb;
+	}
+
+	public Double getCostprice() {
+		return costprice;
+	}
+
+	public void setCostprice(Double costprice) {
+		this.costprice = costprice;
 	}
 	
 	/*public NsGoodsCategory getCategoryName() {

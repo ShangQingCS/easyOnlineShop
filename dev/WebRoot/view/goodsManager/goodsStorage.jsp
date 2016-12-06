@@ -48,8 +48,10 @@
 						<th field="kindname" width="10%">类型</th>
 						<th field="brandname" width="10%">品牌</th>
 						<th field="price" width="5%">价格</th>
-						<th field="storenumb" width="5%">可用库存</th>
+						<th field="storenumb" width="5%">可用销售库存</th>
 						<th field="freazes" width="5%">冻结库存</th>
+						<th field="costprice" width="5%">成本价</th>
+						<th field="sellnumb" width="5%">实际库存</th>
 						<th field="cl" width="10%" formatter='formatterAction'>操作</th>
 					</tr>
 				</thead>
@@ -68,8 +70,20 @@
 		  				</td>
 		  			</tr>
 		  			<tr>
-		  				<td align="right" style="width:80px;">库存数量:</td>
+		  				<td align="right" style="width:80px;">对外可用销售:</td>
 		  				<td><input class="easyui-numberspinner" name="goods.storenumb" id="inp_storenumb" data-options="increment:10" style="width:150px;"/></td>
+		  			</tr>
+		  			<tr>
+		  				<td align="right" style="width:80px;">销售价格:</td>
+		  				<td><input class="easyui-numberspinner" name="goods.price" id="inp_price" data-options="increment:10" style="width:150px;"/></td>
+		  			</tr>
+		  			<tr>
+		  				<td align="right" style="width:80px;">成本价:</td>
+		  				<td><input class="easyui-numberspinner" name="goods.costprice" id="inp_costprice" data-options="increment:10" style="width:150px;"/></td>
+		  			</tr>
+		  			<tr>
+		  				<td align="right" style="width:80px;">实际库存:</td>
+		  				<td><input class="easyui-numberspinner" name="goods.sellnumb" id="inp_sellnumb" data-options="increment:10" style="width:150px;"/></td>
 		  			</tr>
 		  		</table>
 		  		<div id="buts_window_new" align="right" >
@@ -147,7 +161,7 @@
 		}
 		
 		var formatterAction = function(value,rec) {
-			var formatterStr = "<a href='#' onclick='openEdit(\""+rec.id+"\",\""+rec.gname+"\",\""+rec.storenumb+"\"); return false;'>修改可用库存</a>&nbsp;";
+			var formatterStr = "<a href='#' onclick='openEdit(\""+rec.id+"\",\""+rec.gname+"\",\""+rec.storenumb+"\"); return false;'>修改库存</a>&nbsp;";
 			return formatterStr;
 		}
 		

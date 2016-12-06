@@ -57,7 +57,7 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
 				<tr id="codeTr" style="display:none;">
 					<td>类别编码：</td>
 					<td>
-		    			<input name="goodsCategory.cateCode" id="inp_cateCode" style="width: 50px;" class="easyui-validatebox" required="true"/>				
+		    			<input name="goodsCategory.cateCode" id="inp_cateCode" style="width: 50px;" class="easyui-validatebox" required="false"/>				
 					</td>
 				</tr> 
 				<tr id="logoTr" style="display:none;">
@@ -128,9 +128,11 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
 		if(nodeInfo != null && nodeInfo.level != null && nodeInfo.level=="3") {
 			$("#codeTr").css("display","");
 			$("#logoTr").css("display","");
+			$('#inp_cateCode').validatebox({required: true});
 		} else {
 			$("#codeTr").css("display","none");
 			$("#logoTr").css("display","none");
+			$('#inp_cateCode').validatebox({required: false});
 		}
 		
 		/* if(currNodeId != nodeInfo.id) {
@@ -148,6 +150,7 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
 			obj.level = node.attributes.level;
 			obj.isuse = node.attributes.isuse;
 			obj.logo = node.attributes.logo;
+			obj.cateCode=node.attributes.cateCode;
 		}
 		var pnode = $('#ul_tree').tree('getParent',node.target); 
 		if(pnode!=null){

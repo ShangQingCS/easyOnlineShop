@@ -226,6 +226,7 @@ public class GoodsManagerAction extends PageAction {
 				ns.setCategory(this.goods.getCategory());
 				ns.setKind(this.goods.getKind());
 				ns.setBrand(this.goods.getBrand());
+				ns.setDetail(this.goods.getDetail());
 				if(StringUtils.isNotBlank(this.goods.getGoodimg())) 
 					ns.setGoodimg(this.goods.getGoodimg());
 				if(StringUtils.isNotBlank(this.goods.getGoodimg())) 

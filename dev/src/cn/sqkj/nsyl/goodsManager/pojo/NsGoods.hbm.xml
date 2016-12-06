@@ -14,6 +14,9 @@
         <property name="price" type="java.lang.Double">
             <column name="price" precision="12" />
         </property>
+        <property name="costprice" type="java.lang.Double">
+            <column name="costprice" precision="12" />
+        </property>
         <property name="category" type="java.lang.Long">
             <column name="category" />
         </property>
@@ -37,6 +40,9 @@
         </property>
         <property name="storenumb" type="java.lang.Integer">
             <column name="storenumb" length="11" />
+        </property>
+        <property name="sellnumb" type="java.lang.Integer">
+            <column name="sellnumb" length="11" />
         </property>
         <property name="goodimg" type="java.lang.String">
             <column name="goodimg" length="60" />

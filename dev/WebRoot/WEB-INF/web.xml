@@ -66,13 +66,13 @@
 		<description>图片上传地址</description>
 		<param-name>img.upload.basepath</param-name>
 		<!-- <param-value>D:\shop_pics</param-value> -->
-		<param-value>D:\dev\apache-tomcat-7.0.41\webapps\dev\upload</param-value>
+		<param-value>D:\dev\apache-tomcat-7.0.41_2\webapps\dev\upload</param-value>
 	</context-param>
 	<context-param>
 		<description>图片访问服务器配置目录</description>
 		<param-name>img.server.basepath</param-name>
 		<!-- <param-value>http://192.168.1.117:9999</param-value> -->
-		<param-value>http://127.0.0.1:8080/dev/upload</param-value>
+		<param-value>http://127.0.0.1:8081/dev/upload</param-value>
 	</context-param>
 	
 	<filter><!-- 编码过滤 -->

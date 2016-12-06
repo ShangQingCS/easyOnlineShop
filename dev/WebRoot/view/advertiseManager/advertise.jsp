@@ -178,7 +178,7 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
 							<th field="brandname" width="10%">品牌</th>
 							<!-- <th field="price" width="5%">价格</th> -->
 							<th field="isuse" width="10%" formatter='formatterIsuse'>状态</th>
-							<th field="cl" width="10%" formatter='formatterAction'>操作</th>
+							<th field="cl" width="10%" formatter='formatterActionGoods'>操作</th>
 						</tr>
 					</thead>
 				</table>
@@ -188,6 +188,39 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
 						<tr><td align="center">
 	 						<a href="#" class="easyui-linkbutton" onclick="queryGoods(); return false;">查询</a>
 			 				<a href="#" class="easyui-linkbutton" onclick="$('#goods_select_window').dialog('close'); return false;">关闭</a>
+						</td></tr>
+					</table>
+				</div>
+			</div>
+			
+			<div title="活动选择" id="event_select_window" modal="true" draggable="false" class="easyui-dialog" 
+				style="width: 800px; height: 500px; background-color:#EFEFEF;"  buttons="#event_select_buts"
+				resizable="false" collapsible="false" maximizable="false" minimizable="false" closed="true">
+				<table id="form_event_query"  dataType="text" class="tablestyle01" style="width:100%">
+		  			<tr>
+		  				<td align="right" style="width: 60">活动名称:</td>
+		  				<td><input name="queryParams.name" /></td>
+		  			</tr>
+		  		</table>
+				<table id="event_select_table" rownumbers="true" region="center" class="easyui-datagrid" fitColumns="true"
+					style="width:auto;height:auto" title="" pagination="true" singleSelect="false">
+					<thead>
+						<tr>
+							<th field="name" width="29%">活动名称</th>
+							<th field="startTime" width="10%" formatter='formatterDate'>活动开始时间</th>
+							<th field="endTime" width="10%" formatter='formatterDate'>活动结束时间</th>
+							<th field="memo" width="10%">活动简介</th>
+							<th field="isuse" width="10%" formatter='formatterIsuse'>状态</th>
+							<th field="cl" width="10%" formatter='formatterActionEvents'>操作</th>
+						</tr>
+					</thead>
+				</table>
+				
+				<div id="events_select_buts" align="center" style="background-color:#EFEFEF;">
+					<table width="100%" align="center" border="0" cellpadding="0" cellspacing="0">
+						<tr><td align="center">
+	 						<a href="#" class="easyui-linkbutton" onclick="queryevents(); return false;">查询</a>
+			 				<a href="#" class="easyui-linkbutton" onclick="$('#event_select_window').dialog('close'); return false;">关闭</a>
 						</td></tr>
 					</table>
 				</div>
@@ -383,7 +416,7 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
 			});
 		}
 		
-		var formatterAction = function(value,rec) {
+		var formatterActionGoods = function(value,rec) {
 			var formatterStr = "<a href='#' onclick='selectGoods(\""+rec.id+"\",\""+rec.gname+"\"); return false;'>选择</a>&nbsp;";
 			return formatterStr;
 		}
@@ -408,8 +441,26 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
 			$('#goods_select_table').datagrid('load',data);
 		}
 		
+		var formatterActionEvents = function(value,rec) {
+			var formatterStr = "<a href='#' onclick='selectEvents(\""+rec.id+"\",\""+rec.name+"\"); return false;'>选择</a>&nbsp;";
+			return formatterStr;
+		}
+		
+		var selectEvents = function(id,gname) {
+			setImgLind(id, gname);
+			$('#event_select_window').dialog('close');
+		} 
+		
 		var showQueryEventsWin = function() {
-			
+			$('#event_select_table').datagrid({   
+				url:'${basePath }/view/eventsManager/eventsManager!queryEvents.action'
+        	});
+        	$('#event_select_window').dialog('open');
+		}
+		
+		var queryevents = function() {
+			var data = formGet("form_event_query");
+			$('#event_select_table').datagrid('load',data);
 		}
 		
 		var showQueryCateInfoWin = function() {

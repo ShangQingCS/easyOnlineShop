@@ -16,22 +16,18 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
 	  	<div region="north" class="easyui-panel bgColor" collapsible="false" title="评论列表" style="height:130px; width:100%">
 	  		<table id="from_query"  border=0 dataType="text" class="tablestyle01" style="width:100%">
 	  			<tr>
-	  				<td align="left">商品名称:</td>
-	  				<td align="left"><input name="queryParams.gname"/></td>
-	  				<td align="left">类别:</td>
-	  				<td align="left"><input class="easyui-combobox" name="queryParams.category" id="inp_category" data-options="editable: false"/></td>
-	  				<td align="left">类型:</td>
-	  				<td align="left"><input class="easyui-combobox" name="queryParams.kind" id="inp_kind" data-options="editable: false"/></td>
-	  				<td align="left">品牌:</td>
-	  				<td align="left"><input class="easyui-combobox" name="queryParams.brand" id="inp_brand" data-options="editable: false"/></td>
-	  			</tr>
-	  			<tr>
-	  				<td align="left">商品编号:</td>
-	  				<td align="left"><input name="queryParams.goodsid"/></td>
-	  				<td align="left">用户id:</td>
-	  				<td align="left"><input name="queryParams.userid" /></td>
-	  				<td align="left">评论关键字:</td>
-	  				<td align="left" colspan="3"><input name="queryParams.comment" style="width: 90%;"/></td>
+	  				<td align="left">活动名称:</td>
+	  				<td align="left"><input name="queryParams.name"/></td>
+	  				<td align="left">起始时间:</td>
+	  				<td align="left"><input name="queryParams.startTime" class="easyui-datebox" editable="false" id="inp_startTime"  required="true"/></td>
+	  				<td align="left">结束时间:</td>
+	  				<td align="left"><input name="queryParams.endTime"  class="easyui-datebox" editable="false" id="inp_endTime"  required="true"/></td>
+	  				<td align="left">是否有效:</td>
+	  				<td align="left"><select name="queryParams.isuse" id="inp_isuse">
+	  								<option value="">请选择</option>
+			  						<option value="1">否</option>
+			  						<option value="0">是</option>
+			  					</select> </td>
 	  			</tr>
 	  		</table>
 	  		<table border=0 dataType="text" class="tablestyle01" style="width:100%">

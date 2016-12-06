@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import cn.sqkj.nsyl.eventsManager.dao.NsEventsinfoDAO;
@@ -32,10 +33,23 @@ public class EventsManagerServiceImpl implements IEventsManagerService {
 		List params = new ArrayList();
 		params.add(SysDict.FLAG_ACT);
 		if(pageBean.getQueryParams() != null && !pageBean.getQueryParams().isEmpty()) {
-			/*if(StringUtils.isNotBlank(pageBean.getQueryParams().get("gname"))) {
-				sql.append(" and t1.gname like ? ");
-				params.add("%"+pageBean.getQueryParams().get("gname")+"%");
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("name"))) {
+				sql.append(" and name like ? ");
+				params.add("%"+pageBean.getQueryParams().get("name")+"%");
 			}
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("startTime"))) {
+				sql.append(" and end_time >= STR_TO_DATE(?,'%Y-%m-%d %H:%i:%s') ");
+				params.add(pageBean.getQueryParams().get("startTime"));
+			}
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("endTime"))) {
+				sql.append(" and start_time <= STR_TO_DATE(?,'%Y-%m-%d %H:%i:%s') ");
+				params.add(pageBean.getQueryParams().get("endTime"));
+			}
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("isuse"))) {
+				sql.append(" and isuse = ?");
+				params.add(pageBean.getQueryParams().get("isuse"));
+			}
+			/*
 			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("category"))) {
 				sql.append(" and t1.category = ? ");
 				params.add(pageBean.getQueryParams().get("category"));

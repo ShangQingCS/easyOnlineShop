@@ -166,7 +166,8 @@ public class AdvertiseManagerAction extends PageAction {
 				NsGoods ng = goodsManagerService.queryGoodsById(new Long(objId));
 				this.objectName = ng.getGname();
 			} else if("1".equals(objType)) {
-				
+				NsAdvertise na=advertiseManagerService.queryAdvById(new Long(objId));
+				this.objectName=na.getName();
 			} else if("2".equals(objType)) {
 				
 			} else if("3".equals(objType)) {

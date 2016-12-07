@@ -13,7 +13,7 @@ public class NsAdvertise implements java.io.Serializable {
 	private String memo;
 	private String imgurl;
 	private Long linkkind;
-	private Long imglink;
+	private String imglink;
 	private Integer ordernumb;
 	private String type;
 	private String isuse;
@@ -65,11 +65,11 @@ public class NsAdvertise implements java.io.Serializable {
 		this.linkkind = linkkind;
 	}
 
-	public Long getImglink() {
+	public String getImglink() {
 		return this.imglink;
 	}
 
-	public void setImglink(Long imglink) {
+	public void setImglink(String imglink) {
 		this.imglink = imglink;
 	}
 

@@ -319,6 +319,10 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
 					var objId = json.adv.imglink;
 					if(json.adv.linkkind=="2") {
 						$("#imglinkLabel").val(json.adv.imglink);
+						$("#imglinkLabel").change(function(var_){
+							var inf_=$("#imglinkLabel").val();
+							$("#imglink").val(inf_);
+						});
 					} else {
 						$.ajax({ type: "POST",  url: "${basePath }/view/advertiseManager/advertiseManager!loadObj.action",  dataType: "json",
 						  	data: "objType="+json.adv.linkkind+"&objId="+objId,
@@ -364,6 +368,10 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
 				$("#cateBtn").css("display","none");
 				$("#goodsBtn").css("display","none");
 				$("#eventBtn").css("display","none");
+				$("#imglinkLabel").change(function(var_){
+					var inf_=$("#imglinkLabel").val();
+					$("#imglink").val(inf_);
+				});
 			} else if(linkkind=="3") {
 				$("#imglinkLabel").attr("readonly",true);
 				$("#cateBtn").css("display","");
@@ -495,6 +503,7 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
 			setImgLind(id, gname);
 			$('#goods_select_window').dialog('close');
 		} 
+		
 		
 		var setImgLind = function(id,text) {
 			//$("#imglinkLabel").attr("required","true");

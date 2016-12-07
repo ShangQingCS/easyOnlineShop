@@ -37,7 +37,7 @@ public class CommentManagerServiceImpl implements ICommentManagerService {
 		sql.append(" left join ns_goods_category t2 on t1.category=t2.id ");
 		sql.append(" left join ns_goods_category t3 on t1.kind=t3.id ");
 		sql.append(" left join ns_goods_category t4 on t1.brand=t4.id ");
-		sql.append(" where 1=1 ");
+		sql.append(" where t.flag = 1 ");
 		List params = new ArrayList();
 		if(pageBean.getQueryParams() != null && !pageBean.getQueryParams().isEmpty()) {
 			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("goodsid"))) {

@@ -1,4 +1,4 @@
-<!-- <?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
@@ -8,12 +8,11 @@
             <column name="id" />
             <generator class="native" />
         </id>
+        <property name="eventsId" type="java.lang.Long">
+            <column name="events_id" />
+        </property>
         <property name="goodsId" type="java.lang.Long">
             <column name="goods_id" />
         </property>
-        <composite-id name="uionPKID" class="com.seed.lee.model.PersonUionPKID"> 
-            <key-property name="secondName" /> 
-            <key-property name="firstName" /> 
-        </composite-id> 
     </class>
-</hibernate-mapping> -->
+</hibernate-mapping>

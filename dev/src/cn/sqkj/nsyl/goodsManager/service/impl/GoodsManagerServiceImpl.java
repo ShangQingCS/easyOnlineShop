@@ -139,7 +139,6 @@ public class GoodsManagerServiceImpl implements IGoodsManagerService {
 			goodsCategoryVO.setCreateTime(DateUtils.getDate());
 			goodsCategoryVO.setUpdateTime(DateUtils.getDate());
 			goodsCategoryVO.setFlag(SysDict.FLAG_ACT);
-			goodsCategoryVO.setIsuse(SysDict.ISUSE_NO);
 			Long id = (Long) db.insert(goodsCategoryVO);
 			goodsCategoryVO.setId(id);
 		} else {

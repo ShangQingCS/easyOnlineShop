@@ -1,12 +1,13 @@
 package cn.sqkj.nsyl.eventsManager.pojo;
 
-public class NsEventsGoods implements java.io.Serializable {
+public class NsEventsGoodsVO implements java.io.Serializable {
 
 	
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private Long eventsId;
 	private Long goodsId;
+	private String gname;
 	
 	public Long getId() {
 		return id;
@@ -25,6 +26,12 @@ public class NsEventsGoods implements java.io.Serializable {
 	}
 	public void setGoodsId(Long goodsId) {
 		this.goodsId = goodsId;
+	}
+	public String getGname() {
+		return gname;
+	}
+	public void setGname(String gname) {
+		this.gname = gname;
 	}
 
 }

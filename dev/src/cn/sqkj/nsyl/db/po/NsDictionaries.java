@@ -14,7 +14,7 @@ public class NsDictionaries implements java.io.Serializable {
 	private String remark;
 	private String isuse;
 	private String isedit;
-	private Integer order;
+	private Integer sort;
 
 	public NsDictionaries() {
 	}
@@ -75,12 +75,12 @@ public class NsDictionaries implements java.io.Serializable {
 		this.isedit = isedit;
 	}
 
-	public Integer getOrder() {
-		return order;
+	public Integer getSort() {
+		return sort;
 	}
 
-	public void setOrder(Integer order) {
-		this.order = order;
+	public void setSort(Integer sort) {
+		this.sort = sort;
 	}
 
 	public String getIsuse() {

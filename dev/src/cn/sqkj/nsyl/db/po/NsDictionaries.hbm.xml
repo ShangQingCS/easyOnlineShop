@@ -17,10 +17,10 @@
         <property name="name" type="java.lang.String">
             <column name="name" length="100" />
         </property>
-        <property name="parentcode" type="java.lang.Long">
+        <property name="parentcode" type="java.lang.String">
             <column name="parentcode" />
         </property>
-        <property name="remark" type="java.lang.Long">
+        <property name="remark" type="java.lang.String">
             <column name="remark" />
         </property>
         <property name="isuse" type="java.lang.String">
@@ -29,8 +29,8 @@
         <property name="isedit" type="java.lang.String">
             <column name="isedit" length="1" />
         </property>
-        <property name="order" type="java.lang.Integer">
-            <column name="order" length="11" />
+        <property name="sort" type="java.lang.Integer">
+            <column name="sort" length="11" />
         </property>
     </class>
 </hibernate-mapping>

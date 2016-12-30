@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="cn.sqkj.nsyl.userManager.pojo.NsUser" table="ns_user">
+        <id name="id" type="java.lang.Long">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        <property name="userid" type="java.lang.String">
+            <column name="userid" length="255" />
+        </property>
+        <property name="username" type="java.lang.String">
+            <column name="username" length="50" />
+        </property>
+        <property name="nickname" type="java.lang.String">
+            <column name="nickname" length="50" />
+        </property>
+        <property name="login_pwd" type="java.lang.String">
+            <column name="login_pwd" length="255"  />
+        </property>
+        <property name="pay_pwd" type="java.lang.String">
+            <column name="pay_pwd" length="255" />
+        </property>
+        <property name="idcard" type="java.lang.String">
+            <column name="idcard" length="50" />
+        </property>
+        <property name="name" type="java.lang.String">
+            <column name="name" length="255" />
+        </property>
+        <property name="valid_idcard" type="java.util.Date">
+            <column name="valid_idcard"  />
+        </property>
+        <property name="create_time" type="java.util.Date">
+            <column name="create_time"  />
+        </property>
+        <property name="modify_date" type="java.util.Date">
+            <column name="modify_date"  />
+        </property>
+        <property name="flag" type="java.lang.String">
+            <column name="flag" length="1" />
+        </property>
+        <property name="status" type="java.lang.String">
+            <column name="status" length="1" />
+        </property>
+        <property name="phone" type="java.lang.String">
+            <column name="phone" length="18" />
+        </property>
+        
+    </class>
+</hibernate-mapping>

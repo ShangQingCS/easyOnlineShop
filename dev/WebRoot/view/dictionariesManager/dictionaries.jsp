@@ -56,7 +56,7 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
 					$("#isuse").val(json.nd.isuse);
 					$("#isedit").val(json.nd.isedit);
 					$("#sort").val(json.nd.sort);
-					$("#dictionaries_add_window").window({title: "查看和编辑活动"});
+					$("#dictionaries_add_window").window({title: "查看和编辑基础数据"});
 					$("#dictionaries_add_window").window("open");
 				},	
 				error: function(e) {alert("查询异常");}

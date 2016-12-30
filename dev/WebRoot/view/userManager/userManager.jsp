@@ -22,6 +22,7 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
 		var queryUserManager = function() {
 			var data = formGet("from_query");
 			$("#tab_list").datagrid({"queryParams":data});
+			$("#tab_list").datagrid("hideColumn","id");//隐藏id
 			$.ajax({
 				url: "${basePath }/view/userManager/userManager!queryNsUser.action",
 				cache: false,
@@ -70,6 +71,7 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
 				if(r){
 					$("#flagID").val(id);
 					$("#userReson_window").window({title: "冻结原由"});
+					$("#reason").val("");
 					$("#userReson_window").window("open");
 				}
 			});
@@ -128,15 +130,16 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
 		var invalidUserflag = function(id,name) {
 			window.confirm("提示","设："+name+"为注销?",function(r){
 				if(r){
-				
 					$("#userReson1_window").window({title: "注销原由"});
 					$("#userReson1_window").window("open");	
+					$("#reason1").val("");
 					$("#statusID").val(id);		
 				}
 			});
 		}
 		
 		var operateStatus = function() {
+			 	
 			var reason1 = $.trim($("#reason1").val());
 			if(reason1==""){
 				alert("必须填写注销原由！");
@@ -211,6 +214,9 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
 							<option value = "1">非注销</option>
 						</select>
 	  				</td>
+	  				
+	  				</tr>
+	  				<tr>
 	  				<td align="left">
 	  					<a href="#" class="easyui-linkbutton" onclick="queryUserManager(); return false;">查询</a>
 				 		<a href="#" class="easyui-linkbutton" onclick="winReload();">刷新</a>

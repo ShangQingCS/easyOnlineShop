@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+
+	<!-- 基础数据维护struts配置文件 -->	
+	<package name="userManager" extends="json-default" namespace="/view/userManager">
+		<action name="userManager" class="cn.sqkj.nsyl.userManager.action.UserManagerAction">
+			<result type="json"><param name="ignoreHierarchy">false</param></result><!-- 分配列表  -->
+		</action>
+	</package>
+</struts>    

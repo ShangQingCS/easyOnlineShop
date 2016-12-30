@@ -17,4 +17,12 @@ public class SysDict {
 	//有效，0，无效，1
 	public static final String ISUSE_YES = "0";
 	public static final String ISUSE_NO = "1";
+	
+	//冻结，0， 非冻结，1   默认1非冻结
+	public static final String STATUS_YES = "0";
+	public static final String STATUS_NO = "1";
+	
+	//注销，0， 非注销，1   默认1非注销
+	public static final String FLAG_YES = "0";
+	public static final String FLAG_NO = "1";
 }

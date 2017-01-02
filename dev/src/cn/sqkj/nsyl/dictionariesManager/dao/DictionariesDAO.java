@@ -9,7 +9,7 @@ import framework.bean.PageBean;
 import framework.db.DBUtil;
 import framework.db.PageDAO;
 
-@Repository("baseDataDAO")
+@Repository("dictionariesDAO")
 public class DictionariesDAO extends PageDAO {
 	/**
 	 * 获取数据字典总记录数

@@ -27,8 +27,8 @@ import framework.db.DBUtil;
 @Service("baseDataManagerService")
 public class DictionariesManagerServiceImpl implements IDictionariesManagerService{
 	
-	@Resource(name="baseDataDAO")
-	private DictionariesDAO baseDataDAO;
+	@Resource(name="dictionariesDAO")
+	private DictionariesDAO dictionariesDAO;
 	
 	public PageBean queryBaseDataList(PageBean pageBean) throws Exception {
 		StringBuffer sql = new StringBuffer(" select t.id,t.type,t.code,t.name,t.parentcode,t.remark,t.isuse,t.isedit,t.sort from ns_dictionaries t  ");
@@ -40,7 +40,6 @@ public class DictionariesManagerServiceImpl implements IDictionariesManagerServi
 				sql.append(" and t.type like ? ");
 				params.add("%"+pageBean.getQueryParams().get("type")+"%");
 			}
-			
 			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("name"))) {
 				sql.append(" and t.name like ? ");
 				params.add("%"+pageBean.getQueryParams().get("name")+"%");
@@ -51,9 +50,9 @@ public class DictionariesManagerServiceImpl implements IDictionariesManagerServi
 			}
 		}
 		//查询总计路数
-		int total = baseDataDAO.findBaseDataCount(sql.toString(), params);
+		int total = dictionariesDAO.findBaseDataCount(sql.toString(), params);
 		//查询数据集
-		List<NsDictionaries> list = baseDataDAO.findDictionariesPage(sql.toString(), params, pageBean);
+		List<NsDictionaries> list = dictionariesDAO.findDictionariesPage(sql.toString(), params, pageBean);
 		pageBean.setTotal(total);
 		pageBean.setPageData(list);
 		return pageBean;

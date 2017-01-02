@@ -32,6 +32,7 @@ public class UserManagerAction  extends PageAction {
 		try {
 			//传入分页信息查询数据库
 			PageBean resultData = this.userManagerService.queryUserList(this.getPageBean());
+			System.out.println(resultData.getPageData().get(0));
 			//设置页面要回显的结果集
 			this.setTotal(resultData.getTotal());
 			this.setDataRows(resultData.getPageData());
@@ -46,48 +47,29 @@ public class UserManagerAction  extends PageAction {
 		return Action.SUCCESS;
 	}
 	
+	public String queryUserById(){
+		try {
+			String id = RequestHelper.getParameter("id");
+			this.nsUser = this.userManagerService.queryUserById(Long.valueOf(id));
+			System.out.println(nsUser.getTrue_name());
+			messages = "success";
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("查询用户失败！"+this.nsUser.getId(), e);
+		}
+		return Action.SUCCESS;
+	}
+	
 	/**
-	 * 修改用户的status或者flag
+	 * 修改用户信息
 	 * @return
 	 */
 	public String updateNsUserFlagorStatus(){
 		try {
-			DBUtil db = DBUtil.getDBUtilByRequest();
-			String id = RequestHelper.getParameter("id");
-			String tag = RequestHelper.getParameter("tag");
-			String reason = RequestHelper.getParameter("reason");
-			NsUser nu = this.userManagerService.queryUserById(Long.parseLong(id));
-			//打印审计日志
-			if(tag.equals("1")){
-				System.out.println("设为冻结");
-				nu.setStatus(SysDict.STATUS_YES);
-				db.update(nu);
-				TAuditLog message = new TAuditLog(user.getUId(), "设为冻结成功！");
-				TAuditLog message2 = new TAuditLog(user.getUId(), "冻结原由:"+reason);
-				logger.info(message);
-				logger.info(message2);
-			}else if(tag.equals("2")){
-				System.out.println("设为非冻结");
-				nu.setStatus(SysDict.STATUS_NO);
-				db.update(nu);
-				TAuditLog message = new TAuditLog(user.getUId(), "设为非冻结成功！");
-				logger.info(message);
-			}else if(tag.equals("3")){
-				System.out.println("设为注销");
-				nu.setFlag(SysDict.FLAG_YES);
-				db.update(nu);
-				TAuditLog message = new TAuditLog(user.getUId(), "设为注销成功！");
-				TAuditLog message2 = new TAuditLog(user.getUId(), "注销原由:"+reason);
-				logger.info(message);
-				logger.info(message2);
-			}else if(tag.equals("4")){
-				System.out.println("设为非注销");
-				nu.setFlag(SysDict.FLAG_NO);
-				db.update(nu);
-				TAuditLog message = new TAuditLog(user.getUId(), "设为非注销成功！");
-				logger.info(message);
+			NsUser nu = this.userManagerService.updateNsUser(this.nsUser);
+			if(nu!=null){
+				messages = "success";
 			}
-			messages = "success";
 		}catch (Exception e) {
 			log.error("操作失败！", e);
 			TAuditLog message = new TAuditLog(user.getUId(), "操作失败！");

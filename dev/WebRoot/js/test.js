@@ -12,8 +12,6 @@
 把需要进行预览的IMG标签外 套一个DIV 然后给上传控件ID给予uploadPreview事件
 $("#up").uploadPreview({ Img: "ImgPr", Width: 120, Height: 120, ImgType: ["gif", "jpeg", "jpg", "bmp", "png"], Callback: function () { }});
 */
-var baseimgurl="http://shoxgov.iask.in:17545/dev/"
-
 jQuery.fn.extend({
     uploadPreview: function (opts) {
         var _self = this,
@@ -45,7 +43,7 @@ jQuery.fn.extend({
                 }
                 if ($.browser.msie) {
                     try {
-                        $("#" + opts.Img).attr('src', baseimgurl+_self.getObjectURL(this.files[0]))
+                        $("#" + opts.Img).attr('src', _self.getObjectURL(this.files[0]))
                     } catch (e) {
                         var src = "";
                         var obj = $("#" + opts.Img);
@@ -67,7 +65,7 @@ jQuery.fn.extend({
                         div.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = src
                     }
                 } else {
-                    $("#" + opts.Img).attr('src', baseimgurl+_self.getObjectURL(this.files[0]))
+                    $("#" + opts.Img).attr('src', _self.getObjectURL(this.files[0]))
                 }
                 opts.Callback()
             }

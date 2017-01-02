@@ -120,64 +120,12 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
 			  					</select> 
 			  				</td>
 			  			</tr>
-			  			<td align="right">活动商品:</td>
-			  				<td colspan="2" id="events_goods">
-			  					
-			  				</td>
-			  				<td>
-			  					<input type="hidden" name="events_goods_list" id="events_goods_list" />
-			  					<input type="hidden" name="events_id" id="events_id" value=""/>
-			  				</td>
-			  			<tr>
-			  				<td align="right">
-			  					
-			  				</td>
-			  				<td colspan="3">
-			  					<a href="#" class="easyui-linkbutton" onclick="showGoodsDialog(); return false;" id="chooseGoodsBtn">选择商品</a>
-			  				</td>
-			  			</tr>
 		  			</table>
 					<div align="center" class="tablestyle01" style="height:50px; padding-top: 3px; ">
 		 				<a href="#" class="easyui-linkbutton" onclick="eventsSave(); return false;">保存</a>
 		 				<a href="#" class="easyui-linkbutton" onclick="$('#events_add_window').window('close'); return false;">关闭</a>
 					</div>
 				</form>
-			</div>
-			
-			<!-- 活动商品选择 -->
-			<div title="商品选择" id="goods_select_window" modal="true" draggable="false" class="easyui-dialog" 
-				style="width: 800px; height: 500px; background-color:#EFEFEF;"  buttons="#goods_select_buts"
-				resizable="false" collapsible="false" maximizable="false" minimizable="false" closed="true">
-				<table id="form_goods_query"  dataType="text" class="tablestyle01" style="width:100%">
-		  			<tr>
-		  				<td align="right" style="width: 60">商品名称:</td>
-		  				<td><input name="queryParams.gname" /></td>
-		  			</tr>
-		  		</table>
-				<table id="goods_select_table" rownumbers="true" region="center" class="easyui-datagrid" fitColumns="true"
-					style="width:auto;height:auto" title="" pagination="true" singleSelect="false">
-					<thead>
-						<tr>
-							<!-- <th field="id" width="5%">商品编号</th> -->
-							<th field="gname" width="49%">商品名称</th>
-							<th field="categoryname" width="10%">类别</th>
-							<th field="kindname" width="10%">类型</th>
-							<th field="brandname" width="10%">品牌</th>
-							<!-- <th field="price" width="5%">价格</th> -->
-							<th field="isuse" width="10%" formatter='formatterIsuse'>状态</th>
-							<th field="cl" width="10%" formatter='formatterActionGoods'>操作</th>
-						</tr>
-					</thead>
-				</table>
-				
-				<div id="goods_select_buts" align="center" style="background-color:#EFEFEF;">
-					<table width="100%" align="center" border="0" cellpadding="0" cellspacing="0">
-						<tr><td align="center">
-	 						<a href="#" class="easyui-linkbutton" onclick="queryGoods(); return false;">查询</a>
-			 				<a href="#" class="easyui-linkbutton" onclick="$('#goods_select_window').dialog('close'); return false;">关闭</a>
-						</td></tr>
-					</table>
-				</div>
 			</div>
 		</div>
   	</body>
@@ -246,71 +194,9 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
 			
 			return true;
 		}
-		//选择产品
-		var showGoodsDialog=function(){
-			$('#goods_select_table').datagrid({   
-				url:'${basePath }/view/goodsManager/goodsManager!queryGoods.action'
-        	});
-        	$('#goods_select_window').dialog('open');
-		}
-		//产品状态
-		var formatterIsuse = function(value,rec) {
-			if(value=="0") {
-				return "<span style='color: green;'>有效</span>";
-			} else {
-				return "<span style='color: red;'>无效</span>";
-			}
-		}
-		//选择产品操作
-		var formatterActionGoods = function(value,rec) {
-			var formatterStr = "<a href='#' onclick='selectGoods(\""+rec.id+"\",\""+rec.gname+"\"); return false;'>选择</a>&nbsp;";
-			return formatterStr;
-		}
-		//产品添加方法
-		var selectGoods = function(id,gname) {
-			setImgLind(id,gname);
-			$('#goods_select_window').dialog('close');
-		} 
-		//产品添加
-		var setImgLind = function(id,gname) {
-			 var idlist=$("#events_goods_list").val();
-			 var namelist=$("#events_goods").html();
-			 
-			 var ishave=true;
-			 if(idlist!=""){
-			 	var arraygoods=idlist.split(",");
-			 	for(var i = 0;i<arraygoods.length;i++){
-					var nowgoods=arraygoods[i];	
-					if(nowgoods == id){
-						ishave=false;
-					}
-				}
-			 }
-			 if(ishave){
-			 	idlist=id+","+idlist;
-				namelist="<div class='"+id+"'><em>"+gname+"</em>&nbsp;&nbsp;&nbsp;&nbsp;<a href='#' onclick='removeChoose(\""+id+"\"); return false;' >x</a><br></div>"+namelist;	
-			 }
-			 $("#events_goods_list").val(idlist);
-			 
-			 $("#events_goods").html(namelist);
-		}
 		
 		var clearForm = function() {
 			$('#ff').form('clear');
-		}
-		
-		var removeChoose = function(id){
-			$("."+id).remove();
-			var goodslist=$("#events_goods_list").val();
-			var arraygoods=goodslist.split(",");
-			var newgoodslist="";
-			for(var i = 0;i<arraygoods.length;i++){
-				var nowgoods=arraygoods[i];	
-				if(nowgoods != id){
-					newgoodslist=nowgoods+","+newgoodslist;
-				}
-			}
-			$("#events_goods_list").val(newgoodslist);
 		}
 		
 		var showEventsDetailRow = function() {
@@ -338,20 +224,6 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
 					$("#endTime").datebox("setValue", formatterDate(json.eve.endTime,null,null));
 					$("#minpicture").validatebox({required:false});
 					$("#picture").validatebox({required:false});
-					$("#events_id").val(id);
-					var idlist="";
-					var namelist="";
-					var objlist=json.evegslist;
-					if(objlist){
-						for(var i=0;i<objlist.length;i++){
-							var eventsgoods=objlist[i];
-							idlist=eventsgoods.goodsId+","+idlist;
-							namelist="<div class='"+eventsgoods.goodsId+"'><em>"+eventsgoods.gname+"</em>&nbsp;&nbsp;&nbsp;&nbsp;<a href='#' onclick='removeChoose(\""+eventsgoods.goodsId+"\"); return false;' >x</a><br></div>"+namelist;	
-						}
-					}
-					$("#events_goods_list").val(idlist);
-					$("#events_goods").html(namelist);
-					
 					$("#events_add_window").window({title: "查看和编辑活动"});
 					$("#events_add_window").window("open");
 				},	

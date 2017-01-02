@@ -26,6 +26,7 @@ import com.opensymphony.xwork2.Action;
 
 import framework.action.PageAction;
 import framework.config.Config;
+import framework.config.SysDict;
 import framework.db.DBUtil;
 import framework.db.pojo.TAuditLog;
 import framework.db.pojo.TXtUser;
@@ -61,6 +62,7 @@ public class GoodsCagegoryManagerAction extends PageAction {
 		DBUtil db = DBUtil.getDBUtilByRequest();
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("level", 1);
+		params.put("flag", SysDict.FLAG_ACT);//有效记录
 		this.categorys = db.queryByPojo(NsGoodsCategory.class, params);
 		return Action.SUCCESS;
 	}

@@ -13,9 +13,9 @@
 	<!-- <property name="connection.url">jdbc:mysql://localhost:3306/dev?useUnicode=true&amp;characterEncoding=GBK&amp;useOldAliasMetadataBehavior=true</property>
 	<property name="connection.username">root</property> 
 	<property name="connection.password"></property> -->
-	<property name="connection.url">jdbc:mysql://192.168.1.32:3306/nssc?useUnicode=true&amp;characterEncoding=GBK&amp;useOldAliasMetadataBehavior=true</property>
-	<property name="connection.username">bxdz</property> 
-	<property name="connection.password">bxdz123</property>
+	<property name="connection.url">jdbc:mysql://192.168.0.111:3306/nssc?useOldAliasMetadataBehavior=true</property>
+	<property name="connection.username">root</property> 
+	<property name="connection.password">ltx123456</property>
 	<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
 	<property name="myeclipse.connection.profile">JDBC</property>
 	<property name="connection.pool_size">30</property>
@@ -48,6 +48,9 @@
 	<mapping resource="framework/db/pojo/TXtMessage.hbm.xml" />
 	<mapping resource="framework/db/pojo/TFormTableValue.hbm.xml" />
 	<mapping resource="framework/db/pojo/TPbDatasource.hbm.xml" />
+	
+	
+	
 	<mapping resource="cn/sqkj/nsyl/goodsManager/pojo/NsGoods.hbm.xml" />
 	<mapping resource="cn/sqkj/nsyl/goodsManager/pojo/NsGoodsCategory.hbm.xml" />
 	<mapping resource="cn/sqkj/nsyl/commentManager/pojo/NsComment.hbm.xml" />
@@ -55,10 +58,17 @@
 	<mapping resource="cn/sqkj/nsyl/orderManager/pojo/NsOrderDetail.hbm.xml" />
 	<mapping resource="cn/sqkj/nsyl/advertiseManager/pojo/NsAdvertise.hbm.xml" />
 	<mapping resource="cn/sqkj/nsyl/eventsManager/pojo/NsEventsinfo.hbm.xml" />
-	<mapping resource="cn/sqkj/nsyl/eventsManager/pojo/NsEventsGoods.hbm.xml" />
+	
+	<mapping resource="cn/sqkj/nsyl/userManager/pojo/NsUser.hbm.xml" />
+	
 	<mapping resource="cn/sqkj/nsyl/db/po/NsDictionaries.hbm.xml" />
+	
+	
 	<!-- <mapping resource="cn/sqkj/nsyl/db/po/NsCart.hbm.xml" />
 	<mapping resource="cn/sqkj/nsyl/db/po/NsAddress.hbm.xml" /> -->
 	<mapping resource="framework/db/pojo/TAuditLog.hbm.xml" />
+	
+	
+	
 </session-factory>
 </hibernate-configuration>

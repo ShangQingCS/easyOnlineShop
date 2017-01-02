@@ -8,44 +8,75 @@
             <column name="id" />
             <generator class="native" />
         </id>
-        <property name="userid" type="java.lang.String">
-            <column name="userid" length="255" />
+        <property name="user_name" type="java.lang.String">
+            <column name="user_name" length="50" />
         </property>
-        <property name="username" type="java.lang.String">
-            <column name="username" length="50" />
+        <property name="nick_name" type="java.lang.String">
+            <column name="nick_name" length="50" />
         </property>
-        <property name="nickname" type="java.lang.String">
-            <column name="nickname" length="50" />
+        <property name="true_name" type="java.lang.String">
+            <column name="true_name" length="50" />
         </property>
+        
         <property name="login_pwd" type="java.lang.String">
-            <column name="login_pwd" length="255"  />
+            <column name="login_pwd" length="50"  />
         </property>
         <property name="pay_pwd" type="java.lang.String">
-            <column name="pay_pwd" length="255" />
+            <column name="pay_pwd" length="50" />
         </property>
-        <property name="idcard" type="java.lang.String">
-            <column name="idcard" length="50" />
+        <property name="user_grade" type="java.lang.Long">
+            <column name="user_grade" />
         </property>
-        <property name="name" type="java.lang.String">
-            <column name="name" length="255" />
+        <property name="user_phone" type="java.lang.String">
+            <column name="user_phone" length="15" />
         </property>
-        <property name="valid_idcard" type="java.util.Date">
-            <column name="valid_idcard"  />
+        <property name="user_mail" type="java.lang.String">
+            <column name="user_mail" length="15" />
+        </property>
+        <property name="user_sex" type="java.lang.String">
+            <column name="user_sex" length="1" />
+        </property>
+        <property name="identity_card" type="java.lang.String">
+            <column name="identity_card" length="50" />
+        </property>
+        <property name="identity_card_validity" type="java.util.Date">
+            <column name="identity_card_validity"  />
+        </property>
+        <property name="identity_issuing" type="java.lang.String">
+            <column name="identity_issuing" length="255" />
+        </property>
+        <property name="identity_status" type="java.lang.String">
+            <column name="identity_status" length="1"  />
+        </property>
+        <property name="user_ky_balance" type="java.lang.Double">
+            <column name="user_ky_balance" precision="2" />
+        </property>
+        <property name="user_fx_balance" type="java.lang.Double">
+            <column name="user_fx_balance" precision="2" />
+        </property>
+        <property name="user_dj_balance" type="java.lang.Double">
+            <column name="user_dj_balance" precision="2" />
+        </property>
+        <property name="tixian_status" type="java.lang.String">
+            <column name="tixian_status" length="1" />
+        </property>
+        <property name="user_jf_balance" type="java.lang.Double">
+            <column name="user_jf_balance" precision="2"  />
         </property>
         <property name="create_time" type="java.util.Date">
             <column name="create_time"  />
         </property>
-        <property name="modify_date" type="java.util.Date">
-            <column name="modify_date"  />
+        <property name="option_time" type="java.util.Date">
+            <column name="option_time"  />
         </property>
-        <property name="flag" type="java.lang.String">
-            <column name="flag" length="1" />
+        <property name="user_status" type="java.lang.String">
+            <column name="user_status" length="1" />
         </property>
-        <property name="status" type="java.lang.String">
-            <column name="status" length="1" />
+        <property name="user_pid" type="java.lang.Long">
+            <column name="user_pid" length="20" />
         </property>
-        <property name="phone" type="java.lang.String">
-            <column name="phone" length="18" />
+        <property name="option_remark" type="java.lang.String">
+            <column name="option_remark" length="2000" />
         </property>
         
     </class>

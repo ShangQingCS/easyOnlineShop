@@ -24,11 +24,9 @@ public interface IUserManagerService {
 	
 	
 	/**
-	 * 修改用户状态
-	 * @param id
-	 * @param tag
+	 * 修改用户信息
 	 * @return
 	 * @throws Exception
 	 */
-	public NsUser updateUserById(Long id,String tag) throws Exception;
+	public NsUser updateNsUser(NsUser nsUser) throws Exception;
 }

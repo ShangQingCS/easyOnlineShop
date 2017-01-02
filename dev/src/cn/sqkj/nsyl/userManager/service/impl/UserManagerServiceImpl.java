@@ -8,7 +8,6 @@ import javax.annotation.Resource;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
-import cn.sqkj.nsyl.db.po.NsDictionaries;
 import cn.sqkj.nsyl.userManager.dao.UserManagerDAO;
 import cn.sqkj.nsyl.userManager.pojo.NsUser;
 import cn.sqkj.nsyl.userManager.service.IUserManagerService;
@@ -23,35 +22,37 @@ public class UserManagerServiceImpl implements IUserManagerService{
 	private UserManagerDAO userManagerDAO;
 
 	public PageBean queryUserList(PageBean pageBean) throws Exception {
-		StringBuffer sql = new StringBuffer("select t.id,t.userid,t.nickname,t.username,t.`name`,t.idcard,t.flag,t.`status`,t.phone from ns_user t");
-		sql.append(" where 1=1 ");
+		//StringBuffer sql = new StringBuffer("select t.id,t.user_name, t.true_name, t.user_phone,t.identity_card,t.create_time,");
+		//sql.append(" t.user_ky_balance,t.user_fx_balance,t.user_jf_balance, t.user_status from ns_user t where 1=1 ");
+		StringBuffer sql = new StringBuffer("select t.id,t.user_name,t.nick_name,t.user_sex,t.identity_card_validity,t.login_pwd,");
+		sql.append(" t.true_name, t.user_phone,t.identity_card,t.create_time,t.option_remark,t.user_ky_balance,t.user_fx_balance,t.user_mail,");
+		sql.append(" t.user_jf_balance, t.user_status,t.identity_issuing,t.identity_status from ns_user t where 1=1 ");
 		List params = new ArrayList();
 		//params.add(SysDict.ISUSE_YES);//数据有效
 		if(pageBean.getQueryParams() != null && !pageBean.getQueryParams().isEmpty()) {
-			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("userid"))) {
-				sql.append(" and t.userid like ? ");
-				params.add("%"+pageBean.getQueryParams().get("userid")+"%");
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("id"))) {
+				sql.append(" and t.id = ? ");
+				params.add(pageBean.getQueryParams().get("id"));
 			}
-			
-			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("nickname"))) {
-				sql.append(" and t.nickname like ? ");
-				params.add("%"+pageBean.getQueryParams().get("nickname")+"%");
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("user_name"))) {
+				sql.append(" and t.user_name like ? ");
+				params.add("%"+pageBean.getQueryParams().get("user_name")+"%");
 			}
-			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("phone"))) {
-				sql.append(" and t.phone like ? ");
-				params.add("%"+pageBean.getQueryParams().get("phone")+"%");
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("true_name"))) {
+				sql.append(" and t.true_name like ? ");
+				params.add("%"+pageBean.getQueryParams().get("true_name")+"%");
 			}
-			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("name"))) {
-				sql.append(" and t.name like ? ");
-				params.add("%"+pageBean.getQueryParams().get("name")+"%");
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("user_phone"))) {
+				sql.append(" and t.user_phone like ? ");
+				params.add("%"+pageBean.getQueryParams().get("user_phone")+"%");
 			}
-			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("flag"))) {
-				sql.append(" and t.flag like ? ");
-				params.add("%"+pageBean.getQueryParams().get("flag")+"%");
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("identity_card"))) {
+				sql.append(" and t.identity_card like ? ");
+				params.add("%"+pageBean.getQueryParams().get("identity_card")+"%");
 			}
-			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("status"))) {
-				sql.append(" and t.status like ? ");
-				params.add("%"+pageBean.getQueryParams().get("status")+"%");
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("user_status"))) {
+				sql.append(" and t.user_status like ? ");
+				params.add("%"+pageBean.getQueryParams().get("user_status")+"%");
 			}
 		}
 		//查询总计路数
@@ -72,10 +73,12 @@ public class UserManagerServiceImpl implements IUserManagerService{
 		return null;
 	}
 
-	public NsUser updateUserById(Long id, String tag) throws Exception {
+	public NsUser updateNsUser(NsUser nsUser) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 	
 	
 

@@ -28,6 +28,7 @@ public class NsGoodsDAO extends PageDAO {
 	
 	@SuppressWarnings("unchecked")
 	public List<NsGoods> findGoodsPage(String sql,List params, PageBean pageBean) {
+		
 		List<NsGoods> pageData = this.query(sql, params, pageBean);
 		return pageData;
 	}

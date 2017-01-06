@@ -66,6 +66,7 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
 							$("#trueName").val(json.nsUser.true_name);
 							$("#userPhone").val(json.nsUser.user_phone);
 							$("#userMail").val(json.nsUser.user_mail);
+							$("#user_pid").val(json.nsUser.user_pid);
 							if(json.nsUser.user_sex=="0"){//女
 								$("#radio0").attr("checked","checked");
 							}else if(json.nsUser.user_sex=="1"){//男
@@ -92,7 +93,6 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
 		
 		//保存用户信息
 		var operateFlag = function() {
-			
 			$("#ff").form("submit", {
 				url: "${basePath }/view/userManager/userManager!updateNsUserFlagorStatus.action",  
 				onSubmit: function() {
@@ -101,7 +101,7 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
 	      		success:function(data) {
 	      			alert("操作成功！");
 					queryUserManager();//初始化用户信息列表
-					$("#userReson_window").window("close");
+					$("#userinfo_window").window("close");
 	     		}
 	 		});  
 		}
@@ -117,6 +117,15 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
 		
 		var formatterDeliveryTime = function(val, data, index){
 			return val==null?"":val.replace("T"," ");
+		}
+		
+		
+		var resetPassword = function (){
+			window.confirm("提示","确定重置密码为：12345678?",function(r){
+				if(r){
+					$("#loginPwd").val("12345678");
+				}
+			});
 		}
 		
 		
@@ -182,65 +191,67 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
 				<form id="ff" method="post" enctype="multipart/form-data">
 					<table id="userinfo_table" border="0" dataType="text" class="tablestyle01" style="width:100%">
 			  			<tr>
+			  				<input type="hidden" id="id" name="nsUser.id" />
+			  				<input type="hidden" id="user_pid" name="nsUser.user_pid" />
 			  				<td align="right" width="100">用户名:</td>
 			  				<td >
-			  					<input type="text" id="userName" name="nsUser.userName" />
+			  					<input type="text" id="userName" name="nsUser.user_name" />
 			  				</td>
 			  			</tr>
 			  			<tr>
 			  				<td align="right" width="100">用户昵称:</td>
 			  				<td >
-			  					<input type="text" id="nickName" name="nsUser.nickName" />
+			  					<input type="text" id="nickName" name="nsUser.nick_name" />
 			  				</td>
 			  			</tr>
 			  			<tr>
 			  				<td align="right" width="100">真实姓名:</td>
 			  				<td >
-			  					<input type="text" id="trueName" name="nsUser.trueName" />
+			  					<input type="text" id="trueName" name="nsUser.true_name" />
 			  				</td>
 			  			</tr>
 			  			
 			  			<tr>
 			  				<td align="right" width="100">手机号:</td>
 			  				<td >
-			  					<input type="text" id="userPhone" name="nsUser.userPhone" />
+			  					<input type="text" id="userPhone" name="nsUser.user_phone" />
 			  				</td>
 			  			</tr>
 			  			<tr>
 			  				<td align="right" width="100">邮箱:</td>
 			  				<td >
-			  					<input type="text" id="userMail" name="nsUser.userMail" />
+			  					<input type="text" id="userMail" name="nsUser.user_mail" />
 			  				</td>
 			  			</tr>
 			  			<tr>
 			  				<td align="right" width="100">性       别:</td>
 			  				<td>
-			  					男<input type="radio" id="radio1" name="nsUser.userSex" value="1"> 女<input type="radio" id="radio0" name="nsUser.userSex" value="0"> 
-			  					未知<input type="radio" id="radio2" name="nsUser.userSex" value="2"> 
+			  					男<input type="radio" id="radio1" name="nsUser.user_sex" value="1"> 女<input type="radio" id="radio0" name="nsUser.user_sex" value="0"> 
+			  					未知<input type="radio" id="radio2" name="nsUser.user_sex" value="2"> 
 			  				</td>
 			  			</tr>
 			  			<tr>
 			  				<td align="right" width="100">身份证号:</td>
 			  				<td >
-			  					<input type="text" id="identityCard" name="nsUser.loginPwd"/>
+			  					<input type="text" id="identityCard" name="nsUser.identity_card"/>
 			  				</td>
 			  			</tr>
 			  			<tr>
 			  				<td align="right" width="100">身份证有效期:</td>
 			  				<td >
-			  					<input id="identityCardValidity" name="nsUser.loginPwd" class="easyui-datebox" editable="false" style="width: 100px;"/>
+			  					<input id="identityCardValidity" name="nsUser.identity_card_validity" class="easyui-datebox" editable="false" style="width: 100px;"/>
 			  				</td>
 			  			</tr>
 			  			<tr>
 			  				<td align="right" width="100">发证机关:</td>
 			  				<td >
-			  					<input type="text" id="identityIssuing" name="nsUser.identityIssuing"/>
+			  					<input type="text" id="identityIssuing" name="nsUser.identity_issuing"/>
 			  				</td>
 			  			</tr>
 			  			<tr>
 			  				<td align="right" width="100">身份状态:</td>
 			  				<td >
-			  					<select name="nsUser.identityStatus" id="identityStatus">
+			  					<select name="nsUser.identity_status" id="identityStatus">
 			  						<option value="0">未认证</option>
 			  						<option value="1">申请中</option>
 			  						<option value="2">已认证</option>
@@ -250,13 +261,14 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
 			  			<tr>
 			  				<td align="right" width="100">登陆密码:</td>
 			  				<td >
-			  					<input type="password" id="loginPwd" name="nsUser.loginPwd"  />
+			  					<input type="password" id="loginPwd" name="nsUser.login_pwd"  />
+			  					<a href="#" class="easyui-linkbutton" onclick="resetPassword(); return false;">重置密码</a>
 			  				</td>
 			  			</tr>
 			  			<tr>
 			  				<td align="right" width="100">用户状态:</td>
 			  				<td >
-			  					<select name="nsUser.userStatus" id="userStatus">
+			  					<select name="nsUser.user_status" id="userStatus">
 			  						<option value="1">正常</option>
 			  						<option value="0">注销</option>
 			  						<option value="2">冻结</option>
@@ -266,7 +278,7 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
 			  			<tr>
 			  				<td align="right" width="100">操作备注:</td>
 			  				<td >
-			  					<textarea name="nsUser.optionRemark" id="optionRemark" rows="5" style="width: 100%;" class="easyui-validatebox" required="true">
+			  					<textarea name="nsUser.option_remark" id="optionRemark" rows="5" style="width: 100%;" class="easyui-validatebox" required="true">
 			  					</textarea> 
 			  				</td>
 			  			</tr>

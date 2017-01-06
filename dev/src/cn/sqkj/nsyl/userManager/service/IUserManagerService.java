@@ -22,11 +22,19 @@ public interface IUserManagerService {
 	public NsUser queryUserById(Long id) throws Exception;
 	
 	
+	/**
+	 * 查询用户列表
+	 * @param pageBean
+	 * @return
+	 * @throws Exception
+	 */
+	public NsUser queryUserListByCondition(PageBean pageBean) throws Exception;
+	
 	
 	/**
 	 * 修改用户信息
 	 * @return
 	 * @throws Exception
 	 */
-	public NsUser updateNsUser(NsUser nsUser) throws Exception;
+	public int updateNsUser(NsUser nsUser) throws Exception;
 }

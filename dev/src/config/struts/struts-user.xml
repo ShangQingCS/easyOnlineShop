@@ -7,5 +7,14 @@
 		<action name="userManager" class="cn.sqkj.nsyl.userManager.action.UserManagerAction">
 			<result type="json"><param name="ignoreHierarchy">false</param></result><!-- 分配列表  -->
 		</action>
+		
+		<action name="userGrade" class="cn.sqkj.nsyl.userManager.action.UserGradeAction">
+			<result type="json"><param name="ignoreHierarchy">false</param></result><!-- 分配列表  -->
+		</action>
+		
+		<action name="userPurse" class="cn.sqkj.nsyl.userManager.action.UserPurseAction">
+			<result type="json"><param name="ignoreHierarchy">false</param></result><!-- 分配列表  -->
+		</action>
+		
 	</package>
 </struts>    

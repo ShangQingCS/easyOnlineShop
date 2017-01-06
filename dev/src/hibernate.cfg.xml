@@ -13,9 +13,9 @@
 	<!-- <property name="connection.url">jdbc:mysql://localhost:3306/dev?useUnicode=true&amp;characterEncoding=GBK&amp;useOldAliasMetadataBehavior=true</property>
 	<property name="connection.username">root</property> 
 	<property name="connection.password"></property> -->
-	<property name="connection.url">jdbc:mysql://192.168.0.111:3306/nssc?useOldAliasMetadataBehavior=true</property>
+	<property name="connection.url">jdbc:mysql://localhost:3306/nssc?useOldAliasMetadataBehavior=true</property>
 	<property name="connection.username">root</property> 
-	<property name="connection.password">ltx123456</property>
+	<property name="connection.password"></property>
 	<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
 	<property name="myeclipse.connection.profile">JDBC</property>
 	<property name="connection.pool_size">30</property>
@@ -60,6 +60,9 @@
 	<mapping resource="cn/sqkj/nsyl/eventsManager/pojo/NsEventsinfo.hbm.xml" />
 	
 	<mapping resource="cn/sqkj/nsyl/userManager/pojo/NsUser.hbm.xml" />
+	<mapping resource="cn/sqkj/nsyl/userManager/pojo/NsUserGrade.hbm.xml" />
+	<mapping resource="cn/sqkj/nsyl/userManager/pojo/NsUserPurse.hbm.xml" />
+	
 	
 	<mapping resource="cn/sqkj/nsyl/db/po/NsDictionaries.hbm.xml" />
 	

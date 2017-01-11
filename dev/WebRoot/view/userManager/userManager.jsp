@@ -1,9 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ page import="framework.config.Config"%>
-<%
-String imgPathPrefix = Config.get("img.server.basepath");
-request.setAttribute("imgPathPrefix",imgPathPrefix);
-%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 	<head>

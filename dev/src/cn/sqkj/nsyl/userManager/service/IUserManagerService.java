@@ -14,6 +14,14 @@ public interface IUserManagerService {
 	public PageBean queryUserList(PageBean pageBean) throws Exception;
 	
 	/**
+	 * 查询用户团队列表
+	 * @param pageBean
+	 * @return
+	 * @throws Exception
+	 */
+	public PageBean queryNsUserTeamList(PageBean pageBean,String id) throws Exception;
+	
+	/**
 	 * 根据ID查询用户
 	 * @param id
 	 * @return
@@ -28,7 +36,7 @@ public interface IUserManagerService {
 	 * @return
 	 * @throws Exception
 	 */
-	public NsUser queryUserListByCondition(PageBean pageBean) throws Exception;
+	public NsUser queryUserListByCondition(String user_name,String true_name,String user_phone,String identity_card) throws Exception;
 	
 	
 	/**

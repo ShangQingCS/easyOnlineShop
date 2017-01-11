@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="cn.sqkj.nsyl.userManager.pojo.NsUserPurse" table="ns_user_purse">
+        <id name="id" type="java.lang.Long">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        <property name="trade_type" type="java.lang.Integer">
+            <column name="trade_type"  />
+        </property>
+        <property name="trade_amount" type="java.lang.Double">
+            <column name="trade_amount" precision="2" />
+        </property>
+        <property name="trade_sn" type="java.lang.String">
+            <column name="trade_sn" length="255" />
+        </property>
+        <property name="trade_state" type="java.lang.Integer">
+            <column name="trade_state"    />
+        </property>
+        <property name="option_type" type="java.lang.Integer">
+            <column name="option_type"  />
+        </property>
+        <property name="user_id" type="java.lang.Long">
+            <column name="user_id" />
+        </property>
+        <property name="user_amount" type="java.lang.Double">
+            <column name="user_amount" precision="2" />
+        </property>
+        <property name="purse_type" type="java.lang.Integer">
+            <column name="purse_type"  />
+        </property>
+        <property name="pay_account" type="java.lang.String">
+            <column name="pay_account" length="255" />
+        </property>
+        <property name="pay_open_bank" type="java.lang.String">
+            <column name="pay_open_bank" length="2000" />
+        </property>
+        <property name="purse_status" type="java.lang.Integer">
+            <column name="purse_status"  />
+        </property>
+        <property name="create_time" type="java.util.Date">
+            <column name="create_time"  />
+        </property>
+        <property name="option_time" type="java.util.Date">
+            <column name="option_time" />
+        </property>
+        <property name="option_adminid" type="java.lang.Long">
+            <column name="option_adminid"  />
+        </property>
+        <property name="option_adminname" type="java.lang.String">
+            <column name="option_adminname" length="255" />
+        </property>
+        <property name="option_remark" type="java.lang.String">
+            <column name="option_remark" length="2000" />
+        </property>
+    </class>
+</hibernate-mapping>

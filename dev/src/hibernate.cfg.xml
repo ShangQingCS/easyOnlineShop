@@ -63,6 +63,8 @@
 	<mapping resource="cn/sqkj/nsyl/userManager/pojo/NsUserGrade.hbm.xml" />
 	<mapping resource="cn/sqkj/nsyl/userManager/pojo/NsUserPurse.hbm.xml" />
 	
+	<mapping resource="cn/sqkj/nsyl/coupon/pojo/NsCoupon.hbm.xml" />
+	<mapping resource="cn/sqkj/nsyl/coupon/pojo/NsUserCoupon.hbm.xml" />
 	
 	<mapping resource="cn/sqkj/nsyl/db/po/NsDictionaries.hbm.xml" />
 	

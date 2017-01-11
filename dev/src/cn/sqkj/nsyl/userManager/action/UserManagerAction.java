@@ -53,10 +53,35 @@ public class UserManagerAction  extends PageAction {
 		return Action.SUCCESS;
 	}
 	
+	public String queryNsUserTeam(){
+		try {
+			//传入分页信息查询数据库
+			String id = RequestHelper.getParameter("id");
+			if(id!=null&&id!=""){
+				PageBean resultData = this.userManagerService.queryNsUserTeamList(this.getPageBean(),id);
+				this.setTotal(resultData.getTotal());
+				this.setDataRows(resultData.getPageData());
+				//打印审计日志
+				TAuditLog message = new TAuditLog(user.getUId(), "查询用户列表成功！");
+				logger.info(message);
+			}
+		} catch (Exception e) {
+			log.error("查询用户列表失败！", e);
+			TAuditLog message = new TAuditLog(user.getUId(), "查询用户列表失败！");
+			logger.info(message);
+		}
+		return Action.SUCCESS;
+	}
+	
 	public String queryNsUserByCondition(){
 		try {
 			//传入分页信息查询数据库
-			this.nsUser = this.userManagerService.queryUserListByCondition(this.getPageBean());
+			String user_name = RequestHelper.getParameter("user_name");
+			String true_name = RequestHelper.getParameter("true_name");
+			String user_phone = RequestHelper.getParameter("user_phone");
+			String identity_card = RequestHelper.getParameter("identity_card");
+			System.out.println(user_name);
+			this.nsUser = this.userManagerService.queryUserListByCondition(user_name,true_name,user_phone,identity_card);
 			//设置页面要回显的结果集
 			//打印审计日志
 			TAuditLog message = new TAuditLog(user.getUId(), "查询用户列表成功！");

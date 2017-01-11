@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="cn.sqkj.nsyl.coupon.pojo.NsCoupon" table="ns_coupon">
+        <id name="id" type="java.lang.Long">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        <property name="coupon_name" type="java.lang.String">
+            <column name="coupon_name" length="255" />
+        </property>
+        <property name="coupon_type" type="java.lang.String">
+            <column name="coupon_type" length="1" />
+        </property>
+        
+        <property name="coupon_zs_balance" type="java.lang.Double">
+            <column name="coupon_zs_balance" precision="2" />
+        </property>
+        
+        <property name="coupon_blance" type="java.lang.Double">
+            <column name="coupon_blance" precision="2" />
+        </property>
+        
+        <property name="coupon_xf_balance" type="java.lang.Double">
+            <column name="coupon_xf_balance" precision="2" />
+        </property>
+        <property name="coupon_expiry_date" type="java.lang.Integer">
+            <column name="coupon_expiry_date" not-null="true" />
+        </property>
+        <property name="coupon_remark" type="java.lang.String">
+            <column name="coupon_remark" length="2000" />
+        </property>
+         <property name="coupon_status" type="java.lang.String">
+            <column name="coupon_status" length="1" />
+        </property>
+        <property name="create_time" type="java.util.Date">
+            <column name="create_time" />
+        </property>
+        <property name="option_adminid" type="java.lang.Long">
+            <column name="option_adminid"  />
+        </property>
+        <property name="option_time" type="java.util.Date">
+            <column name="option_time" />
+        </property>
+        
+        
+        
+        
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="cn.sqkj.nsyl.coupon.pojo.NsUserCoupon" table="ns_user_coupon">
+        <id name="id" type="java.lang.Long">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        <property name="user_id" type="java.lang.Long">
+            <column name="user_id"  />
+        </property>
+        <property name="user_name" type="java.lang.String">
+            <column name="user_name" length="255" />
+        </property>
+        <property name="coupon_id" type="java.lang.Long">
+            <column name="coupon_id"  />
+        </property>
+        <property name="coupon_name" type="java.lang.String">
+            <column name="coupon_name" length="255" />
+        </property>
+        <property name="coupon_blance" type="java.lang.Double">
+            <column name="coupon_blance" precision="2" />
+        </property>
+        <property name="coupon_xf_balance" type="java.lang.Double">
+            <column name="coupon_xf_balance" precision="2" />
+        </property>
+        <property name="coupon_creatdate" type="java.util.Date">
+            <column name="coupon_creatdate"  />
+        </property>
+        <property name="coupon_expirydate" type="java.util.Date">
+            <column name="coupon_expirydate" />
+        </property>
+        <property name="order_sn" type="java.lang.String">
+            <column name="order_sn" length="255" />
+        </property>
+        <property name="coupon_status" type="java.lang.String">
+            <column name="coupon_status" length="1" />
+        </property>
+        <property name="option_time" type="java.util.Date">
+            <column name="option_time" />
+        </property>
+        <property name="option_adminid" type="java.lang.Long">
+            <column name="option_adminid"  />
+        </property>
+        <property name="option_remark" type="java.lang.String">
+            <column name="option_remark" length="2000" />
+        </property>
+    </class>
+</hibernate-mapping>

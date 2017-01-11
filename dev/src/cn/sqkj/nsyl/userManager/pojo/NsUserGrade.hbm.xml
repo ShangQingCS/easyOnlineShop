@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="cn.sqkj.nsyl.userManager.pojo.NsUserGrade" table="ns_user_grade">
+        <id name="id" type="java.lang.Long">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        <property name="grade_name" type="java.lang.String">
+            <column name="grade_name" length="255" />
+        </property>
+        <property name="grade_fc_level" type="java.lang.Double">
+            <column name="grade_fc_level" precision="2" />
+        </property>
+        <property name="grade_fc_level1" type="java.lang.Double">
+            <column name="grade_fc_level1" precision="2" />
+        </property>
+        <property name="grade_fc_level2" type="java.lang.Double">
+            <column name="grade_fc_level2" precision="2" />
+        </property>
+        <property name="grade_fc_level3" type="java.lang.Double">
+            <column name="grade_fc_level3" precision="2" />
+        </property>
+        <property name="grade_balance" type="java.lang.Double">
+            <column name="grade_balance" precision="2" />
+        </property>
+        <property name="grade_tx_balance" type="java.lang.Double">
+            <column name="grade_tx_balance" precision="2" />
+        </property>
+        <property name="create_time" type="java.util.Date">
+            <column name="create_time"  />
+        </property>
+        <property name="option_adminid" type="java.lang.Long">
+            <column name="option_adminid"  />
+        </property>
+        <property name="option_time" type="java.util.Date">
+            <column name="option_time"  />
+        </property>
+        <property name="option_remark" type="java.lang.String">
+            <column name="option_remark" length="2000" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -141,23 +141,21 @@ public class UserManagerServiceImpl implements IUserManagerService{
 		return result;
 	}
 
-	public NsUser queryUserListByCondition(PageBean pageBean) throws Exception {
+	public NsUser queryUserListByCondition(String user_name,String true_name,String user_phone,String identity_card) throws Exception {
 		StringBuffer sql = new StringBuffer("select t.id,t.user_name,t.true_name,t.user_ky_balance,t.user_fx_balance,t.user_jf_balance,"
 				+ "t.identity_card,t.identity_card_validity,t.user_status from ns_user t where 1=1");
-		if(pageBean.getQueryParams() != null && !pageBean.getQueryParams().isEmpty()) {
-			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("user_name"))) {
-				sql.append(" and t.user_name = '"+pageBean.getQueryParams().get("user_name")+"' ");
+			if(StringUtils.isNotBlank(user_name)) {
+				sql.append(" and t.user_name = '"+user_name+"'");
 			}
-			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("true_name"))) {
-				sql.append(" and t.true_name = '"+pageBean.getQueryParams().get("true_name")+"' ");
+			if(StringUtils.isNotBlank(true_name)) {
+				sql.append(" and t.true_name = '"+true_name+"'");
 			}
-			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("user_phone"))) {
-				sql.append(" and t.user_phone = '"+pageBean.getQueryParams().get("user_phone")+"' ");
+			if(StringUtils.isNotBlank(user_phone)) {
+				sql.append(" and t.user_phone = '"+user_phone+"'");
 			}
-			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("identity_card"))) {
-				sql.append(" and t.identity_card = '"+pageBean.getQueryParams().get("identity_card")+"' ");
+			if(StringUtils.isNotBlank(identity_card)) {
+				sql.append(" and t.identity_card = '"+identity_card+"'");
 			}
-		}
 		
 		DBUtil db = DBUtil.getDBUtilByRequest();
 		List<NsUser> list = new ArrayList<NsUser>();
@@ -177,6 +175,23 @@ public class UserManagerServiceImpl implements IUserManagerService{
 			nu.setUser_status(objects[8].toString());
 		}
 		return nu;
+	}
+
+	public PageBean queryNsUserTeamList(PageBean pageBean,String id) throws Exception {
+		List params = new ArrayList();
+		StringBuffer sql = new StringBuffer(" select distinct *  from " +
+				"(select *  from ns_user t where t.id= "+id+
+				" union  select n2.* from ns_user  n1,ns_user  n2 where n1.id= "+id+" and n2.user_pid=n1.id " +
+				" union select n3.* from ns_user  n3,( select n2.* from ns_user  n1,ns_user  n2 " +
+				" where n1.id="+id+" and n2.user_pid=n1.id ) " +
+				" t2 where t2.id=n3.user_pid) a ");
+		//查询总计路数
+		int total = userManagerDAO.findNsUserCount(sql.toString(), params);
+		//查询数据集
+		List<NsUser> list = userManagerDAO.findNsUserPage(sql.toString(), params, pageBean);
+		pageBean.setTotal(total);
+		pageBean.setPageData(list);
+		return pageBean;
 	}
 
 	

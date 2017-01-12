@@ -96,5 +96,17 @@ public class EventsManagerServiceImpl implements IEventsManagerService {
 		List eventsgoodslist = db.queryBySQL("select * from ns_events_goods t where t.goods_id=?", goodsId);
 		return eventsgoodslist;
 	}
+	
+	public List queryEventsGoodsByEventsId(Long eventsId) throws Exception {
+		DBUtil db = DBUtil.getDBUtilByRequest();
+		List eventsgoodslist = db.queryBySQL("select * from ns_events_goods t where t.events_id=?", eventsId);
+		return eventsgoodslist;
+	}
+	
+	public List queryEGVOByEventsId(Long eventsId) throws Exception {
+		DBUtil db = DBUtil.getDBUtilByRequest();
+		List eventsgoodslist = db.queryBySQL("select  id, events_id, goods_id, (select gname from ns_goods a where a.id=t.goods_id) as gname from ns_events_goods t where t.events_id=? order by id desc", eventsId);
+		return eventsgoodslist;
+	}
 
 }

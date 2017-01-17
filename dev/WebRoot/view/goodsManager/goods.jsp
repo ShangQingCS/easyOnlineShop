@@ -12,6 +12,7 @@
 	  		<table id="from_query"  border=0 dataType="text" class="tablestyle01" style="width:100%">
 	  			<tr>
 	  				<td align="left">商品名称:<input name="queryParams.gname"/></td>
+	  				<td align="left">商品编码:<input name="queryParams.goods_code"/></td>
 	  				<td align="left">类别:<input class="easyui-combobox" name="queryParams.category" id="inp_category" data-options="editable: false"/></td>
 	  				<td align="left">类型:<input class="easyui-combobox" name="queryParams.kind" id="inp_kind" data-options="editable: false"/></td>
 	  				<td align="left">品牌:<input class="easyui-combobox" name="queryParams.brand" id="inp_brand" data-options="editable: false"/></td>

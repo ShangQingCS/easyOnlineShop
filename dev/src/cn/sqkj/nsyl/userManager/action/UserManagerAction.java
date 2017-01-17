@@ -4,16 +4,17 @@ import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
 
+import com.opensymphony.xwork2.Action;
+
 import cn.sqkj.nsyl.goodsManager.action.GoodsManagerAction_bak;
 import cn.sqkj.nsyl.userManager.pojo.NsUser;
 import cn.sqkj.nsyl.userManager.pojo.NsUserPurse;
 import cn.sqkj.nsyl.userManager.service.IUserManagerService;
 import cn.sqkj.nsyl.userManager.service.IUserPurseService;
-
-import com.opensymphony.xwork2.Action;
-
 import framework.action.PageAction;
 import framework.bean.PageBean;
+import framework.config.SysDict;
+import framework.db.DBUtil;
 import framework.db.pojo.TAuditLog;
 import framework.db.pojo.TXtUser;
 import framework.helper.RequestHelper;
@@ -93,24 +94,7 @@ public class UserManagerAction  extends PageAction {
 		return Action.SUCCESS;
 	}
 	
-	public String queryNsUserCount(){
-		try {
-			//传入分页信息查询数据库
-			PageBean resultData = this.userManagerService.queryNsUserCount(this.getPageBean());
-			//System.out.println(resultData.getPageData().get(0));
-			//设置页面要回显的结果集
-			this.setTotal(resultData.getTotal());
-			this.setDataRows(resultData.getPageData());
-			//打印审计日志
-			TAuditLog message = new TAuditLog(user.getUId(), "查询用户列表成功！");
-			logger.info(message);
-		} catch (Exception e) {
-			log.error("查询用户列表失败！", e);
-			TAuditLog message = new TAuditLog(user.getUId(), "查询用户列表失败！");
-			logger.info(message);
-		}
-		return Action.SUCCESS;
-	}
+	
 	
 	public String queryUserById(){
 		try {

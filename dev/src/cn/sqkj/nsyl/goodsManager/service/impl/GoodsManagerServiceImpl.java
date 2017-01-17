@@ -58,7 +58,9 @@ public class GoodsManagerServiceImpl implements IGoodsManagerService {
 		pageBean.setPageData(goods);*/
 		
 		//SQL方式
-		StringBuffer sql = new StringBuffer("select t1.id, t1.gname, t2.cate_name as categoryName , t3.cate_name as kindName, t4.cate_name as brandName , t1.price, t1.isuse from ns_goods t1");
+		StringBuffer sql = new StringBuffer("select t1.id,t1.goods_code, t1.gname,");
+		sql.append(" t2.cate_name as categoryName , t3.cate_name as kindName, ");
+		sql.append(" t4.cate_name as brandName , t1.price, t1.isuse from ns_goods t1");
 		sql.append(" left join ns_goods_category t2 on t1.category=t2.id ");
 		sql.append(" left join ns_goods_category t3 on t1.kind=t3.id ");
 		sql.append(" left join ns_goods_category t4 on t1.brand=t4.id ");
@@ -90,9 +92,12 @@ public class GoodsManagerServiceImpl implements IGoodsManagerService {
 				sql.append(" and t1.storenumb <= ? ");
 				params.add(pageBean.getQueryParams().get("storenumbtwo"));
 			}
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("goods_code"))) {
+				sql.append(" and t1.goods_code like ? ");
+				params.add("%"+pageBean.getQueryParams().get("goods_code")+"%");
+			}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 		}
 		sql.append(" order by t1.create_time desc,t1.id desc ");
-		System.out.println("sql:"+sql+"----params:"+params);
 		//查询总计路数
 		int total = goodsDAO.findGoodsCount(sql.toString(), params);
 		//查询数据
@@ -140,6 +145,7 @@ public class GoodsManagerServiceImpl implements IGoodsManagerService {
 			goodsCategoryVO.setCreateTime(DateUtils.getDate());
 			goodsCategoryVO.setUpdateTime(DateUtils.getDate());
 			goodsCategoryVO.setFlag(SysDict.FLAG_ACT);
+			goodsCategoryVO.setIsuse(SysDict.ISUSE_NO);
 			Long id = (Long) db.insert(goodsCategoryVO);
 			goodsCategoryVO.setId(id);
 		} else {

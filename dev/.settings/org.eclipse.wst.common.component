@@ -4,6 +4,5 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
         <property name="context-root" value="/dev"/>
         <property name="java-output-path" value="/dev/WebRoot/WEB-INF/classes"/>
-        <property name="me-merge-utility-modules" value="true"/>
     </wb-module>
 </project-modules>

@@ -13,7 +13,7 @@
 	<!-- <property name="connection.url">jdbc:mysql://tobsenl.gicp.net:23599/nssc?useUnicode=true&amp;characterEncoding=GBK&amp;useOldAliasMetadataBehavior=true</property>
 	<property name="connection.username">root</property> 
 	<property name="connection.password"></property> -->
-	<property name="connection.url">jdbc:mysql://tobsenl.gicp.net:23599/nssc?useOldAliasMetadataBehavior=true</property>
+	<property name="connection.url">jdbc:mysql://192.168.1.32:3306/nssc?useOldAliasMetadataBehavior=true</property>
 	<property name="connection.username">bxdz</property> 
 	<property name="connection.password">bxdz123</property>
 	<property name="connection.driver_class">com.mysql.jdbc.Driver</property>

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -187,6 +188,51 @@ public class UserManagerServiceImpl implements IUserManagerService{
 				" t2 where t2.id=n3.user_pid) a ");
 		//查询总计路数
 		int total = userManagerDAO.findNsUserCount(sql.toString(), params);
+		//查询数据集
+		List<NsUser> list = userManagerDAO.findNsUserPage(sql.toString(), params, pageBean);
+		pageBean.setTotal(total);
+		pageBean.setPageData(list);
+		return pageBean;
+	}
+
+	public PageBean queryNsUserCount(PageBean pageBean)
+			throws Exception {
+		// TODO Auto-generated method stub
+		StringBuffer sql = new StringBuffer(" select DISTINCT t1.true_name,t1.user_name,t1.user_sex,"
+				+ " t1.user_phone,t1.identity_card,t1.create_time,t1.user_status,t1.identity_status,"
+				+ " (select sum(t2.trade_amount) dqye from ns_user_purse t2 where t2.purse_type = 0) dqye,"
+				+ " (select sum(t2.trade_amount) jf from ns_user_purse t2 where t2.purse_type = 2) jf,"
+				+ " (select sum(t2.trade_amount) fhje from ns_user_purse t2 where t2.purse_type = 1) fhje,"
+				+ " (select sum(t2.trade_amount) cz from ns_user_purse t2 where t2.option_type = 0) cz,"
+				+ " (select sum(t2.trade_amount) xf from ns_user_purse t2 where t2.option_type = 1) xf "
+				+ " from ns_user t1,ns_user_purse t2 where t1.id = t2.user_id " );
+		List params = new ArrayList();
+		if(pageBean.getQueryParams() != null && !pageBean.getQueryParams().isEmpty()) {
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("identity_status"))) {
+				sql.append(" and t1.identity_status = ? ");
+				params.add(pageBean.getQueryParams().get("identity_status"));
+			}
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("user_status"))) {
+				sql.append(" and t1.user_status = ? ");
+				params.add(pageBean.getQueryParams().get("user_status"));
+			}
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("startCreateTime"))) {
+				sql.append(" and t1.create_time >= str_to_date(?,'%Y-%m-%d %H:%i:%s')   ");
+				params.add(pageBean.getQueryParams().get("startCreateTime"));
+			}
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("endCreateTime"))) {
+				sql.append(" and t1.create_time <= str_to_date(?,'%Y-%m-%d %H:%i:%s')   ");
+				params.add(pageBean.getQueryParams().get("endCreateTime"));
+			}
+		}
+		
+		sql.append(" GROUP BY t1.user_name ");
+		//查询总计路数
+		DBUtil db = DBUtil.getDBUtilByRequest();
+		String mysql = sql.toString().toUpperCase();
+		mysql = "SELECT COUNT(1) ROW_COUNT FROM ("+mysql+") a";
+		List list1 = db.queryBySQL(mysql, params, 0, 0);
+		int total = Integer.parseInt(((Map)list1.get(0)).get("rowCount").toString());
 		//查询数据集
 		List<NsUser> list = userManagerDAO.findNsUserPage(sql.toString(), params, pageBean);
 		pageBean.setTotal(total);

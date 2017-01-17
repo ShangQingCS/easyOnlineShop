@@ -4,7 +4,6 @@
 <html>
 	<head>
 		<jsp:include page="/include/default.jsp"></jsp:include>
-    	<script type="text/javascript" charset="utf-8" src="${basePath }/js/test.js"></script>
     	<script type="text/javascript">
     		
    		$(function(){
@@ -19,6 +18,7 @@
 			var data = formGet("from_query");
 			$("#tab_list").datagrid({"queryParams":data});
 			$("#tab_list").datagrid("hideColumn","id");//隐藏id
+			$("#tab_list").datagrid("pageSize","15");//隐藏id
 			$.ajax({
 				url: "${basePath }/view/userManager/userManager!queryNsUser.action",
 				cache: false,
@@ -46,6 +46,20 @@
 				return "";
 			}
 		}
+		
+		var formatterIDStatus = function(value,rec) {
+			if(value=="1") {//身份状态0未认证1申请中2已认证
+				return "<span style='color: red;'>申请中</span>";
+			} else if(value=="0"){
+				return "<span style='color: red;'>未认证</span>";
+			}else if(value=="2"){
+				return "<span style='color: green;'>已认证</span>";
+			}else{
+				return "";
+			}
+		}
+		
+		
 		
 		//打开编辑页面
 		var modUserstatus = function(id,name) {
@@ -169,9 +183,10 @@
 						<th field="trueName" width="10%">真实姓名</th>
 						<th field="userPhone" width="10%">手机号</th>
 						<th field="identityCard" width="15%">身份证号</th>
+						<th field="identityStatus" width="10" formatter='formatterIDStatus'>实名认证状态</th>
 						<th field="createTime" width="10%" formatter='formatterDeliveryTime'>创建时间</th>
-						<th field="userKyBalance" width="10%">可用余额</th>
-						<th field="userFxBalance" width="10%">分销金额</th>
+						<th field="userKyBalance" width="5%">可用余额</th>
+						<th field="userFxBalance" width="5%">分销金额</th>
 						<th field="userJfBalance" width="10%">积分</th>
 						<th field="userStatus" width="5%" formatter='formatterFlag'>状态</th>
 						<th field="cz" width="10%" formatter='formatteruser'>操作</th> 

@@ -22,6 +22,15 @@ public interface IUserManagerService {
 	public PageBean queryNsUserTeamList(PageBean pageBean,String id) throws Exception;
 	
 	/**
+	 * 查询用户团队列表
+	 * @param pageBean
+	 * @return
+	 * @throws Exception
+	 */
+	public PageBean queryNsUserCount(PageBean pageBean) throws Exception;
+	
+	
+	/**
 	 * 根据ID查询用户
 	 * @param id
 	 * @return

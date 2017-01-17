@@ -19,6 +19,14 @@ public interface IUserPurseService {
 	 * @return
 	 * @throws Exception
 	 */
+	public PageBean queryUserPurseListCount(PageBean pageBean) throws Exception;
+	
+	/**
+	 * 查询钱包记录列表
+	 * @param pageBean
+	 * @return
+	 * @throws Exception
+	 */
 	public PageBean queryUserPurseList(PageBean pageBean,String purse_type) throws Exception;
 	
 	/**

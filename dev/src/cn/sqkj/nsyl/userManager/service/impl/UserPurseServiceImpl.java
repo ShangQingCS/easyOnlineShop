@@ -110,6 +110,45 @@ public class UserPurseServiceImpl implements IUserPurseService{
 		pageBean.setPageData(list);
 		return pageBean;
 	}
+
+
+	public PageBean queryUserPurseListCount(PageBean pageBean) throws Exception {
+		StringBuffer sql = new StringBuffer(" select t1.user_name,t1.true_name,t2.purse_type,t2.trade_type,t2.option_type,t2.trade_amount,"
+				+ "t2.option_time,t1.user_status from ns_user t1,ns_user_purse t2 where t1.id = t2.user_id  ");
+		List params = new ArrayList();
+		
+		if(pageBean.getQueryParams() != null && !pageBean.getQueryParams().isEmpty()) {
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("trade_type"))) {
+				sql.append(" and t2.trade_type = ? ");
+				params.add(pageBean.getQueryParams().get("trade_type"));
+			}
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("purse_type"))) {
+				sql.append(" and t2.purse_type = ? ");
+				params.add(pageBean.getQueryParams().get("purse_type"));
+			}
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("option_type"))) {
+				sql.append(" and t2.option_type = ? ");
+				params.add(pageBean.getQueryParams().get("option_type"));
+			}
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("startCreateTime"))) {
+				sql.append(" and t2.option_time >= str_to_date(?,'%Y-%m-%d %H:%i:%s')   ");
+				params.add(pageBean.getQueryParams().get("startCreateTime"));
+			}
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("endCreateTime"))) {
+				sql.append(" and t2.option_time <= str_to_date(?,'%Y-%m-%d %H:%i:%s')   ");
+				params.add(pageBean.getQueryParams().get("endCreateTime"));
+			}
+		}
+		//查询总计路数
+		int total = userPurseDAO.findNsUserPurseCount(sql.toString(), params);
+		//查询数据集
+		List<NsUserPurse> list = userPurseDAO.findNsUserPursePage(sql.toString(), params, pageBean);
+		pageBean.setTotal(total);
+		pageBean.setPageData(list);
+		return pageBean;
+	}
+	
+	
 	
 	
 	

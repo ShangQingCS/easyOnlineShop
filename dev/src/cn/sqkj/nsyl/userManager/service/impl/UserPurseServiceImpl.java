@@ -97,9 +97,28 @@ public class UserPurseServiceImpl implements IUserPurseService{
 
 	public PageBean queryUserPurseList(PageBean pageBean, String purse_type)
 			throws Exception {
-		StringBuffer sql = new StringBuffer("select t.id,t.trade_type,t.trade_sn,t.trade_state,t.option_type,t.purse_type,"
-				+ "t.trade_amount,t.option_time from ns_user_purse t where 1=1 ");
+		StringBuffer sql = new StringBuffer("select t.id,t.trade_type,t.trade_sn,t.trade_state,t.option_type,t.purse_type," +
+				"( select t1.name from ns_dictionaries t1 where t1.`code`=t.trade_type and t1.type='TRADE_TYPE') type_name ," +
+				"t.trade_amount,t.option_time from ns_user_purse t   where 1=1 ");
 		List params = new ArrayList();
+		if(pageBean.getQueryParams() != null && !pageBean.getQueryParams().isEmpty()) {
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("user_name"))) {
+				sql.append(" and t.user_id in (select id from ns_user t1 where t1.user_name = ?) ");
+				params.add(pageBean.getQueryParams().get("user_name"));
+			}
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("true_name"))) {
+				sql.append(" and t.user_id in (select id from ns_user t1 where t1.true_name = ?) ");
+				params.add(pageBean.getQueryParams().get("true_name"));
+			}
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("user_phone"))) {
+				sql.append(" and t.user_id = in (select id from ns_user t1 where t1.user_phone = ?)  ");
+				params.add(pageBean.getQueryParams().get("user_phone"));
+			}
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("identity_card"))) {
+				sql.append(" and t.user_id = in (select id from ns_user t1 where t1.identity_card = ?) ");
+				params.add(pageBean.getQueryParams().get("identity_card"));
+			}
+		}
 		sql.append(" and t.purse_type = ? ");
 		params.add(purse_type);
 		//查询总计路数

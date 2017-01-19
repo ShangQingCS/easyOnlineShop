@@ -386,8 +386,8 @@ public class DBUtil {
 	 */
 	public int queryCountBySQL(String sql, List params){
 		sql = sql.toUpperCase();
-		int startIndex = sql.indexOf("FROM");
-		sql = "SELECT COUNT(1) ROW_COUNT "+sql.subSequence(startIndex, sql.length());
+//		int startIndex = sql.indexOf("FROM");
+		sql = "SELECT COUNT(1) ROW_COUNT FROM ("+sql+" ) a";
 		List list = queryBySQL(sql, params, 0, 0);
 		return Integer.parseInt(((Map)list.get(0)).get("rowCount").toString());
 	}

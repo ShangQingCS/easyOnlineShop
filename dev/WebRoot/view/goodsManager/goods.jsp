@@ -36,6 +36,7 @@
 					<tr>
 						<!-- <th style="display: block;" checkbox="true" field="id" width="5%">ID</th> -->
 						<th field="id" width="5%">商品编号</th>
+						<th field="goodsCode" width="5%">商品编码</th>
 						<th field="gname" width="39%">商品名称</th>
 						<th field="categoryname" width="10%">类别</th>
 						<th field="kindname" width="10%">类型</th>

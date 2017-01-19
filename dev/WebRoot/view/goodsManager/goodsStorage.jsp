@@ -12,7 +12,6 @@
 	  		<table id="from_query"  border=0 dataType="text" class="tablestyle01" style="width:100%">
 	  			<tr>
 	  				<td align="left">商品名称:<input name="queryParams.gname"/></td>
-	  				<td align="left">商品编码:<input name="queryParams.goods_code"/></td>
 	  				<td align="left">类别:<input class="easyui-combobox" name="queryParams.category" id="inp_category" data-options="editable: false"/></td>
 	  				<td align="left">类型:<input class="easyui-combobox" name="queryParams.kind" id="inp_kind" data-options="editable: false"/></td>
 	  				<td align="left">品牌:<input class="easyui-combobox" name="queryParams.brand" id="inp_brand" data-options="editable: false"/></td>
@@ -44,6 +43,7 @@
 					<tr>
 						<!-- <th style="display: block;" checkbox="true" field="id" width="5%">ID</th> -->
 						<th field="id" width="5%">商品编号</th>
+						<th field="goodsCode" width="5%">商品编码</th>
 						<th field="gname" width="39%">商品名称</th>
 						<th field="categoryname" width="10%">类别</th>
 						<th field="kindname" width="10%">类型</th>
@@ -138,7 +138,8 @@
 			});
 		}
 		
-		var openEdit = function(id,gname,storenumb) { 
+		var openEdit = function(id,gname,storenumb) {
+			debugger; 
         	formReset("form_edit");
         	$("#inp_storenumb").textbox('setValue', storenumb=="null"?"0":storenumb);
         	$("#inp_gname").textbox('setValue', gname);
@@ -162,6 +163,7 @@
 		}
 		
 		var formatterAction = function(value,rec) {
+			debugger;
 			var formatterStr = "<a href='#' onclick='openEdit(\""+rec.id+"\",\""+rec.gname+"\",\""+rec.storenumb+"\"); return false;'>修改库存</a>&nbsp;";
 			return formatterStr;
 		}

@@ -32,7 +32,7 @@ public class CommentManagerServiceImpl implements ICommentManagerService {
 	 * @throws Exception
 	 */
 	public PageBean queryCommentList(PageBean pageBean) throws Exception {
-		StringBuffer sql = new StringBuffer(" select t.*,t1.gname,t2.cate_name as category_name,t3.cate_name as kind_name,t4.cate_name as brand_name from ns_comment t  ");
+		StringBuffer sql = new StringBuffer(" select t.*,( select t1.user_name from ns_user t1 where t1.id=t.userid ) user_name,t1.gname,t2.cate_name as category_name,t3.cate_name as kind_name,t4.cate_name as brand_name from ns_comment t  ");
 		sql.append(" left join ns_goods t1 on t.goodsid=t1.id ");
 		sql.append(" left join ns_goods_category t2 on t1.category=t2.id ");
 		sql.append(" left join ns_goods_category t3 on t1.kind=t3.id ");
@@ -63,6 +63,10 @@ public class CommentManagerServiceImpl implements ICommentManagerService {
 			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("userid"))) {
 				sql.append(" and t.userid like ? ");
 				params.add("%"+pageBean.getQueryParams().get("userid")+"%");
+			}
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("user_name"))) {
+				sql.append(" and t.userid in ( select id from ns_user where user_name like ? ) ");
+				params.add("%"+pageBean.getQueryParams().get("user_name")+"%");
 			}
 			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("comment"))) {
 				sql.append(" and t.comment like ? ");

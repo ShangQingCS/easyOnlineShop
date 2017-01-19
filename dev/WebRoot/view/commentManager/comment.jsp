@@ -23,8 +23,8 @@
 	  			<tr>
 	  				<td align="left">商品编号:</td>
 	  				<td align="left"><input name="queryParams.goodsid"/></td>
-	  				<td align="left">用户id:</td>
-	  				<td align="left"><input name="queryParams.userid" /></td>
+	  				<td align="left">用户名:</td>
+	  				<td align="left"><input name="queryParams.user_name" /></td>
 	  				<td align="left">评论关键字:</td>
 	  				<td align="left" colspan="3"><input name="queryParams.comment" style="width: 90%;"/></td>
 	  			</tr>
@@ -46,7 +46,7 @@
 				<thead>
 					<tr>
 						<!-- <th style="display: block;" checkbox="true" field="id" width="5%">ID</th> -->
-						<th field="userid" width="5%">用户名</th>
+						<th field="userName" width="5%">用户名</th>
 						<th field="goodsid" width="5%">商品编号</th>
 						<th field="gname" width="24%">商品名称</th>
 						<th field="categoryName" width="5%">类别</th>

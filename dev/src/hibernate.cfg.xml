@@ -17,10 +17,14 @@
 	<property name="connection.username">bxdz</property> 
 	<property name="connection.password">bxdz123</property>
 	<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+	<property name="connection.autoReconnect">true</property>
+	<property name="connection.autoReconnectForPools">true</property>
+	<property name="connection.is-connection-validation-required">true</property>
 	<property name="myeclipse.connection.profile">JDBC</property>
 	<property name="connection.pool_size">30</property>
 	<property name="format_sql">true</property>
 	<property name="show_sql">true</property>
+	
 	
 	<mapping resource="framework/db/pojo/TXtEmp.hbm.xml" />
 	<mapping resource="framework/db/pojo/TXtKeyValue.hbm.xml" />

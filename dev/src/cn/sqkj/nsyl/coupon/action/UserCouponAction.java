@@ -50,6 +50,7 @@ public class UserCouponAction  extends PageAction {
 			this.nsUserCoupon = this.userCouponService.queryUserCouponById(Long.valueOf(id));
 			this.nsUserCoupon.setCoupon_status(couponStatus);//
 			this.userCouponService.updateNsUserCoupon(this.nsUserCoupon);
+			messages = "success";
 			//打印审计日志
 			TAuditLog message = new TAuditLog(user.getUId(), "修改优惠券成功！");
 			logger.info(message);

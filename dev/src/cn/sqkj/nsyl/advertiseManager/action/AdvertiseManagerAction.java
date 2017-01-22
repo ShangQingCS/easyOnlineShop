@@ -16,6 +16,8 @@ import org.apache.log4j.Logger;
 import cn.sqkj.nsyl.advertiseManager.pojo.NsAdvertise;
 import cn.sqkj.nsyl.advertiseManager.service.IAdvertiseManagerService;
 import cn.sqkj.nsyl.db.po.NsDictionaries;
+import cn.sqkj.nsyl.eventsManager.pojo.NsEventsinfo;
+import cn.sqkj.nsyl.eventsManager.service.IEventsManagerService;
 import cn.sqkj.nsyl.goodsManager.pojo.NsGoods;
 import cn.sqkj.nsyl.goodsManager.pojo.NsGoodsCategory;
 import cn.sqkj.nsyl.goodsManager.service.IGoodsManagerService;
@@ -44,6 +46,9 @@ public class AdvertiseManagerAction extends PageAction {
 	private IAdvertiseManagerService advertiseManagerService;
 	@Resource(name="goodsManagerService")
 	private IGoodsManagerService goodsManagerService;
+	@Resource(name="eventsManagerService")
+	private IEventsManagerService eventsManagerService;
+	
 	@Resource(name="dictService")
 	private IDictService dictService;
 	private AuditLogger logger = AuditLogger.getLogger(); //审计日志对象
@@ -166,7 +171,7 @@ public class AdvertiseManagerAction extends PageAction {
 				NsGoods ng = goodsManagerService.queryGoodsById(new Long(objId));
 				this.objectName = ng.getGname();
 			} else if("1".equals(objType)) {
-				NsAdvertise na=advertiseManagerService.queryAdvById(new Long(objId));
+				NsEventsinfo na=eventsManagerService.queryEventsById(new Long(objId));
 				this.objectName=na.getName();
 			} else if("2".equals(objType)) {
 				

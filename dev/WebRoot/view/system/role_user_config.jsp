@@ -189,10 +189,10 @@
 	</script>
   </head>
   <body class="easyui-layout">
-  	<div region="west" style="width:200px; "  title="角色列表">
+  	<div region="west" style="width:200px; "  >
 	   <ul id="ul_role_tree" class="easyui-tree" ondblclick="roleTreeClick()"></ul>
 	</div>
-  	<div region="center" title="用户列表">
+  	<div region="center" >
   		<table border=0 dataType="text" class="tablestyle01" style="width:100%">
   			<tr>
   				<td align="left">

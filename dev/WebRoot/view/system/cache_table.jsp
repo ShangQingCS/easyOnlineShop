@@ -60,7 +60,7 @@
   </head>
   
    <body class="easyui-layout">
-   <div region="north" class="easyui-panel bgColor" title="缓存表管理" style="height:68px; ">
+   <div region="north" class="easyui-panel bgColor" style="height:68px; ">
   		<table id="from_query"  dataType="text" class="tablestyle01" style="width:100%">
   			<tr>
   				<td align="right" style="width: 100">用户名称:</td>

@@ -103,7 +103,7 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
   
  	<body class="easyui-layout">
  		
- 		<div region="north" class="easyui-panel bgColor" collapsible="false" title="会员操作" style="display: none;">
+ 		<div region="north" class="easyui-panel bgColor" collapsible="false"  style="display: none;">
 	  		<table id="from_query"  border=0 dataType="text" class="tablestyle01" style="width:100%">
 	  			<tr>
 	  				<td align="left">

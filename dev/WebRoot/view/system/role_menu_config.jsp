@@ -104,10 +104,10 @@
 	</script>
   </head>
   <body class="easyui-layout">
-  	<div region="west" style="width:200px; "  title="角色列表">
+  	<div region="west" style="width:200px; "  >
 	   <ul id="ul_role_tree" class="easyui-tree" ondblclick="roleTreeClick()"></ul>
 	</div>
-  	<div region="center" title="功能树">
+  	<div region="center" >
 	   <ul id="ul_menu_tree" class="easyui-tree" checkbox="true"></ul>
 	</div>
 	

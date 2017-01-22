@@ -9,7 +9,7 @@
   	</head>
   
  	<body class="easyui-layout">
-	  	<div region="north" class="easyui-panel bgColor" collapsible="false" title="评论列表" style="height:130px; width:100%">
+	  	<div region="north" class="easyui-panel bgColor" collapsible="false" style="height:130px; width:100%">
 	  		<table id="from_query" border=0 dataType="text" class="tablestyle01" style="width:100%">
 	  			<tr>
 	  				<td align="left">用户名:</td>
@@ -229,10 +229,9 @@
 		var formatterAction = function(value,rec) {
 			var formatterStr = "<a href='#' onclick='showOrderDetail(\""+rec.id+"\"); return false;'>查看详细</a>&nbsp;";
 			formatterStr+="<a href='#' onclick='editOrder(\""+rec.id+"\",\""+rec.deliveryNumb+"\"); return false;'>编辑单号</a>&nbsp;";
-			if(rec.orderstatus=="2" && rec.deliveryNumb!="")  
-				formatterStr+="<a href='#' onclick='changeStatus(\""+rec.id+"\",\""+rec.deliveryNumb+"\"); return false;'>已发货</a>&nbsp;";
-			if(rec.orderstatus=="3")  
-				formatterStr+="<a href='#' onclick='cancelStatus(\""+rec.id+"\",\""+rec.deliveryNumb+"\"); return false;'>取消发货</a>&nbsp;";
+			if(rec.orderstatus=="2" && rec.deliveryNumb!=""){  
+				formatterStr+="<a href='#' onclick='changeStatus(\""+rec.id+"\",\""+rec.deliveryNumb+"\"); return false;'>发货</a>&nbsp;";
+			}
 			return formatterStr;
 		}
 		
@@ -269,7 +268,8 @@
 		}
 		
 		var changeStatus = function(id,deliveryNumb) {
-			if(deliveryNumb.length==0) {
+			debugger;
+			if(deliveryNumb.length==0||deliveryNumb=="null") {
 				alert("快递单号未填写！");
 				return;
 			} 
@@ -311,7 +311,12 @@
 		var editOrder = function(id,deliveryNumb) { 
         	formReset("form_edit");
         	$("#inp_id").val(id);
-        	$("#inp_deliveryNumb").val(deliveryNumb);
+        	if(deliveryNumb=="null"){
+        		$("#inp_deliveryNumb").val("");
+        	}else{
+        		$("#inp_deliveryNumb").val(deliveryNumb);
+        	}
+        	
 			$("#div_window_new").dialog("open");
 		}
 		

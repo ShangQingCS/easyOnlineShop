@@ -13,7 +13,7 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
 </head>
   
 <body class="easyui-layout">
-   	<div region="north" class="easyui-panel bgColor" title="商品类别维护" style="height:66px; ">
+   	<div region="north" class="easyui-panel bgColor"  style="height:66px; ">
   		<table border=0 dataType="text" class="tablestyle01" style="width:100%">
   			<tr>
   				<td align="left">

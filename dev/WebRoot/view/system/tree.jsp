@@ -192,10 +192,10 @@
   </head>
   
    <body class="easyui-layout">
-  	<div region="west" class="easyui-panel bgColor" split="true" title="功能菜单列表" style="width:200px;overflow: auto;">
+  	<div region="west" class="easyui-panel bgColor" split="true"  style="width:200px;overflow: auto;">
   		<ul id="ul_menu_tree" ></ul>
   	</div>
-  	<div id="div_config" region="center" title="功能菜单信息" class="easyui-panel bgColor" style="overflow: auto;">
+  	<div id="div_config" region="center" class="easyui-panel bgColor" style="overflow: auto;">
 		<table class="tablestyle01" style="margin-top:5px;" width="100%">
 			<tr>
 				<td width="110">菜单ID：</td>

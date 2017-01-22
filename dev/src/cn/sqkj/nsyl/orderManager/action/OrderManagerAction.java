@@ -6,7 +6,10 @@ import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
 
+import cn.sqkj.nsyl.goodsManager.pojo.NsGoods;
+import cn.sqkj.nsyl.goodsManager.service.IGoodsManagerService;
 import cn.sqkj.nsyl.orderManager.pojo.NsOrder;
+import cn.sqkj.nsyl.orderManager.pojo.NsOrderDetail;
 import cn.sqkj.nsyl.orderManager.service.IOrderManagerService;
 
 import com.opensymphony.xwork2.Action;
@@ -18,6 +21,7 @@ import framework.db.pojo.TAuditLog;
 import framework.db.pojo.TXtUser;
 import framework.helper.RequestHelper;
 import framework.logger.AuditLogger;
+import framework.util.DateUtils;
 
 /**
  * @author yangchaowen
@@ -27,12 +31,16 @@ import framework.logger.AuditLogger;
 public class OrderManagerAction extends PageAction {
 	@Resource(name="orderManagerService")
 	private IOrderManagerService orderManagerService;
+	@Resource(name="goodsManagerService")
+	private IGoodsManagerService goodsManagerService;
+	
 	private AuditLogger logger = AuditLogger.getLogger(); //审计日志对象
 	private Logger log = Logger.getLogger(OrderManagerAction.class); //系统log日志对象
 	private TXtUser user = (TXtUser) RequestHelper.getSession().getAttribute("user");
 	private String message;
+	private NsGoods goods;
 	private NsOrder order;
-	private List orderDetail;
+	private List<NsOrderDetail> orderDetail;
 	
 	public String findOrder() {
 		try {
@@ -96,15 +104,25 @@ public class OrderManagerAction extends PageAction {
 		try {
 			DBUtil db = DBUtil.getDBUtilByRequest();
 			NsOrder o = this.orderManagerService.queryOrderById(this.order.getId());
+			db.beginTransaction();
+			this.orderDetail = this.orderManagerService.queryOrderDetailByOrderId(this.order.getId());
+			for (int i = 0; i < orderDetail.size(); i++) {
+				this.goods = this.goodsManagerService.queryGoodsById(orderDetail.get(i).getGoodsid());//取出指定商品
+				if(this.goods.getFreazes()-orderDetail.get(i).getCount()<0){
+					db.rollback();//如果冻结数据有问题则回滚
+				}
+				this.goods.setFreazes(this.goods.getFreazes()-orderDetail.get(i).getCount());//
+				db.update(this.goods);
+			}
 			o.setOrderstatus(new Long("3")); //已发货
+			o.setDeliveryTime(DateUtils.getTimestamp());
 			db.update(o);
+			db.commit();
 			this.message="success";
-			
 			//打印审计日志
 			TAuditLog message = new TAuditLog(user.getUId(), "修改订单已发货成功:"+this.order.getId());
 			logger.info(message);
 		} catch (Exception e) {
-			/*e.printStackTrace();*/
 			this.message="操作失败";
 			//打印审计日志
 			TAuditLog message = new TAuditLog(user.getUId(), "修改订单已发货失败:"+this.order.getId());
@@ -144,6 +162,14 @@ public class OrderManagerAction extends PageAction {
 
 	public void setOrder(NsOrder order) {
 		this.order = order;
+	}
+	
+	public NsGoods getGoods() {
+		return goods;
+	}
+
+	public void setGoods(NsGoods goods) {
+		this.goods = goods;
 	}
 
 	public List getOrderDetail() {

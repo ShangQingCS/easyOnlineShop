@@ -8,7 +8,7 @@
   	</head>
   
  	<body class="easyui-layout">
-	  	<div region="north" class="easyui-panel bgColor" collapsible="false" title="评论列表" style="height:130px; width:100%">
+	  	<div region="north" class="easyui-panel bgColor" collapsible="false" style="height:130px; width:100%">
 	  		<table id="from_query"  border=0 dataType="text" class="tablestyle01" style="width:100%">
 	  			<tr>
 	  				<td align="left">商品名称:</td>
@@ -21,10 +21,13 @@
 	  				<td align="left"><input class="easyui-combobox" name="queryParams.brand" id="inp_brand" data-options="editable: false"/></td>
 	  			</tr>
 	  			<tr>
-	  				<td align="left">商品编号:</td>
-	  				<td align="left"><input name="queryParams.goodsid"/></td>
-	  				<td align="left">用户id:</td>
-	  				<td align="left"><input name="queryParams.userid" /></td>
+	  				<!-- <td align="left">商品编号:</td>
+	  				<td align="left"><input name="queryParams.goodsid"/></td> -->
+	  				
+	  				<td align="left">商品编码:</td>
+	  				<td align="left"><input name="queryParams.goods_code"/></td>
+	  				<td align="left">用户名:</td>
+	  				<td align="left"><input name="queryParams.user_name" /></td>
 	  				<td align="left">评论关键字:</td>
 	  				<td align="left" colspan="3"><input name="queryParams.comment" style="width: 90%;"/></td>
 	  			</tr>
@@ -46,8 +49,9 @@
 				<thead>
 					<tr>
 						<!-- <th style="display: block;" checkbox="true" field="id" width="5%">ID</th> -->
-						<th field="userid" width="5%">用户名</th>
-						<th field="goodsid" width="5%">商品编号</th>
+						<th field="userName" width="5%">用户名</th>
+						<!-- <th field="goodsid" width="5%">商品编号</th>-->
+						<th field="goodsCode" width="5%">商品编码</th>
 						<th field="gname" width="24%">商品名称</th>
 						<th field="categoryName" width="5%">类别</th>
 						<th field="kindName" width="5%">类型</th>

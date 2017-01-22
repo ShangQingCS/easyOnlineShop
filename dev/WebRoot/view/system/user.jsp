@@ -257,7 +257,7 @@
   </head>
   
   <body class="easyui-layout">
-  	<div region="north" class="easyui-panel bgColor" title="人员列表" style="height:100px; ">
+  	<div region="north" class="easyui-panel bgColor"  style="height:100px; ">
   		<table id="from_query"  dataType="text" class="tablestyle01" style="width:100%">
   			<tr>
   				<td align="right" style="width: 100">姓名:</td>

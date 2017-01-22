@@ -8,10 +8,11 @@
   	</head>
   
  	<body class="easyui-layout">
-	  	<div region="north" class="easyui-panel bgColor" collapsible="false" title="商品列表" style="height:100px; width:100%">
+	  	<div region="north" class="easyui-panel bgColor" collapsible="false"  style="height:100px; width:100%">
 	  		<table id="from_query"  border=0 dataType="text" class="tablestyle01" style="width:100%">
 	  			<tr>
 	  				<td align="left">商品名称:<input name="queryParams.gname"/></td>
+	  				<td align="left">商品编码:<input name="queryParams.goods_code"/></td>
 	  				<td align="left">类别:<input class="easyui-combobox" name="queryParams.category" id="inp_category" data-options="editable: false"/></td>
 	  				<td align="left">类型:<input class="easyui-combobox" name="queryParams.kind" id="inp_kind" data-options="editable: false"/></td>
 	  				<td align="left">品牌:<input class="easyui-combobox" name="queryParams.brand" id="inp_brand" data-options="editable: false"/></td>
@@ -35,6 +36,7 @@
 					<tr>
 						<!-- <th style="display: block;" checkbox="true" field="id" width="5%">ID</th> -->
 						<th field="id" width="5%">商品编号</th>
+						<th field="goodsCode" width="5%">商品编码</th>
 						<th field="gname" width="39%">商品名称</th>
 						<th field="categoryname" width="10%">类别</th>
 						<th field="kindname" width="10%">类型</th>

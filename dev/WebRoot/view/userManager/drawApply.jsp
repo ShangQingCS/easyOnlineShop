@@ -101,7 +101,7 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
   
  	<body class="easyui-layout">
  		
- 		<div region="north" class="easyui-panel bgColor" collapsible="false" title="会员操作" style="display: none;">
+ 		<div region="north" class="easyui-panel bgColor" collapsible="false"  style="display: none;">
 	  		<table id="from_query"  border=0 dataType="text" class="tablestyle01" style="width:100%">
 	  			<tr>
 	  				<td align="left">
@@ -116,17 +116,17 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
  	
 	  	<div region="center" style="width: 100%">
 		     <table id="tab_list" rownumbers="true" region="center" fitColumns="true" class="easyui-datagrid" 
-		    	url="userManager!queryNsUser.action" style="width:auto;height:auto" title="" 
+		    	url="userManager!queryNsUserTiXian.action" style="width:auto;height:auto" title="" 
 		    	pagination="true" singleSelect="true" data-options=""><!-- 身份状态0未认证1申请中2已认证 -->
 				<thead>
 					<tr>
 						<th field="id" style="display: none;"></th>
 						<th field="userName" width="8%">用户名</th>
 						<th field="trueName" width="10%">真实姓名</th>
-						<th field="identityCard" width="15%">身份证号</th>
-						<th field="identityCardValidity" width="10%" formatter='formatterDeliveryTime'>有效期</th>
-						<th field="identityIssuing" width="30%">发证机关</th>
-						<th field="tixianStatus" width="10%" formatter='formatterFlag'>状态</th>
+						<th field="tradeAmount" width="15%">提现金额</th>
+						<th field="typeName" width="10%" >支付类型</th>
+						<th field="payOpenBank" width="30%">开户行</th>
+						<th field="payAccount" width="10%">提现账号</th>
 						<th field="cz" width="15%" formatter='formatteruser'>操作</th> 
 					</tr>
 				</thead>

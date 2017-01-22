@@ -2,19 +2,49 @@
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
 
-	<!-- 基础数据维护struts配置文件 -->	
+	<!-- 基础数据维护struts配置文件 -->
 	<package name="userManager" extends="json-default" namespace="/view/userManager">
-		<action name="userManager" class="cn.sqkj.nsyl.userManager.action.UserManagerAction">
-			<result type="json"><param name="ignoreHierarchy">false</param></result><!-- 分配列表  -->
+		<action name="userManager"
+			class="cn.sqkj.nsyl.userManager.action.UserManagerAction">
+			<result type="json">
+				<param name="ignoreHierarchy">false</param>
+			</result><!-- 分配列表 -->
+		</action>
+
+		<action name="exportExcel"
+			class="cn.sqkj.nsyl.userManager.action.ExportExcelAction" method="exportExcel">
+			<result name="excel" type="stream">
+				<param name="contentType">application/vnd.ms-excel</param>
+				<param name="contentDisposition">attachment;filename="${fileName}"</param>
+				<param name="bufferSize">1024</param>
+				<param name="inputName">excelFile</param>
+			</result>
 		</action>
 		
+		
+		
+		
+		<action name="acountExportExcel"
+			class="cn.sqkj.nsyl.userManager.action.AcountExportExcelAction" method="acountExportExcel">
+			<result name="excel" type="stream">
+				<param name="contentType">application/vnd.ms-excel</param>
+				<param name="contentDisposition">attachment;filename="${fileName}"</param>
+				<param name="bufferSize">1024</param>
+				<param name="inputName">excelFile</param>
+			</result>
+		</action>
+
 		<action name="userGrade" class="cn.sqkj.nsyl.userManager.action.UserGradeAction">
-			<result type="json"><param name="ignoreHierarchy">false</param></result><!-- 分配列表  -->
+			<result type="json">
+				<param name="ignoreHierarchy">false</param>
+			</result><!-- 分配列表 -->
 		</action>
-		
+
 		<action name="userPurse" class="cn.sqkj.nsyl.userManager.action.UserPurseAction">
-			<result type="json"><param name="ignoreHierarchy">false</param></result><!-- 分配列表  -->
+			<result type="json">
+				<param name="ignoreHierarchy">false</param>
+			</result><!-- 分配列表 -->
 		</action>
-		
+
 	</package>
 </struts>    

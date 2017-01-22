@@ -1,5 +1,7 @@
 package cn.sqkj.nsyl.userManager.action;
 
+import java.util.UUID;
+
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
@@ -106,7 +108,9 @@ public class UserPurseAction extends PageAction {
 			NsUserPurse nsUserPurse = new NsUserPurse();
 			nsUserPurse.setTrade_type(0);
 			nsUserPurse.setTrade_amount(Double.valueOf(jf_balance));//输入值
-			nsUserPurse.setTrade_sn("S"+DateUtils.getDate());
+			UUID uuid = UUID.randomUUID();
+			String tradeSn = "S"+uuid.toString().replaceAll("-", ""); 
+			nsUserPurse.setTrade_sn(tradeSn);
 			nsUserPurse.setTrade_state(2);//交易成功
 			nsUserPurse.setOption_type(Integer.valueOf(radiojf));
 			nsUserPurse.setUser_id(this.nsUser.getId());
@@ -129,6 +133,24 @@ public class UserPurseAction extends PageAction {
 		}catch (Exception e) {
 			log.error("操作失败！", e);
 			TAuditLog message = new TAuditLog(user.getUId(), "操作失败！");
+			logger.info(message);
+		}
+		return Action.SUCCESS;
+	}
+	
+	public String queryUserPurseListCount(){
+		try {
+			//传入分页信息查询数据库
+			PageBean resultData = this.userPurseService.queryUserPurseListCount(this.getPageBean());
+			//设置页面要回显的结果集
+			this.setTotal(resultData.getTotal());
+			this.setDataRows(resultData.getPageData());
+			//打印审计日志
+			TAuditLog message = new TAuditLog(user.getUId(), "查询用户列表成功！");
+			logger.info(message);
+		} catch (Exception e) {
+			log.error("查询用户列表失败！", e);
+			TAuditLog message = new TAuditLog(user.getUId(), "查询用户列表失败！");
 			logger.info(message);
 		}
 		return Action.SUCCESS;

@@ -216,7 +216,10 @@ public class GoodsManagerAction extends PageAction {
 			DBUtil db = DBUtil.getDBUtilByRequest();
 			if(this.goods.getId()==null) {
 				this.goods.setIsuse(SysDict.ISUSE_NO);
+				
 				Long id = (Long) db.insert(this.goods);
+				this.goods.setGoodsCode(this.goods.getCategory()+""+id);
+				db.update(this.goods);
 			} else {
 				NsGoods ns = this.goodsManagerService.queryGoodsById(this.goods.getId());
 				ns.setGname(this.goods.getGname());

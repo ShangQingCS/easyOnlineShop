@@ -24,6 +24,7 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
 					dataType:"json",
 					data:$("#ff1").serialize(),
 					success: function(json){
+						debugger;
 						if(json.nsUser!=null){
 		      				$("#content").show();
 		      				$("#id").val(json.nsUser.id);
@@ -93,6 +94,8 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
 		}
 		
 		var queryUserPurse = function (){
+			var data = formGet("from_query");
+			$("#tab_list").datagrid({"queryParams":data});
 			$("#tab_list").datagrid("hideColumn","id");//隐藏id
 			/**/
 			$.ajax({
@@ -107,20 +110,6 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
 		
 		var formatterDeliveryTime = function(val, data, index){
 			return val==null?"":val.replace("T"," ");
-		}
-		
-		var formatterType = function(value,rec) {
-			if(value=="1") {
-				return "<span style='color: green;'>alipay</span>";
-			} else if(value=="0"){
-				return "<span style='color: green;'>system</span>";
-			}else if(value=="2"){
-				return "<span style='color: green;'>wechatpay</span>";
-			}else if(value=="3"){
-				return "<span style='color: green;'>unionpay </span>";
-			}else{
-				return "";
-			}
 		}
 		
 		var formatterState = function(value,rec) {
@@ -151,14 +140,14 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
   	</head>
   
  	<body class="easyui-layout">
-	  	<div id="header" region="north" class="easyui-panel bgColor" collapsible="false" title="会员操作" style="height:100px; width:100%">
+	  	<div id="header" region="north" class="easyui-panel bgColor" collapsible="false"  style="height:100px; width:100%">
 	  		<form id="ff1" method="post" enctype="multipart/form-data">
 	  		<table id="from_query"  border=0 dataType="text" class="tablestyle01" style="width:100%">
 	  			<tr>
-	  				<td align="left">用户名:<input id="f_userName" name="user_name"  /></td>
-	  				<td align="left">真实姓名:<input id="f_trueName" name="true_name"  /></td>
-	  				<td align="left">手机号 :<input id="f_userPhone" name="user_phone"  /></td>
-	  				<td align="left">身份证号 :<input id="f_identityCard" name="identity_card"  /></td>
+	  				<td align="left">用户名:<input id="f_userName" name="queryParams.user_name"  /></td>
+	  				<td align="left">真实姓名:<input id="f_trueName" name="queryParams.true_name"  /></td>
+	  				<td align="left">手机号 :<input id="f_userPhone" name="queryParams.user_phone"  /></td>
+	  				<td align="left">身份证号 :<input id="f_identityCard" name="queryParams.identity_card"  /></td>
 	  				<td align="left">
 	  					<a href="#" class="easyui-linkbutton" onclick="queryUserManager(); return false;">查询</a>
 				 		<a href="#" class="easyui-linkbutton" onclick="winReload();">刷新</a>
@@ -236,7 +225,7 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
 				<thead>
 					<tr>
 						<th field="id" style="display: none;"></th>
-						<th field="tradeType" width="8%" formatter = 'formatterType' >交易类型</th>
+						<th field="typeName" width="8%"  >交易类型</th>
 						<th field="tradeSn" width="30%" >交易流水号</th>
 						<th field="tradeState" width="10%" formatter = 'formatterState'>交易状态</th>
 						<th field="optionType" width="10%" formatter = 'formatteroType'>操作类型</th>

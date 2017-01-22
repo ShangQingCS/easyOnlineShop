@@ -33,7 +33,7 @@
 	</script>
   </head>
   <body class="easyui-layout">
-  	<div region="north" class="easyui-panel bgColor" title="信息管理" style="height:100px; ">
+  	<div region="north" class="easyui-panel bgColor" style="height:100px; ">
   		<table id="from_query"  dataType="text" class="tablestyle01" style="width:100%">
   			<tr>
   				<td align="right" >关键字:</td>

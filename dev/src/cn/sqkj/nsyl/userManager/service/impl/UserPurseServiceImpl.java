@@ -97,9 +97,28 @@ public class UserPurseServiceImpl implements IUserPurseService{
 
 	public PageBean queryUserPurseList(PageBean pageBean, String purse_type)
 			throws Exception {
-		StringBuffer sql = new StringBuffer("select t.id,t.trade_type,t.trade_sn,t.trade_state,t.option_type,t.purse_type,"
-				+ "t.trade_amount,t.option_time from ns_user_purse t where 1=1 ");
+		StringBuffer sql = new StringBuffer("select t.id,t.trade_type,t.trade_sn,t.trade_state,t.option_type,t.purse_type," +
+				"( select t1.name from ns_dictionaries t1 where t1.`code`=t.trade_type and t1.type='TRADE_TYPE') type_name ," +
+				"t.trade_amount,t.option_time from ns_user_purse t   where 1=1 ");
 		List params = new ArrayList();
+		if(pageBean.getQueryParams() != null && !pageBean.getQueryParams().isEmpty()) {
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("user_name"))) {
+				sql.append(" and t.user_id in (select id from ns_user t1 where t1.user_name = ?) ");
+				params.add(pageBean.getQueryParams().get("user_name"));
+			}
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("true_name"))) {
+				sql.append(" and t.user_id in (select id from ns_user t1 where t1.true_name = ?) ");
+				params.add(pageBean.getQueryParams().get("true_name"));
+			}
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("user_phone"))) {
+				sql.append(" and t.user_id = in (select id from ns_user t1 where t1.user_phone = ?)  ");
+				params.add(pageBean.getQueryParams().get("user_phone"));
+			}
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("identity_card"))) {
+				sql.append(" and t.user_id = in (select id from ns_user t1 where t1.identity_card = ?) ");
+				params.add(pageBean.getQueryParams().get("identity_card"));
+			}
+		}
 		sql.append(" and t.purse_type = ? ");
 		params.add(purse_type);
 		//查询总计路数
@@ -110,6 +129,45 @@ public class UserPurseServiceImpl implements IUserPurseService{
 		pageBean.setPageData(list);
 		return pageBean;
 	}
+
+
+	public PageBean queryUserPurseListCount(PageBean pageBean) throws Exception {
+		StringBuffer sql = new StringBuffer(" select t1.user_name,t1.true_name,t2.purse_type,t2.trade_type,t2.option_type,t2.trade_amount,"
+				+ "t2.option_time,t1.user_status from ns_user t1,ns_user_purse t2 where t1.id = t2.user_id  ");
+		List params = new ArrayList();
+		
+		if(pageBean.getQueryParams() != null && !pageBean.getQueryParams().isEmpty()) {
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("trade_type"))) {
+				sql.append(" and t2.trade_type = ? ");
+				params.add(pageBean.getQueryParams().get("trade_type"));
+			}
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("purse_type"))) {
+				sql.append(" and t2.purse_type = ? ");
+				params.add(pageBean.getQueryParams().get("purse_type"));
+			}
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("option_type"))) {
+				sql.append(" and t2.option_type = ? ");
+				params.add(pageBean.getQueryParams().get("option_type"));
+			}
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("startCreateTime"))) {
+				sql.append(" and t2.option_time >= str_to_date(?,'%Y-%m-%d %H:%i:%s')   ");
+				params.add(pageBean.getQueryParams().get("startCreateTime"));
+			}
+			if(StringUtils.isNotBlank(pageBean.getQueryParams().get("endCreateTime"))) {
+				sql.append(" and t2.option_time <= str_to_date(?,'%Y-%m-%d %H:%i:%s')   ");
+				params.add(pageBean.getQueryParams().get("endCreateTime"));
+			}
+		}
+		//查询总计路数
+		int total = userPurseDAO.findNsUserPurseCount(sql.toString(), params);
+		//查询数据集
+		List<NsUserPurse> list = userPurseDAO.findNsUserPursePage(sql.toString(), params, pageBean);
+		pageBean.setTotal(total);
+		pageBean.setPageData(list);
+		return pageBean;
+	}
+	
+	
 	
 	
 	

@@ -93,10 +93,10 @@
   </head>
   
    <body class="easyui-layout">
-  	<div region="west" class="easyui-panel bgColor" split="true" title="功能菜单" style="width:200px;" >
+  	<div region="west" class="easyui-panel bgColor" split="true" style="width:200px;" >
   		<ul id="ul_menu_tree" ></ul>
   	</div>
-  	<div id="div_config" region="center" title="配置" class="easyui-panel bgColor" style="">
+  	<div id="div_config" region="center"  class="easyui-panel bgColor" style="">
 		<table class="tablestyle01" style="margin-top:5px; width: 100%;">
 			<tr>
 				<td style="width: 80px;">菜单ID</td>

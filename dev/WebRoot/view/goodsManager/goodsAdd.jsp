@@ -14,7 +14,7 @@
 </head>
   
 <body class="easyui-layout">
-	<div region="center" class="easyui-panel bgColor" title="商品录入" style="width:100%;height:100%;overflow-x: hidden;overflow-y: auto;">
+	<div region="center" class="easyui-panel bgColor" style="width:100%;height:100%;overflow-x: hidden;overflow-y: auto;">
 	    <form id="ff" method="post" enctype="multipart/form-data">
 	    	<table class="tablestyle01" style="width:100%" border="0">
 	    		<tr>

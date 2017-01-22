@@ -107,7 +107,7 @@
   </head>
   
    <body class="easyui-layout">
-  	<div region="west" class="easyui-panel bgColor" split="true" title="全体机构" style="width:300px;" >
+  	<div region="west" class="easyui-panel bgColor" split="true" style="width:300px;" >
   		<ul id="ul_org_tree" ></ul>
   	</div>
   	<div id="div_config" region="center" title="机构信息" class="easyui-panel bgColor" style="">

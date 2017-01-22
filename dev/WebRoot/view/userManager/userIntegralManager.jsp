@@ -140,7 +140,7 @@ request.setAttribute("imgPathPrefix",imgPathPrefix);
   	</head>
   
  	<body class="easyui-layout">
-	  	<div id="header" region="north" class="easyui-panel bgColor" collapsible="false" title="会员操作" style="height:100px; width:100%">
+	  	<div id="header" region="north" class="easyui-panel bgColor" collapsible="false"  style="height:100px; width:100%">
 	  		<form id="ff1" method="post" enctype="multipart/form-data">
 	  		<table id="from_query"  border=0 dataType="text" class="tablestyle01" style="width:100%">
 	  			<tr>

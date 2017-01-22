@@ -50,7 +50,7 @@
   </head>
   
   <body class="easyui-layout">
-  	<div region="north" class="easyui-panel bgColor" title="数据管理" style="height:64px; ">
+  	<div region="north" class="easyui-panel bgColor"  style="height:64px; ">
   		<table id="from_query"  dataType="text" class="tablestyle01" style="width:100%">
   			<tr>
   				<td align="right" style="width: 100">对象名称:</td>

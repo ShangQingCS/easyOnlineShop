@@ -8,7 +8,7 @@
   	</head>
   
  	<body class="easyui-layout">
-	  	<div region="north" class="easyui-panel bgColor" collapsible="false" title="商品列表" style="height:130px; width:100%">
+	  	<div region="north" class="easyui-panel bgColor" collapsible="false"  style="height:130px; width:100%">
 	  		<table id="from_query"  border=0 dataType="text" class="tablestyle01" style="width:100%">
 	  			<tr>
 	  				<td align="left">商品名称:<input name="queryParams.gname"/></td>
@@ -17,7 +17,8 @@
 	  				<td align="left">品牌:<input class="easyui-combobox" name="queryParams.brand" id="inp_brand" data-options="editable: false"/></td>
 	  			</tr>
 	  			<tr>
-	  				<td align="left">可用库存:<input class="easyui-numberspinner" name="queryParams.storenumbone" data-options="increment:10" style="width:100px;"/>
+	  				<td align="left">商品编码:<input  name="queryParams.goods_code" id="goods_code"  /></td>
+	  				<td align="left">实际库存:<input class="easyui-numberspinner" name="queryParams.storenumbone" data-options="increment:10" style="width:100px;"/>
 	  				至<input class="easyui-numberspinner"name="queryParams.storenumbtwo" data-options="increment:10" style="width:100px;"/></td>
 	  				<td align="left"></td>
 	  				<td align="left"></td>
@@ -41,7 +42,6 @@
 		    	pagination="true" singleSelect="true">
 				<thead>
 					<tr>
-						<!-- <th style="display: block;" checkbox="true" field="id" width="5%">ID</th> -->
 						<th field="id" width="5%">商品编号</th>
 						<th field="goodsCode" width="5%">商品编码</th>
 						<th field="gname" width="39%">商品名称</th>

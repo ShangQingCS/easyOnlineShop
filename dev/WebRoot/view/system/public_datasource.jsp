@@ -160,7 +160,7 @@ function copyToClipboard(txt) {
   </head>
   
    <body class="easyui-layout">
-   <div region="north" class="easyui-panel bgColor" title="数据源管理" style="height:68px; ">
+   <div region="north" class="easyui-panel bgColor"  style="height:68px; ">
   		<table id="from_query"  dataType="text" class="tablestyle01" style="width:100%">
   			<tr>
   				<td align="right" style="width: 100">数据源名称:</td>

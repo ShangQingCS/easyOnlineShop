@@ -92,7 +92,7 @@
 	</script>
   </head>
   <body class="easyui-layout">
-  	<div region="north" class="easyui-panel bgColor" title="角色列表" style="height:68px;">
+  	<div region="north" class="easyui-panel bgColor"  style="height:68px;">
   		<table id="from_query" dataType="text" class="tablestyle01" style="width:100%">
   			<tr>
   				<td align="right" style="width: 100">角色名称:</td>

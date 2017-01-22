@@ -48,17 +48,24 @@
 		
 		var changeStatus = function(selectobj,value,id) {
 			//selectobj.selectedIndex	updateNsUserCoupon
-			alert(selectobj.selectedIndex);
-			$.ajax({
+			window.confirm("提示","确认修改优惠券状态?",function(r){
+				if(r){
+					$.ajax({
 					url: "${basePath }/view/coupon/userCoupon!updateNsUserCoupon.action",
 					cache: false,
 					dataType:"json",
 					data: "id="+id+"&couponStatus="+selectobj.selectedIndex,
 					success: function(json){
-						
-						queryUserCoupon();
+						if(json.messages=='success'){
+							alert("修改状态成功！");
+							queryUserCoupon();
+						}
 					}
-				});
+					});
+				}else{
+					queryUserCoupon();
+				}
+			});
 		}
 		
 		
@@ -70,7 +77,7 @@
   	</head>
   
  	<body class="easyui-layout">
-	  	<div region="north" class="easyui-panel bgColor" collapsible="false" title="会员操作" style="height:100px; width:100%">
+	  	<div region="north" class="easyui-panel bgColor" collapsible="false" style="height:100px; width:100%">
 	  		<table id="from_query"  border=0 dataType="text" class="tablestyle01" style="width:100%">
 	  			<tr>
 	  				<td align="left">用户名:<input name="queryParams.user_name"  /></td>

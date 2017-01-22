@@ -31,7 +31,7 @@
   </head>
   
    <body class="easyui-layout">
-  	<div id="div_config" region="center" title="日志列表" class="easyui-panel bgColor" >
+  	<div id="div_config" region="center" class="easyui-panel bgColor" >
 		<table id="log_list" rownumbers="true" region="center" class="easyui-datagrid" url="log!list.action" style="width:auto;height:auto" title=""   pagination="true">
 			<thead>
 				<tr>

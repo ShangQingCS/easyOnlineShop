@@ -54,4 +54,13 @@ public interface IUserManagerService {
 	 * @throws Exception
 	 */
 	public int updateNsUser(NsUser nsUser) throws Exception;
+	
+	
+	/**
+	 * 查询用户体现列表
+	 * @param pageBean
+	 * @return
+	 * @throws Exception
+	 */
+	public PageBean queryUserTiXianList(PageBean pageBean) throws Exception;
 }

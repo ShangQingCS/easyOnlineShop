@@ -218,7 +218,7 @@ a:visited { text-decoration: none;}
 					<a href="#" onclick="showHelp();return false;">帮助</a>
 					&nbsp;&nbsp;|&nbsp;&nbsp;
 					<a href="#" onclick="confirm('提示', '确认退出', userOut);return false;">退出</a>
-					<div id="help_window" closed="true" closable="false" collapsible="true" resizable="false" title="帮助" class="easyui-window" style="width: 640px; height: 360px;">
+					<div id="help_window" closed="true" closable="false" collapsible="true" resizable="false"  class="easyui-window" style="width: 640px; height: 360px;">
 						<!--  <iframe id="iframe_help" src="" frameborder="0" style="width: 100%; height: 100%;"></iframe>-->
 						<div  id="div_help_content"></div>
 					</div>

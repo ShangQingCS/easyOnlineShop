@@ -133,7 +133,7 @@
   	</head>
   
  	<body class="easyui-layout">
-	  	<div region="north" class="easyui-panel bgColor" collapsible="false" title="基础数据" style="height:100px; width:100%">
+	  	<div region="north" class="easyui-panel bgColor" collapsible="false" style="height:100px; width:100%">
 	  		<table id="from_query"  border=0 dataType="text" class="tablestyle01" style="width:100%">
 	  			<tr>
 	  				<td align="left">名称:<input name="queryParams.name"  /></td>

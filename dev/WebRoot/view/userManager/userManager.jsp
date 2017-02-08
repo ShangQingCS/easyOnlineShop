@@ -15,10 +15,10 @@
 		}
 		
 		var queryUserManager = function() {
+			debugger;
 			var data = formGet("from_query");
 			$("#tab_list").datagrid({"queryParams":data});
 			$("#tab_list").datagrid("hideColumn","id");//隐藏id
-			$("#tab_list").datagrid("pageSize","15");//隐藏id
 			$.ajax({
 				url: "${basePath }/view/userManager/userManager!queryNsUser.action",
 				cache: false,
@@ -109,9 +109,11 @@
 					return checkForm();
 				},
 	      		success:function(data) {
+	      			debugger;
 	      			alert("操作成功！");
 					queryUserManager();//初始化用户信息列表
 					$("#userinfo_window").window("close");
+					
 	     		}
 	 		});  
 		}
